@@ -33,7 +33,7 @@ int EventManager::registerHandler(HandlerFn fn, int priority)
         return lh.priority < rh.priority;
     });
 
-    return newHandler.ID;
+    return newHandler.id();
 }
 
 void EventManager::removeHandler(int ID)
@@ -43,7 +43,7 @@ void EventManager::removeHandler(int ID)
         std::remove_if(m_handlers.begin(), m_handlers.end(), 
         [ID](const Handler& handler)
         {
-            return handler.ID == ID;
+            return handler.id() == ID;
         })
     );
 }

@@ -18,16 +18,21 @@ class EventManager
     {
         HandlerFn function;
         int priority = 0;
-        const int ID;
 
         Handler()
-            : ID(nextID)
         {
+            ID = nextID;
             nextID++;
+        }
+        
+        int id() const
+        {
+           return ID;
         }
 
     private:
-        static int nextID;
+        static inline int nextID = 0;
+        int ID;
     };
 
     std::vector<Handler> m_handlers;
