@@ -16,7 +16,8 @@ private:
     // Called on quit event
     std::function<void()> quitHandler;
 
-    struct Handler {
+    struct Handler 
+    {
         HandlerFn function;
         int priority;
         const int ID;
