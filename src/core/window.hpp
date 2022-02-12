@@ -15,4 +15,7 @@ public:
 
     // Get window renderer
     auto renderer() -> SDL_Renderer*;
+
+    // Render frame
+    void update();
 };

@@ -52,3 +52,9 @@ auto Window::renderer() -> SDL_Renderer*
 {
     return m_renderer;
 }
+
+void Window::update()
+{
+    SDL_RenderPresent(m_renderer);
+    SDL_RenderClear(m_renderer);
+}

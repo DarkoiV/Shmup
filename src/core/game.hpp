@@ -10,7 +10,7 @@ class Game
     // Game resolution
     static constexpr int SCREEN_WIDTH  = 576;
     static constexpr int SCREEN_HEIGHT = 360;
-    static inline int s_scaling = 1;
+    static inline int s_scaling = 2;
 
     // Game window
     Window m_window = Window
@@ -24,7 +24,7 @@ class Game
     void onQuit();
 
     // Event manager
-    EventManager eventManager = EventManager
+    EventManager m_eventManager = EventManager
     (
         std::bind(&Game::onQuit, this)
     );

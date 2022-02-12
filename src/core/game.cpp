@@ -16,6 +16,7 @@ void Game::run()
 {
     while (m_running)
     {
-        eventManager.update();
+        m_eventManager.update();
+        m_window.update();
     }
 }
