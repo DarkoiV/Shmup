@@ -25,14 +25,14 @@ class EventManager
             nextID++;
         }
         
-        int id() const
+        Uint32 id() const
         {
            return ID;
         }
 
     private:
-        static inline int nextID = 0;
-        int ID;
+        static inline Uint32 nextID = 0;
+        Uint32 ID;
     };
 
     std::vector<Handler> m_handlers;
@@ -43,10 +43,10 @@ public:
     EventManager(EventManager&&) = delete;
 
     // Registers handler with priority, returns ID
-    int registerHandler(HandlerFn fn, int priority = 0);
+    Uint32 registerHandler(HandlerFn fn, int priority = 0);
 
     // Removes handler by ID
-    void removeHandler(int ID);
+    void removeHandler(Uint32 ID);
 
     // Handle events
     void update();

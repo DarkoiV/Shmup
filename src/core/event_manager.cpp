@@ -21,7 +21,7 @@ void EventManager::update()
     }
 }
 
-int EventManager::registerHandler(HandlerFn fn, int priority)
+Uint32 EventManager::registerHandler(HandlerFn fn, int priority)
 {
     m_handlers.emplace_back();
     auto& newHandler = m_handlers.back();
@@ -36,7 +36,7 @@ int EventManager::registerHandler(HandlerFn fn, int priority)
     return newHandler.id();
 }
 
-void EventManager::removeHandler(int ID)
+void EventManager::removeHandler(Uint32 ID)
 {
     m_handlers.erase
     (
