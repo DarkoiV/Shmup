@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "event_manager.hpp"
 #include "util.hpp"
 
@@ -17,4 +19,31 @@ void EventManager::update()
             if (handler.function(event)) break;
         }
     }
+}
+
+int EventManager::registerHandler(HandlerFn fn, int priority)
+{
+    m_handlers.emplace_back();
+    auto& newHandler = m_handlers.back();
+    newHandler.function = fn;
+    newHandler.priority = priority;
+
+    std::sort(m_handlers.begin(), m_handlers.end(), [](const Handler& lh, const Handler& rh)
+    {
+        return lh.priority < rh.priority;
+    });
+
+    return newHandler.ID;
+}
+
+void EventManager::removeHandler(int ID)
+{
+    m_handlers.erase
+    (
+        std::remove_if(m_handlers.begin(), m_handlers.end(), 
+        [ID](const Handler& handler)
+        {
+            return handler.ID == ID;
+        })
+    );
 }

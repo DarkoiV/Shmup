@@ -1,25 +1,23 @@
 #pragma once
 
 #include <functional>
+#include <vector>
 
 #include <SDL2/SDL.h>
-#include <vector>
 
 class EventManager
 {
-public:
-    // Event handler is function that takes SDL_Event
+    // Event HandlerFn is function that takes SDL_Event
     // and returns True when event was processed
     using HandlerFn = std::function<bool(SDL_Event&)>;
 
-private:
     // Called on quit event
     std::function<void()> quitHandler;
 
     struct Handler 
     {
         HandlerFn function;
-        int priority;
+        int priority = 0;
         const int ID;
 
         Handler()
@@ -39,5 +37,12 @@ public:
     EventManager(EventManager&)  = delete;
     EventManager(EventManager&&) = delete;
 
+    // Registers handler with priority, returns ID
+    int registerHandler(HandlerFn fn, int priority = 0);
+
+    // Removes handler by ID
+    void removeHandler(int ID);
+
+    // Handle events
     void update();
 };
