@@ -36,5 +36,7 @@ class Game
 
 public:
     static void loadSettings();
+
+    void clientSetup();
     void run();
 };

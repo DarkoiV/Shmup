@@ -42,6 +42,9 @@ void Game::loadSettings()
 
 void Game::run() 
 {
+    LOG::INFO("Client setup");
+    clientSetup();
+
     LOG::INFO("Starting game loop");
     while (m_running)
     {
