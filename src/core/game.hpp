@@ -2,6 +2,7 @@
 
 #include "window.hpp"
 #include "event_manager.hpp"
+#include "scene_manager.hpp"
 
 #include <string>
 
@@ -33,6 +34,8 @@ class Game
     (
         std::bind(&Game::onQuit, this)
     );
+
+    SceneManager m_sceneManager;
 
 public:
     static void loadSettings();

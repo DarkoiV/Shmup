@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "log.hpp"
+#include "scene.hpp"
 
 #include <fstream>
 
@@ -48,7 +49,12 @@ void Game::run()
     LOG::INFO("Starting game loop");
     while (m_running)
     {
-        m_eventManager.update();
-        m_window.update();
+        auto scene = m_sceneManager.currentScene();
+        while (not scene->completed())
+        {
+            m_eventManager.update();
+            scene->update();
+            m_window.update();
+        }
     }
 }
