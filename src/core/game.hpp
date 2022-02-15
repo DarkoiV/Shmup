@@ -3,9 +3,14 @@
 #include "window.hpp"
 #include "event_manager.hpp"
 
+#include <string>
+
 class Game 
 {
     bool m_running = true;
+
+    static inline std::string s_gameDirectory;
+    static inline std::string s_dataFolder;
 
     // Game resolution
     static constexpr int SCREEN_WIDTH  = 576;
