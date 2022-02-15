@@ -13,3 +13,8 @@ bool TestScene::completed()
 {
     return false;
 }
+
+auto TestScene::factory(EventManager& em) -> Scene*
+{
+    return new TestScene(em);
+}

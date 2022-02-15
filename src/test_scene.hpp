@@ -12,4 +12,5 @@ public:
 
     void update() override;
     bool completed() override;
+    static auto factory(EventManager& em) -> Scene*;
 };
