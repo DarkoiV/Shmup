@@ -10,10 +10,12 @@ class EventManager;
 
 class SceneManager
 {
+    // Scene dependencies
+    friend Scene;
     EventManager& eventManager;
 
     // Scene factory is function that creates scene of conrete type
-    using sceneFactory = std::function<Scene*(EventManager&, SceneManager&)>;
+    using sceneFactory = std::function<Scene*(SceneManager&)>;
 
     // All registered scenes
     std::map<std::string, sceneFactory> m_registeredScenes;
@@ -25,7 +27,7 @@ public:
     SceneManager(EventManager& em);
     ~SceneManager();
 
-    void registerScene(const std::string& sceneName, sceneFactory createMethod);
+    void registerScene(const std::string& sceneName, sceneFactory factoryMethod);
     void nextScene(const std::string& sceneName);
 
     auto currentScene() -> Scene*;

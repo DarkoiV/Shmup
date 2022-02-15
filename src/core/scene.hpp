@@ -9,16 +9,16 @@ class Scene
     u_int32_t eventHandlerID;
 
 protected:
-    EventManager& eventManager;
     SceneManager& sceneManager;
+    EventManager& eventManager;
 
     virtual bool eventHandler(SDL_Event& event) = 0;
 
 public:
     // Constructor registers default event handler for scene
-    Scene(EventManager& em, SceneManager& sm): 
-        eventManager(em),
-        sceneManager(sm)
+    Scene(SceneManager& sm): 
+        sceneManager(sm),
+        eventManager(sm.eventManager)
     {
         eventHandlerID = eventManager.registerHandler(std::bind
         (
