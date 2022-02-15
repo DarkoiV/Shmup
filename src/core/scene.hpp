@@ -5,9 +5,9 @@
 class Scene
 {
     u_int32_t eventHandlerID;
-    EventManager& eventManager;
 
 protected:
+    EventManager& eventManager;
     virtual bool eventHandler(SDL_Event& event) = 0;
 
 public:
