@@ -14,7 +14,7 @@ bool TestScene::completed()
     return false;
 }
 
-auto TestScene::factory(EventManager& em) -> Scene*
+auto TestScene::factory(EventManager& em, SceneManager& sm) -> Scene*
 {
-    return new TestScene(em);
+    return new TestScene(em, sm);
 }

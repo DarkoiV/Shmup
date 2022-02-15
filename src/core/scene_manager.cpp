@@ -22,7 +22,7 @@ void SceneManager::registerScene(const std::string& sceneName, sceneFactory crea
 void SceneManager::nextScene(const std::string& sceneName)
 {
     LOG::INFO("Requestes next scene", sceneName);
-    m_nextScene = m_registeredScenes[sceneName](eventManager);
+    m_nextScene = m_registeredScenes[sceneName](eventManager, *this);
 }
 
 auto SceneManager::currentScene() -> Scene*

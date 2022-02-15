@@ -1,6 +1,8 @@
 #pragma once
 
 #include "event_manager.hpp"
+#include "scene_manager.hpp"
+
 
 class Scene
 {
@@ -8,12 +10,15 @@ class Scene
 
 protected:
     EventManager& eventManager;
+    SceneManager& sceneManager;
+
     virtual bool eventHandler(SDL_Event& event) = 0;
 
 public:
     // Constructor registers default event handler for scene
-    Scene(EventManager& em)
-        : eventManager(em)
+    Scene(EventManager& em, SceneManager& sm): 
+        eventManager(em),
+        sceneManager(sm)
     {
         eventHandlerID = eventManager.registerHandler(std::bind
         (
