@@ -6,11 +6,14 @@
 #include <string_view>
 
 class Scene;
+class EventManager;
 
 class SceneManager
 {
+    EventManager& eventManager;
+
     // Scene factory is function that creates scene of conrete type
-    using sceneFactory = std::function<Scene*()>;
+    using sceneFactory = std::function<Scene*(EventManager&)>;
 
     // All registered scenes
     std::map<std::string, sceneFactory> m_registeredScenes;
@@ -18,9 +21,11 @@ class SceneManager
     Scene* m_currentScene = nullptr;
     Scene* m_nextScene    = nullptr;
 public:
+    SceneManager(EventManager& em);
+    ~SceneManager();
 
-    void registerScene(std::string& sceneName, sceneFactory createMethod);
-    void nextScene(std::string& sceneName);
+    void registerScene(const std::string& sceneName, sceneFactory createMethod);
+    void nextScene(const std::string& sceneName);
 
     auto currentScene() -> Scene*;
 };

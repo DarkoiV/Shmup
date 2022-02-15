@@ -46,11 +46,11 @@ void Game::run()
     LOG::INFO("Client setup");
     clientSetup();
 
-    LOG::INFO("Starting game loop");
+    LOG::INFO("Starting game loop \n");
     while (m_running)
     {
         auto scene = m_sceneManager.currentScene();
-        while (not scene->completed())
+        while (not scene->completed() and m_running)
         {
             m_eventManager.update();
             scene->update();

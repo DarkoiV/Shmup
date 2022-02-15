@@ -2,25 +2,39 @@
 #include "log.hpp"
 #include "scene.hpp"
 
-void SceneManager::registerScene(std::string& sceneName, sceneFactory createMethod)
+SceneManager::SceneManager(EventManager& em)
+    : eventManager(em)
 {
+}
+
+SceneManager::~SceneManager()
+{
+    if (m_nextScene) delete m_nextScene;
+    delete m_currentScene;
+}
+
+void SceneManager::registerScene(const std::string& sceneName, sceneFactory createMethod)
+{
+    LOG::INFO("Registering new scene type", sceneName);
     m_registeredScenes[sceneName] = createMethod;
 }
 
-void SceneManager::nextScene(std::string& sceneName)
+void SceneManager::nextScene(const std::string& sceneName)
 {
     LOG::INFO("Requestes next scene", sceneName);
-    m_nextScene = m_registeredScenes[sceneName]();
+    m_nextScene = m_registeredScenes[sceneName](eventManager);
 }
 
 auto SceneManager::currentScene() -> Scene*
 {
-    if(m_nextScene)
+    if (m_nextScene)
     {
         LOG::INFO("Switching scene");
         delete m_currentScene;
         m_currentScene = m_nextScene;
         m_nextScene = nullptr;
     }
+
+    if (not m_currentScene) LOG::FATAL("No current scene loaded");
     return m_currentScene;
 }

@@ -35,7 +35,11 @@ class Game
         std::bind(&Game::onQuit, this)
     );
 
-    SceneManager m_sceneManager;
+    // Scene manager
+    SceneManager m_sceneManager = SceneManager
+    (
+        m_eventManager
+    );
 
 public:
     static void loadSettings();
