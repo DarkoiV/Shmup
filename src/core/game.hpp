@@ -13,15 +13,15 @@ class Game
     static inline std::string s_dataFolder;
 
     // Game resolution
-    static constexpr int SCREEN_WIDTH  = 576;
-    static constexpr int SCREEN_HEIGHT = 360;
+    static constexpr int WINDOW_WIDTH  = 576;
+    static constexpr int WINDOW_HEIGHT = 360;
     static inline int s_scaling = 2;
 
     // Game window
     Window m_window = Window
     (
-        SCREEN_WIDTH,
-        SCREEN_HEIGHT,
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
         s_scaling
     );
  
