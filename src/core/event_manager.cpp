@@ -7,7 +7,7 @@
 EventManager::EventManager(std::function<void()> onQuit)
     : quitHandler(onQuit)
 {
-    LOG::INFO("Creating event manager");
+    LOG::OK("Event manager created");
 }
 
 void EventManager::update()
