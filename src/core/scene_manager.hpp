@@ -33,6 +33,8 @@ class SceneManager
 
 public:
     SceneManager(EventManager& em);
+    SceneManager(SceneManager&)  = delete;
+    SceneManager(SceneManager&&) = delete;
     ~SceneManager();
 
     template<class T>
