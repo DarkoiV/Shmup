@@ -12,5 +12,4 @@ public:
 
     void update() override;
     bool completed() override;
-    static auto factory(SceneManager& sm) -> Scene*;
 };

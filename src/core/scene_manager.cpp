@@ -13,16 +13,10 @@ SceneManager::~SceneManager()
     delete m_currentScene;
 }
 
-void SceneManager::registerScene(const std::string& sceneName, sceneFactory createMethod)
+void SceneManager::nextScene(const std::string& name)
 {
-    LOG::INFO("Registering new scene type", sceneName);
-    m_registeredScenes[sceneName] = createMethod;
-}
-
-void SceneManager::nextScene(const std::string& sceneName)
-{
-    LOG::INFO("Requestes next scene", sceneName);
-    m_nextScene = m_registeredScenes[sceneName](*this);
+    LOG::INFO("Requestes next scene", name);
+    m_nextScene = m_registeredScenes.at(name)(*this);
 }
 
 auto SceneManager::currentScene() -> Scene*
