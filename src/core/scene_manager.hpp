@@ -12,7 +12,7 @@ class Scene;
 class SceneManager
 {
     // Scene factory is function that creates scene of conrete type
-    using sceneFactory = std::function<Scene*(SceneManager&)>;
+    using sceneFactory = std::function<Scene*()>;
 
     // All registered scenes
     std::map<std::string, sceneFactory> m_registeredScenes;
@@ -23,7 +23,7 @@ class SceneManager
     template<class T>
     auto createSceneFactory() -> sceneFactory
     {
-        return [](SceneManager& sm){ return new T(sm); };
+        return [](){ return new T(); };
     }
 
     SceneManager() = default;

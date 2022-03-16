@@ -16,9 +16,9 @@ protected:
 
 public:
     // Constructor registers default event handler for scene
-    Scene(SceneManager& sm): 
-        sceneManager(sm),
-        eventManager(sm.eventManager)
+    Scene(): 
+        sceneManager(SceneManager::get()),
+        eventManager(EventManager::get())
     {
         eventHandlerID = eventManager.registerHandler(std::bind
         (

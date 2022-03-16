@@ -48,6 +48,18 @@ Window::~Window()
     SDL_DestroyWindow(m_window);
 }
 
+void Window::init(int w, int h, int s)
+{
+    if (instance) LOG::WARN("Window was already initialized");
+    else instance = new Window(w, h, s);
+}
+
+auto Window::get() -> Window&
+{
+    if (not instance) LOG::FATAL("Cannot get window instance");
+    return *instance;
+}
+
 auto Window::renderer() -> SDL_Renderer* 
 {
     return m_renderer;

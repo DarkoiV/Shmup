@@ -24,7 +24,7 @@ SceneManager::~SceneManager()
 void SceneManager::nextScene(const std::string& name)
 {
     LOG::INFO("Requestes next scene", name);
-    m_nextScene = m_registeredScenes.at(name)(*this);
+    m_nextScene = m_registeredScenes.at(name)();
 }
 
 auto SceneManager::currentScene() -> Scene*

@@ -3,6 +3,7 @@
 
 void Game::clientSetup()
 {
-    m_sceneManager.registerScene<TestScene>("TestScene");
-    m_sceneManager.nextScene("TestScene");
+    auto& sceneManager = SceneManager::get();
+    sceneManager.registerScene<TestScene>("TestScene");
+    sceneManager.nextScene("TestScene");
 }

@@ -10,6 +10,10 @@ Game::Game()
     (
         std::bind(&Game::onQuit, this)
     );
+
+    SceneManager::init();
+
+    Window::init(WINDOW_WIDTH, WINDOW_HEIGHT, s_scaling);
 }
 
 void Game::onQuit()
@@ -54,15 +58,19 @@ void Game::run()
     LOG::INFO("Client setup");
     clientSetup();
 
+    auto& sceneManager = SceneManager::get();
+    auto& eventManager = EventManager::get();
+    auto& window = Window::get();
+
     LOG::INFO("Starting game loop \n");
     while (m_running)
     {
-        auto scene = m_sceneManager.currentScene();
+        auto scene = sceneManager.currentScene();
         while (not scene->completed() and m_running)
         {
-            m_eventManager.update();
+            eventManager.update();
             scene->update();
-            m_window.update();
+            window.update();
         }
     }
 }
