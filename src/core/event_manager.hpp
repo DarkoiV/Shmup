@@ -31,10 +31,15 @@ class EventManager
 
     std::vector<Handler> m_handlers;
 
-public:
     EventManager(std::function<void()> onQuit);
     EventManager(EventManager&)  = delete;
     EventManager(EventManager&&) = delete;
+
+    inline static EventManager* instance = nullptr;
+
+public:
+    static void init(std::function<void()> onQuit);
+    static auto get() -> EventManager&;
 
     // Registers handler with priority, returns ID
     Uint32 registerHandler(HandlerFn fn, int priority = 0);

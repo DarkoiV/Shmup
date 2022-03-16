@@ -8,14 +8,9 @@
 #include "log.hpp"
 
 class Scene;
-class EventManager;
 
 class SceneManager
 {
-    // Scene dependencies
-    friend Scene;
-    EventManager& eventManager;
-
     // Scene factory is function that creates scene of conrete type
     using sceneFactory = std::function<Scene*(SceneManager&)>;
 
@@ -31,11 +26,16 @@ class SceneManager
         return [](SceneManager& sm){ return new T(sm); };
     }
 
-public:
-    SceneManager(EventManager& em);
+    SceneManager() = default;
     SceneManager(SceneManager&)  = delete;
     SceneManager(SceneManager&&) = delete;
     ~SceneManager();
+
+    inline static SceneManager* instance = nullptr;
+
+public:
+    static void init();
+    static auto get() -> SceneManager&;
 
     template<class T>
     void registerScene(const std::string& name)

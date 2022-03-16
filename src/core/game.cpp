@@ -4,6 +4,14 @@
 
 #include <fstream>
 
+Game::Game()
+{
+    EventManager::init
+    (
+        std::bind(&Game::onQuit, this)
+    );
+}
+
 void Game::onQuit()
 {
     LOG::INFO("Requested quitting");

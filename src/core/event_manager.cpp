@@ -10,6 +10,19 @@ EventManager::EventManager(std::function<void()> onQuit)
     LOG::OK("Event manager created");
 }
 
+void EventManager::init(std::function<void ()> onQuit)
+{
+    LOG::INFO("Initalizing event manager");
+    if (instance) LOG::WARN("Event manager instance was already initalized!");
+    else instance = new EventManager(onQuit);
+}
+
+auto EventManager::get() -> EventManager&
+{
+    if (not instance) LOG::FATAL("Cannot get event manager instance");
+    return *instance;
+}
+
 void EventManager::update()
 {
     SDL_Event event;

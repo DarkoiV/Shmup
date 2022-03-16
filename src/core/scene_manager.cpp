@@ -2,9 +2,17 @@
 #include "log.hpp"
 #include "scene.hpp"
 
-SceneManager::SceneManager(EventManager& em)
-    : eventManager(em)
+void SceneManager::init()
 {
+    LOG::INFO("Initalizing scene manager");
+    if (instance) LOG::WARN("Scene manager instance was already initalized!");
+    else instance = new SceneManager();
+}
+
+auto SceneManager::get() -> SceneManager&
+{
+    if (not instance) LOG::FATAL("Cannot get scene manager instance");
+    return *instance;
 }
 
 SceneManager::~SceneManager()
