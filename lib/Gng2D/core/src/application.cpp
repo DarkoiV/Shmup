@@ -9,5 +9,26 @@ Gng2D::Application::Application()
 void Gng2D::Application::run()
 {
     onCreate();
+    while (running) mainLoop();
+}
+
+void Gng2D::Application::stopRunning()
+{
+    LOG::INFO("Application requested to stop running");
+    running = false;
+}
+
+void Gng2D::Application::mainLoop()
+{
+    eventLoop();
+}
+
+void Gng2D::Application::eventLoop()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT) onQuit();
+    }
 }
 
