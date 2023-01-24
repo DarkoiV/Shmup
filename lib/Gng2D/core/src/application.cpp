@@ -9,18 +9,30 @@ Gng2D::Application::Application()
 void Gng2D::Application::run()
 {
     onCreate();
-    while (running) mainLoop();
+    LOG::INFO("Switching to first scene");
+    sceneRegistry.switchScene();
+    while (isRunning) mainLoop();
 }
 
 void Gng2D::Application::stopRunning()
 {
     LOG::INFO("Application requested to stop running");
-    running = false;
+    isRunning = false;
+}
+
+void Gng2D::Application::setNextScene(const std::string& name)
+{
+    sceneRegistry.setNextScene(name);
 }
 
 void Gng2D::Application::mainLoop()
 {
+    auto& scene = sceneRegistry.scene();
+
     eventLoop();
+    scene.update();
+
+    if (scene.isCompleted()) sceneRegistry.switchScene();
 }
 
 void Gng2D::Application::eventLoop()
