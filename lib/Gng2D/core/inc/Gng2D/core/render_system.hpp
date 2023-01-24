@@ -11,6 +11,7 @@ struct RenderSystem
     void operator()() const;
 
 private:
-    entt::registry& registry;
+    entt::registry&     registry;
+    SDL_Renderer*       targetRenderer;
 };
 }

@@ -8,10 +8,10 @@ struct Window
     Window();
     ~Window();
 
-    auto renderer() -> SDL_Renderer*;
+    static auto renderer() -> SDL_Renderer*;
 
 private:
-    SDL_Window* sdlWindow;
-    SDL_Renderer* sdlRenderer;
+    inline static SDL_Window*       sdlWindow;
+    inline static SDL_Renderer*     sdlRenderer;
 };
 }

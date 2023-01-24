@@ -31,6 +31,7 @@ void Gng2D::Application::mainLoop()
 
     eventLoop();
     scene.update();
+    scene.render();
 
     if (scene.isCompleted()) sceneRegistry.switchScene();
 }
@@ -40,7 +41,12 @@ void Gng2D::Application::eventLoop()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        if (event.type == SDL_QUIT) onQuit();
+        switch (event.type)
+        {
+            case SDL_QUIT: 
+                onQuit();
+                break;
+        }
     }
 }
 
