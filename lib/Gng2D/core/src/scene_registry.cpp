@@ -8,9 +8,9 @@ auto Gng2D::SceneRegistry::scene() -> Scene&
 
 void Gng2D::SceneRegistry::setNextScene(const std::string& name)
 {
-    LOG::INFO("Setting next scene to:", name);
+    LOG::INFO("Setting next scene to", name);
 
-    if (not registered.contains(name)) LOG::ERROR("No registered scene named: ", name);
+    if (not registered.contains(name)) LOG::ERROR("No registered scene named", name);
     else nextScene = registered.at(name)();
 }
 
