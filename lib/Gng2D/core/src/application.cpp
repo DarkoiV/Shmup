@@ -1,5 +1,5 @@
 #include "Gng2D/core/application.hpp"
-#include "Gng2D/core/window.hpp"
+#include "Gng2D/internal/window.hpp"
 #include "Gng2D/core/log.hpp"
 
 Gng2D::Application::Application()
@@ -27,7 +27,7 @@ void Gng2D::Application::stopRunning()
     isRunning = false;
 }
 
-void Gng2D::Application::setNextScene(const std::string& name)
+void Gng2D::Application::setFirstScene(const std::string& name)
 {
     sceneRegistry.setNextScene(name);
 }
