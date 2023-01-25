@@ -1,13 +1,14 @@
 #pragma once
 #include <entt/entity/registry.hpp>
-#include "Gng2D/core/render_system.hpp"
+
+struct SDL_Renderer;
 
 namespace Gng2D
 {
 
 struct Scene
 {
-    Scene()             = default;
+    Scene();
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
     virtual ~Scene()    = default;
@@ -20,8 +21,8 @@ struct Scene
     void render();
 
 private:
-    entt::registry  entityRegistry;
-    RenderSystem    renderSystem{entityRegistry};
+    entt::registry  registry;
+    SDL_Renderer*   sceneRenderer;
 };
 
 }
