@@ -1,5 +1,4 @@
 #pragma once
-#include "Gng2D/core/window.hpp"
 #include "Gng2D/components/scene.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 
@@ -8,6 +7,7 @@ namespace Gng2D
 struct Application
 {
     Application();
+    virtual ~Application();
 
     virtual void onCreate() = 0;
     virtual void onQuit()   = 0;
@@ -20,7 +20,6 @@ private:
     void mainLoop();
     void eventLoop();
 
-    Window          window;
     SceneRegistry   sceneRegistry;
 
     bool isRunning{true};
