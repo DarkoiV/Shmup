@@ -26,16 +26,16 @@ Gng2D::Scene::Scene()
 void Gng2D::Scene::render()
 {
     auto view = registry.view<const Sprite, const Position>();
-    view.each([this](const auto& sprite, const auto& pos)
+    for (const auto& [_, sprite, pos] : view.each())
     {
         SDL_Rect dstRect;
-        dstRect.x = pos.x + (sprite.srcRect.w / 2);
-        dstRect.y = pos.y + (sprite.srcRect.h / 2);
+        dstRect.x = static_cast<int>(pos.x) + (sprite.srcRect.w / 2);
+        dstRect.y = static_cast<int>(pos.y) + (sprite.srcRect.h / 2);
         dstRect.w = sprite.srcRect.w;
         dstRect.h = sprite.srcRect.h;
             
         SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
-    });
+    }
 
     SDL_RenderPresent(sceneRenderer);
     SDL_Delay(20);
