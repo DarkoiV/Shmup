@@ -10,9 +10,6 @@ void Gng2D::AssetRegistry::init()
 
     if (not instance) instance = new AssetRegistry;
     else LOG::WARN("Asset registry already exists");
-
-    // TMP
-    instance->loadSprite("data/Clojure.png");
 }
 
 void Gng2D::AssetRegistry::destroy()
@@ -36,24 +33,25 @@ void Gng2D::AssetRegistry::loadSprite(const std::string& name)
     auto sprite = IMG_LoadTexture(renderer, name.c_str());
 
     if (not sprite) return LOG::ERROR("Failed to load sprite:", name, SDL_GetError());
-    if (loadedTextures.contains(name)) return LOG::WARN("Sprite", name, "already loaded");
+    if (loadedSprites.contains(name)) return LOG::WARN("Sprite", name, "already loaded");
 
-    loadedTextures[name] = sprite;
+    loadedSprites[name] = sprite;
 }
 
 auto Gng2D::AssetRegistry::getSprite(const std::string& name) -> SDL_Texture*
 {
-    if (not loadedTextures.contains(name))
+    if (not loadedSprites.contains(name))
     {
         LOG::ERROR("No sprite:", name);
         return nullptr;
     }
-    return loadedTextures.at(name);
+    return loadedSprites.at(name);
 }
 
 Gng2D::AssetRegistry::~AssetRegistry()
 {
-    for (const auto& [_, texture] : loadedTextures)
+    LOG::INFO("Destroying asset registry, and freeing loaded sprites");
+    for (const auto& [_, texture] : loadedSprites)
     {
         SDL_DestroyTexture(texture);
     }

@@ -8,18 +8,6 @@
 Gng2D::Scene::Scene()
     : sceneRenderer(Window::renderer())
 {
-    // TMP TEST
-    for (int i = 0; i < 10; i++)
-    {
-        SDL_Rect rect;
-        rect.x = 20 + 50 * i;
-        rect.y = 20 + 50 * i;
-        rect.w = 50 + i;
-        rect.h = 50 + i;
-        const auto entity = registry.create();
-        registry.emplace<Position>(entity, i * 30.f, i * 30.f);
-        registry.emplace<Sprite>(entity, "data/Clojure.png", rect);
-    }
 }
 
 void Gng2D::Scene::render()

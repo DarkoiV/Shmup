@@ -30,9 +30,14 @@ void Gng2D::Application::stopRunning()
     isRunning = false;
 }
 
-void Gng2D::Application::setFirstScene(const std::string& name)
+void Gng2D::Application::setNextScene(const std::string& name)
 {
     sceneRegistry.setNextScene(name);
+}
+
+void Gng2D::Application::loadSprite(const std::string& sprite)
+{
+    AssetRegistry::get().loadSprite(sprite);
 }
 
 void Gng2D::Application::mainLoop()

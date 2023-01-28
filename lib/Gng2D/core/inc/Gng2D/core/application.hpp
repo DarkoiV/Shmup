@@ -14,7 +14,8 @@ struct Application
 
     void run();
     void stopRunning();
-    void setFirstScene(const std::string& name);
+    void setNextScene(const std::string& name);
+    void loadSprite(const std::string& sprite);
 
 private:
     void mainLoop();

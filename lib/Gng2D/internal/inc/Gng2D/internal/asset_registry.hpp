@@ -21,6 +21,6 @@ private:
     ~AssetRegistry();
 
     inline static AssetRegistry*        instance;
-    std::map<std::string, SDL_Texture*> loadedTextures;
+    std::map<std::string, SDL_Texture*> loadedSprites;
 };
 }

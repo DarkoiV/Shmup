@@ -5,7 +5,7 @@ void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
     GNG2D_REGISTER_SCENE(FlightScene);
-    setFirstScene("FlightScene");
+    setNextScene("FlightScene");
 }
 
 void Shmup::onQuit()
