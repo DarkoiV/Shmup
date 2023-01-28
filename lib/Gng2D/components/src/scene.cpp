@@ -9,7 +9,6 @@ Gng2D::Scene::Scene()
     : sceneRenderer(Window::renderer())
 {
     // TMP TEST
-    auto text = IMG_LoadTexture(sceneRenderer, "data/Clojure.png");
     for (int i = 0; i < 10; i++)
     {
         SDL_Rect rect;
@@ -19,7 +18,7 @@ Gng2D::Scene::Scene()
         rect.h = 50 + i;
         const auto entity = registry.create();
         registry.emplace<Position>(entity, i * 30.f, i * 30.f);
-        registry.emplace<Sprite>(entity, text, rect);
+        registry.emplace<Sprite>(entity, "data/Clojure.png", rect);
     }
 }
 

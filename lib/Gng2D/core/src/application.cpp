@@ -1,15 +1,18 @@
 #include "Gng2D/core/application.hpp"
 #include "Gng2D/internal/window.hpp"
+#include "Gng2D/internal/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
 
 Gng2D::Application::Application()
 {
     Window::init("TITLE", 640, 400);
+    AssetRegistry::init();
     LOG::OK("Created Gng2D application");
 }
 
 Gng2D::Application::~Application()
 {
+    AssetRegistry::destroy();
     Window::destroy();
 }
 
