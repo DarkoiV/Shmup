@@ -17,7 +17,7 @@ struct SceneRegistry
     template<typename S>
     static void registerScene(const std::string& name)
     {
-        LOG::INFO("Registering scene named:", name);
+        LOG::INFO("Registering scene:", name);
         registered[name] = []() -> ScenePtr
         {
             return std::make_unique<S>();

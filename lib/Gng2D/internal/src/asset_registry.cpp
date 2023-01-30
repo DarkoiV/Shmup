@@ -29,6 +29,7 @@ auto Gng2D::AssetRegistry::get() -> AssetRegistry&
 
 void Gng2D::AssetRegistry::loadSprite(const std::string& name)
 {
+    LOG::INFO("Loading sprite:", name);
     auto renderer = Gng2D::Window::renderer();
     auto sprite = IMG_LoadTexture(renderer, name.c_str());
 

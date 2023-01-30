@@ -20,7 +20,7 @@ struct Scene
 
     void render();
 
-private:
+protected:
     entt::registry  registry;
     SDL_Renderer*   sceneRenderer;
 };
