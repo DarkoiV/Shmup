@@ -34,10 +34,9 @@ struct SceneRegistry
     void switchScene();
 
 private:
-    ScenePtr    currentScene;
-    ScenePtr    nextScene;
-
-    inline static RegisteredFactories registered;
+    inline static ScenePtr              currentScene;
+    inline static ScenePtr              nextScene;
+    inline static RegisteredFactories   registered;
 };
 }
 

@@ -5,6 +5,7 @@ struct SDL_Renderer;
 
 namespace Gng2D
 {
+struct SceneRegistry;
 
 struct Scene
 {
@@ -23,6 +24,9 @@ struct Scene
 protected:
     entt::registry  registry;
     SDL_Renderer*   sceneRenderer;
+
+private:
+    static SceneRegistry*  sceneRegistry;
 };
 
 }
