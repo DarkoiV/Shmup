@@ -14,13 +14,14 @@ struct AssetRegistry
     static auto get()       -> AssetRegistry&;
 
     void loadSprite(const std::string& name);
-    auto getSprite(const std::string& name) -> SDL_Texture*;
+    auto getSprite(const std::string& name) const -> SDL_Texture*;
 
 private:
+    inline static AssetRegistry*        instance;
+
     AssetRegistry()     = default;
     ~AssetRegistry();
 
-    inline static AssetRegistry*        instance;
     std::map<std::string, SDL_Texture*> loadedSprites;
 };
 }
