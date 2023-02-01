@@ -6,8 +6,6 @@
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/internal/window.hpp"
 
-Gng2D::SceneRegistry* Gng2D::Scene::sceneRegistry = new Gng2D::SceneRegistry;
-
 Gng2D::Scene::Scene()
     : sceneRenderer(Window::renderer())
 {
@@ -30,3 +28,9 @@ void Gng2D::Scene::render()
     SDL_RenderPresent(sceneRenderer);
     SDL_Delay(20);
 };
+
+void Gng2D::Scene::setNextScene(const std::string& name)
+{ 
+    SceneRegistry().setNextScene(name);
+}
+

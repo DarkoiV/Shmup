@@ -5,8 +5,6 @@ struct SDL_Renderer;
 
 namespace Gng2D
 {
-struct SceneRegistry;
-
 struct Scene
 {
     Scene();
@@ -18,15 +16,13 @@ struct Scene
     virtual void onExit()               = 0;
     virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
+    virtual void render();
 
-    void render();
+    void setNextScene(const std::string& name);
 
 protected:
     entt::registry  registry;
     SDL_Renderer*   sceneRenderer;
-
-private:
-    static SceneRegistry*  sceneRegistry;
 };
 
 }
