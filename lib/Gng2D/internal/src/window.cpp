@@ -4,7 +4,7 @@
 void Gng2D::Window::init(const std::string& title, int width, int height)
 {
     if (not instance) instance = new Window(title, width, height);
-    else LOG::WARN("Call to window init when instance exist might result in renderer pointer invalidation, aborting");
+    else LOG::WARN("Call to window init when instance exist, aborting");
 }
 
 void Gng2D::Window::destroy()
@@ -45,5 +45,6 @@ Gng2D::Window::~Window()
 
 auto Gng2D::Window::renderer() -> SDL_Renderer*
 {
+    if (not instance) LOG::ERROR("Cannot aquire window renderer, no window instance");
     return instance->sdlRenderer;
 }
