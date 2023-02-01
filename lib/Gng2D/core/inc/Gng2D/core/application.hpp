@@ -14,14 +14,10 @@ struct Application
 
     void run();
     void stopRunning();
-    void setNextScene(const std::string& name);
-    void loadSprite(const std::string& sprite);
 
 private:
     void mainLoop();
     void eventLoop();
-
-    SceneRegistry   sceneRegistry;
 
     bool isRunning{true};
 };

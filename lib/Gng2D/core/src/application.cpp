@@ -1,18 +1,18 @@
 #include "Gng2D/core/application.hpp"
-#include "Gng2D/internal/window.hpp"
-#include "Gng2D/internal/asset_registry.hpp"
+#include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
+#include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/internal/window.hpp"
 
 Gng2D::Application::Application()
 {
     Window::init("TITLE", 640, 400);
-    AssetRegistry::init();
     LOG::OK("Created Gng2D application");
 }
 
 Gng2D::Application::~Application()
 {
-    AssetRegistry::destroy();
+    AssetRegistry::freeAllSprites();
     Window::destroy();
 }
 
@@ -20,7 +20,7 @@ void Gng2D::Application::run()
 {
     onCreate();
     LOG::INFO("Switching to first scene");
-    sceneRegistry.switchScene();
+    SceneRegistry::switchScene();
     while (isRunning) mainLoop();
 }
 
@@ -30,25 +30,15 @@ void Gng2D::Application::stopRunning()
     isRunning = false;
 }
 
-void Gng2D::Application::setNextScene(const std::string& name)
-{
-    sceneRegistry.setNextScene(name);
-}
-
-void Gng2D::Application::loadSprite(const std::string& sprite)
-{
-    AssetRegistry::get().loadSprite(sprite);
-}
-
 void Gng2D::Application::mainLoop()
 {
-    auto& scene = sceneRegistry.scene();
+    auto& scene = SceneRegistry::scene();
 
     eventLoop();
     scene.update();
     scene.render();
 
-    if (scene.isCompleted()) sceneRegistry.switchScene();
+    if (scene.isCompleted()) SceneRegistry::switchScene();
 }
 
 void Gng2D::Application::eventLoop()
