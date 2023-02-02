@@ -16,12 +16,13 @@ struct Application
     void run();
     void stopRunning();
 
+protected:
+    AssetRegistry   assetRegistry;
+    SceneRegistry   sceneRegistry;
+
 private:
     void mainLoop();
     void eventLoop();
-
-    AssetRegistry   assetRegistry;
-    SceneRegistry   sceneRegistry;
 
     bool isRunning{true};
 };
