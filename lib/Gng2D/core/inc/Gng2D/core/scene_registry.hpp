@@ -29,7 +29,7 @@ struct SceneRegistry
         };
     }
 
-    auto scene()            -> Scene&;
+    auto scene() const -> Scene&;
     void setNextScene(const std::string& name);
     void switchScene();
 
