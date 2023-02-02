@@ -1,7 +1,5 @@
 #include "Gng2D/core/application.hpp"
-#include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/internal/window.hpp"
 
 Gng2D::Application::Application()
@@ -12,7 +10,7 @@ Gng2D::Application::Application()
 
 Gng2D::Application::~Application()
 {
-    AssetRegistry::freeAllSprites();
+    assetRegistry.freeAllSprites();
     Window::destroy();
 }
 
@@ -20,7 +18,7 @@ void Gng2D::Application::run()
 {
     onCreate();
     LOG::INFO("Switching to first scene");
-    SceneRegistry::switchScene();
+    sceneRegistry.switchScene();
     while (isRunning) mainLoop();
 }
 
@@ -32,13 +30,13 @@ void Gng2D::Application::stopRunning()
 
 void Gng2D::Application::mainLoop()
 {
-    auto& scene = SceneRegistry::scene();
+    auto& scene = sceneRegistry.scene();
 
     eventLoop();
     scene.update();
     scene.render();
 
-    if (scene.isCompleted()) SceneRegistry::switchScene();
+    if (scene.isCompleted()) sceneRegistry.switchScene();
 }
 
 void Gng2D::Application::eventLoop()

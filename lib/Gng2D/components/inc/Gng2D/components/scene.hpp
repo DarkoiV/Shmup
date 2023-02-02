@@ -2,6 +2,7 @@
 #include <deque>
 #include <memory>
 #include <entt/entity/registry.hpp>
+#include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/components/game_object.hpp"
 
 struct SDL_Renderer;
@@ -26,9 +27,10 @@ struct Scene
 protected:
     using SceneObject = std::unique_ptr<GameObject>;
 
-    entt::registry          registry;
-    SDL_Renderer*           sceneRenderer;
-    std::deque<SceneObject> sceneObjects;
+    entt::registry              registry;
+    SDL_Renderer*               sceneRenderer;
+    std::deque<SceneObject>     sceneObjects;
+    SceneRegistry               sceneRegistry;
 };
 
 }

@@ -31,6 +31,6 @@ void Gng2D::Scene::render()
 
 void Gng2D::Scene::setNextScene(const std::string& name)
 { 
-    SceneRegistry().setNextScene(name);
+    sceneRegistry.setNextScene(name);
 }
 

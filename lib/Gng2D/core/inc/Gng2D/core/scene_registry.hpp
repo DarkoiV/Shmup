@@ -4,11 +4,11 @@
 #include <functional>
 #include <type_traits>
 #include <unordered_map>
-#include "Gng2D/components/scene.hpp"
 #include "Gng2D/core/log.hpp"
 
 namespace Gng2D
 {
+struct Scene;
 
 template<typename S>
 concept SceneType = std::is_base_of<Scene, S>::value;
@@ -29,9 +29,9 @@ struct SceneRegistry
         };
     }
 
-    static auto scene()            -> Scene&;
-    static void setNextScene(const std::string& name);
-    static void switchScene();
+    auto scene()            -> Scene&;
+    void setNextScene(const std::string& name);
+    void switchScene();
 
 private:
     inline static ScenePtr              currentScene;

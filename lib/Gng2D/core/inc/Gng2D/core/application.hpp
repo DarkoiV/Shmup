@@ -1,6 +1,7 @@
 #pragma once
 #include "Gng2D/components/scene.hpp"
 #include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/core/asset_registry.hpp"
 
 namespace Gng2D
 {
@@ -18,6 +19,9 @@ struct Application
 private:
     void mainLoop();
     void eventLoop();
+
+    AssetRegistry   assetRegistry;
+    SceneRegistry   sceneRegistry;
 
     bool isRunning{true};
 };

@@ -9,9 +9,9 @@ namespace Gng2D
 {
 struct AssetRegistry
 {
-    static void loadSprite(const std::string& name);
-    static auto getSprite(const std::string& name) -> SDL_Texture*;
-    static void freeAllSprites();
+    void loadSprite(const std::string& name);
+    auto getSprite(const std::string& name) -> SDL_Texture*;
+    void freeAllSprites();
 
 private:
     inline static std::map<std::string, SDL_Texture*> loadedSprites;
