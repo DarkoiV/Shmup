@@ -8,9 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Create compile comands
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 
-# Set output directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}) 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${USE_FLAGS}")
 
@@ -20,3 +17,6 @@ add_executable(shmup)
 target_link_libraries(shmup
     Gng2D)
 add_subdirectory(source)
+
+set_target_properties(shmup PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")

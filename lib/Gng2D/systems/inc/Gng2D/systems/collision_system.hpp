@@ -30,7 +30,7 @@ struct CollisionSystem
         {
             for (const auto& [enttityB, posB, colliderB] : colliderBView.each())
             {
-                auto distance = std::sqrt(std::pow(posA.x - posB.x) + std::pow(posA.y - posB.y));
+                auto distance = std::sqrt(std::pow(posA.x - posB.x, 2) + std::pow(posA.y - posB.y, 2));
                 if (distance < (colliderA.radius + colliderB.radius))
                 {
                     collisionHandler(enttityA, enttityB);
