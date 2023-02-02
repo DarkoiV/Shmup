@@ -30,3 +30,4 @@ target_link_libraries(Gng2D
 add_subdirectory(components)
 add_subdirectory(core)
 add_subdirectory(internal)
+add_subdirectory(systems)
