@@ -13,13 +13,13 @@ template<typename C>
 concept CircleColliderType = std::is_base_of<CircleCollider, C>::value;
 
 template<CircleColliderType A, CircleColliderType B>
-struct CollisionSystem
+struct OverlapSystem
 {
-    using CollisionHandler = std::function<void(entt::entity, entt::entity)>;
+    using OnOverlapHandler = std::function<void(entt::entity, entt::entity)>;
 
-    CollisionSystem(entt::registry& r, CollisionHandler ch)
+    OverlapSystem(entt::registry& r, OnOverlapHandler ooh)
         : registry(r)
-        , collisionHandler(ch)
+        , onOverlap(ooh)
     {};
 
     void operator()()
@@ -30,10 +30,11 @@ struct CollisionSystem
         {
             for (const auto& [enttityB, posB, colliderB] : colliderBView.each())
             {
-                auto distance = std::sqrt(std::pow(posA.x - posB.x, 2) + std::pow(posA.y - posB.y, 2));
-                if (distance < (colliderA.radius + colliderB.radius))
+                auto sqrDistance = V2d::sqrDistance(posA, posB);
+                auto sqrRadius = std::pow(colliderA.radius + colliderB.radius, 2);
+                if (sqrDistance < sqrRadius)
                 {
-                    collisionHandler(enttityA, enttityB);
+                    onOverlap(enttityA, enttityB);
                 }
             }
         }
@@ -41,6 +42,6 @@ struct CollisionSystem
 
 private:
     entt::registry&     registry;
-    CollisionHandler    collisionHandler;
+    OnOverlapHandler    onOverlap;
 };
 }

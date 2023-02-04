@@ -5,4 +5,4 @@ target_sources(Gng2D PRIVATE)
 
 # Testing
 target_sources(Gng2D_TESTS PRIVATE
-    tst/collision_system_tests.cpp)
+    tst/overlap_system_tests.cpp)

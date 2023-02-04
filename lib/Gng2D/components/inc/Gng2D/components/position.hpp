@@ -1,11 +1,10 @@
 #pragma once
+#include "Gng2D/components/v2d.hpp"
 
 namespace Gng2D
 {
-struct Position
+struct Position : public V2d
 {
-    float   x;
-    float   y;
 };
 }
 
