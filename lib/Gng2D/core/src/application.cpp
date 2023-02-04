@@ -30,7 +30,7 @@ void Gng2D::Application::stopRunning()
 
 void Gng2D::Application::mainLoop()
 {
-    auto& scene = sceneRegistry.scene();
+    auto& scene = sceneRegistry.getCurrentScene();
 
     eventLoop();
     scene.update();

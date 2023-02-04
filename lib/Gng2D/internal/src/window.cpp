@@ -43,7 +43,7 @@ Gng2D::Window::~Window()
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-auto Gng2D::Window::renderer() -> SDL_Renderer*
+SDL_Renderer* Gng2D::Window::renderer()
 {
     if (not instance) LOG::ERROR("Cannot aquire window renderer, no window instance");
     return instance->sdlRenderer;

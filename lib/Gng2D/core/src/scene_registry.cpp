@@ -2,7 +2,7 @@
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/log.hpp"
 
-auto Gng2D::SceneRegistry::scene() const -> Scene&
+Gng2D::Scene& Gng2D::SceneRegistry::getCurrentScene() const
 {
     return *currentScene;
 }

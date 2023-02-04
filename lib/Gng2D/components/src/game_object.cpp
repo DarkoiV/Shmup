@@ -11,7 +11,7 @@ Gng2D::GameObject::~GameObject()
     registry.destroy(id);
 }
 
-auto Gng2D::GameObject::getId() const -> entt::entity
+entt::entity Gng2D::GameObject::getId() const
 {
     return id;
 }

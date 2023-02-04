@@ -16,7 +16,7 @@ void Gng2D::AssetRegistry::loadSprite(const std::string& name)
     loadedSprites[name] = sprite;
 }
 
-auto Gng2D::AssetRegistry::getSprite(const std::string& name) const -> SDL_Texture*
+SDL_Texture* Gng2D::AssetRegistry::getSprite(const std::string& name) const
 {
     if (not loadedSprites.contains(name))
     {

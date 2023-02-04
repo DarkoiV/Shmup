@@ -29,9 +29,9 @@ struct SceneRegistry
         };
     }
 
-    auto scene() const -> Scene&;
-    void setNextScene(const std::string& name);
-    void switchScene();
+    Scene&  getCurrentScene() const;
+    void    setNextScene(const std::string& name);
+    void    switchScene();
 
 private:
     inline static ScenePtr              currentScene;

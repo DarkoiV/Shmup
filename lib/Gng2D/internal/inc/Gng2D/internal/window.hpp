@@ -9,7 +9,7 @@ struct Window
     static void init(const std::string& title, int width, int height);
     static void destroy();
     
-    static auto renderer() -> SDL_Renderer*;
+    static SDL_Renderer*    renderer();
 
 private:
     inline static Window*   instance;
