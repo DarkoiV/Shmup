@@ -7,7 +7,8 @@ struct GameObject
 {
     GameObject(entt::registry&);
     virtual ~GameObject();
-
+    
+    auto getId() const  -> entt::entity;
 
 protected:
     entt::registry&     registry;
