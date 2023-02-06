@@ -10,34 +10,23 @@ namespace Gng2D
 {
 struct Scene;
 
-template<typename S>
-concept SceneType = std::is_base_of<Scene, S>::value;
-
 struct SceneRegistry
 {
     using ScenePtr              = std::unique_ptr<Scene>;
-    using SceneFactory          = std::function<ScenePtr()>;
-    using RegisteredFactories   = std::unordered_map<std::string, SceneFactory>;
 
-    template<SceneType S>
-    static void registerScene(const std::string& name)
+    [[nodiscard]] Scene&    getCurrentScene() const;
+    void                    switchScene();
+
+    template<typename S, typename... Args>
+        requires(std::is_base_of<Scene, S>::value)
+    void setNextScene(Args&&... args)
     {
-        LOG::INFO("Registering scene:", name);
-        registered[name] = []() -> ScenePtr
-        {
-            return std::make_unique<S>();
-        };
+        nextScene = std::make_unique<S>(std::forward<Args>(args)...);
     }
-
-    Scene&  getCurrentScene() const;
-    void    setNextScene(const std::string& name);
-    void    switchScene();
 
 private:
     inline static ScenePtr              currentScene;
     inline static ScenePtr              nextScene;
-    inline static RegisteredFactories   registered;
 };
 }
 
-#define GNG2D_REGISTER_SCENE(SCENE) Gng2D::SceneRegistry::registerScene<SCENE>(#SCENE)

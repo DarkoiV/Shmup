@@ -6,8 +6,7 @@
 void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
-    GNG2D_REGISTER_SCENE(FlightScene);
-    sceneRegistry.setNextScene("FlightScene");
+    sceneRegistry.setNextScene<FlightScene>();
     assetRegistry.loadSprite("data/Clojure.png");
 }
 

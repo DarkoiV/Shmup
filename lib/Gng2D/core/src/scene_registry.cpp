@@ -7,14 +7,6 @@ Gng2D::Scene& Gng2D::SceneRegistry::getCurrentScene() const
     return *currentScene;
 }
 
-void Gng2D::SceneRegistry::setNextScene(const std::string& name)
-{
-    LOG::INFO("Setting next scene to", name);
-
-    if (not registered.contains(name)) LOG::ERROR("No registered scene named", name);
-    else nextScene = registered.at(name)();
-}
-
 void Gng2D::SceneRegistry::switchScene()
 {
     if (not nextScene) LOG::ERROR("No next scene set, cannot switch");

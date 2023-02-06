@@ -22,8 +22,6 @@ struct Scene
     virtual void update()               = 0;
     virtual void render();
 
-    void setNextScene(const std::string& name);
-
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
     entt::entity spawnObject(Args&&... args)

@@ -29,8 +29,3 @@ void Gng2D::Scene::render()
     SDL_Delay(20);
 };
 
-void Gng2D::Scene::setNextScene(const std::string& name)
-{ 
-    sceneRegistry.setNextScene(name);
-}
-
