@@ -13,7 +13,7 @@ Gng2D::Scene::Scene()
 
 void Gng2D::Scene::render()
 {
-    auto view = registry.view<const Sprite, const Position>();
+    auto view = entityRegistry.view<Sprite, Position>();
     for (const auto& [_, sprite, pos] : view.each())
     {
         SDL_Rect dstRect;

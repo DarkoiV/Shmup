@@ -24,13 +24,22 @@ struct Scene
 
     void setNextScene(const std::string& name);
 
+    template<typename Obj, typename... Args>
+        requires(std::is_base_of<GameObject, Obj>::value)
+    entt::entity spawnObject(Args&&... args)
+    {
+        auto& entity = sceneObjects.emplace_back(
+            std::make_unique<Obj>(entityRegistry, std::forward<Args>(args)...));
+        return entity->getId();
+    }
+
 protected:
     using SceneObject = std::unique_ptr<GameObject>;
 
-    entt::registry              registry;
+    entt::registry              entityRegistry;
+    SceneRegistry               sceneRegistry;
     SDL_Renderer*               sceneRenderer;
     std::deque<SceneObject>     sceneObjects;
-    SceneRegistry               sceneRegistry;
 };
 
 }

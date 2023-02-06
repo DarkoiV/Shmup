@@ -5,7 +5,7 @@
 void FlightScene::onEnter()
 {
     Gng2D::LOG::INFO("Entering flight scene");
-    sceneObjects.emplace_back(std::make_unique<PlayerShip>(registry));
+    spawnObject<PlayerShip>();
 }
 
 void FlightScene::onExit()
