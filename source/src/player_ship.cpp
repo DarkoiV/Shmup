@@ -11,4 +11,5 @@ PlayerShip::PlayerShip(entt::registry& reg)
     addComponent<Gng2D::Acceleration>(0.0f, 0.0f);
     addComponent<Gng2D::Velocity>(0.0f, 0.0f, 5.0f, 0.3f);
     addComponent<Gng2D::Sprite>("player_ship");
+    addComponent<PlayerCollider>(5.0f);
 }

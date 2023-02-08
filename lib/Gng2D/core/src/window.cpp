@@ -1,4 +1,4 @@
-#include "Gng2D/internal/window.hpp"
+#include "Gng2D/core/window.hpp"
 #include "Gng2D/core/log.hpp"
 
 void Gng2D::Window::init(const std::string& title, int width, int height)

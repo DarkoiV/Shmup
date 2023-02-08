@@ -2,7 +2,7 @@
 #include "SDL2/SDL.h"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/internal/window.hpp"
+#include "Gng2D/core/window.hpp"
 
 void Gng2D::AssetRegistry::loadSprite(const std::string& name)
 {

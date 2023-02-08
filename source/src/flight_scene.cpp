@@ -29,3 +29,10 @@ void FlightScene::update()
 
     movementSystem();
 }
+
+void FlightScene::render()
+{
+    Gng2D::Scene::render();
+    PlayerColliderRenderer();
+}
+

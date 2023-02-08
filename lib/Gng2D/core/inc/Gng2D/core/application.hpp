@@ -23,8 +23,12 @@ protected:
 private:
     void mainLoop();
     void eventLoop();
+    void renderFrame();
 
-    bool isRunning{true};
+    bool                    isRunning{true};
+    uint32_t                frameEndTime{0};
+    constexpr static int    FPS{60};
+    SDL_Renderer*           renderer;
 };
 }
 
