@@ -1,6 +1,5 @@
 #pragma once
 #include <cmath>
-#include <functional>
 #include "entt/entity/registry.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/position.hpp"
@@ -10,11 +9,8 @@ namespace Gng2D
 template<CircleColliderType A, CircleColliderType B>
 struct OverlapSystem
 {
-    using OnOverlapHandler = std::function<void(entt::entity, entt::entity)>;
-
-    OverlapSystem(entt::registry& r, OnOverlapHandler ooh)
+    OverlapSystem(entt::registry& r)
         : registry(r)
-        , onOverlap(ooh)
     {};
 
     void operator()()
@@ -35,8 +31,9 @@ struct OverlapSystem
         }
     }
 
+    virtual void onOverlap(entt::entity, entt::entity) = 0;
+
 private:
     entt::registry&     registry;
-    OnOverlapHandler    onOverlap;
 };
 }
