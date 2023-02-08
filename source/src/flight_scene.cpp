@@ -1,7 +1,6 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/components/acceleration.hpp"
-#include "player_ship.hpp"
 
 void FlightScene::onEnter()
 {
@@ -20,19 +19,31 @@ bool FlightScene::isCompleted()
 
 void FlightScene::update()
 {
+    static int spawnCounter;
+    if (spawnCounter == 60)
+    {
+        spawnObject<Bullet>();
+        spawnCounter = 0;
+    }
+    spawnCounter++;
+
     auto& playerAcc = playerShip.getComponent<Gng2D::Acceleration>();
-    playerAcc.value = {0, 0};
-    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerAcc.value.y += 2.0f;
-    if (isKeyPressed(SDL_SCANCODE_UP))      playerAcc.value.y -= 2.0f;
-    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerAcc.value.x += 2.0f;
-    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerAcc.value.x -= 2.0f;
+    playerAcc = {0, 0};
+    float speedMod = 1.0f;
+    if (isKeyPressed(SDL_SCANCODE_LSHIFT))  speedMod = 0.25f;
+    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerAcc.y += 2.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_UP))      playerAcc.y -= 2.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerAcc.x += 2.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerAcc.x -= 2.0f * speedMod;
 
     movementSystem();
+    playerBulletCollisionSystem();
 }
 
 void FlightScene::render()
 {
     Gng2D::Scene::render();
-    PlayerColliderRenderer();
+    playerColliderRenderer();
+    bulletColliderRenderer();
 }
 

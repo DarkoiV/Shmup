@@ -3,5 +3,4 @@ target_include_directories(shmup PUBLIC
 target_sources(shmup PRIVATE
     src/flight_scene.cpp
     src/main.cpp
-    src/player_ship.cpp
     src/shmup.cpp)
