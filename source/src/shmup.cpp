@@ -7,7 +7,7 @@ void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
     sceneRegistry.setNextScene<FlightScene>();
-    assetRegistry.loadSprite("data/Clojure.png");
+    assetRegistry.loadSprite("player_ship");
 }
 
 void Shmup::onQuit()

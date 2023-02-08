@@ -6,5 +6,5 @@ PlayerShip::PlayerShip(entt::registry& reg)
     : Gng2D::GameObject(reg)
 {
     addComponent<Gng2D::Position>(320.0f, 200.0f);
-    addComponent<Gng2D::Sprite>("data/Clojure.png", 0.25f);
+    addComponent<Gng2D::Sprite>("player_ship");
 }

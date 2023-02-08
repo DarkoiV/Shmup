@@ -7,10 +7,11 @@
 void Gng2D::AssetRegistry::loadSprite(const std::string& name)
 {
     LOG::INFO("Loading sprite:", name);
+    const std::string pathToSprite{"data/sprites/" + name + ".png"};
     auto renderer = Gng2D::Window::renderer();
-    auto sprite = IMG_LoadTexture(renderer, name.c_str());
+    auto sprite = IMG_LoadTexture(renderer, pathToSprite.c_str());
 
-    if (not sprite) return LOG::ERROR("Failed to load sprite:", name, SDL_GetError());
+    if (not sprite) return LOG::ERROR("Failed to load sprite:", name, "SDL Error:", SDL_GetError());
     if (loadedSprites.contains(name)) return LOG::WARN("Sprite", name, "already loaded");
 
     loadedSprites[name] = sprite;
