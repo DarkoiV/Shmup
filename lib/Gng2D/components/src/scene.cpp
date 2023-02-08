@@ -19,8 +19,8 @@ void Gng2D::Scene::render()
         SDL_Rect dstRect;
         dstRect.w = sprite.srcRect.w * sprite.scale;
         dstRect.h = sprite.srcRect.h * sprite.scale;
-        dstRect.x = static_cast<int>(pos.value.x) - (dstRect.w / 2);
-        dstRect.y = static_cast<int>(pos.value.y) - (dstRect.h / 2);
+        dstRect.x = pos.value.x - (static_cast<float>(dstRect.w) / 2);
+        dstRect.y = pos.value.y - (static_cast<float>(dstRect.h) / 2);
             
         SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
     }

@@ -48,3 +48,14 @@ SDL_Renderer* Gng2D::Window::renderer()
     if (not instance) LOG::ERROR("Cannot aquire window renderer, no window instance");
     return instance->sdlRenderer;
 }
+
+void Gng2D::Window::renderFrame()
+{
+    SDL_RenderPresent(instance->sdlRenderer);
+    SDL_RenderClear(instance->sdlRenderer);
+    auto timeNow = SDL_GetTicks();
+    auto expectedEnd = instance->frameEndTime + (1000/FPS);
+    if (expectedEnd > timeNow) SDL_Delay(expectedEnd - timeNow);
+    instance->frameEndTime = SDL_GetTicks();
+}
+

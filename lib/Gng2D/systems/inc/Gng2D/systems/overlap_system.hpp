@@ -1,5 +1,4 @@
 #pragma once
-#include <type_traits>
 #include <cmath>
 #include <functional>
 #include "entt/entity/registry.hpp"
@@ -8,9 +7,6 @@
 
 namespace Gng2D
 {
-template<typename C>
-concept CircleColliderType = std::is_base_of<CircleCollider, C>::value;
-
 template<CircleColliderType A, CircleColliderType B>
 struct OverlapSystem
 {

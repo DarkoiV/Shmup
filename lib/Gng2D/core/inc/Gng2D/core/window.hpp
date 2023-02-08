@@ -8,6 +8,7 @@ struct Window
 {
     static void init(const std::string& title, int width, int height);
     static void destroy();
+    static void renderFrame();
     
     static SDL_Renderer*    renderer();
 
@@ -19,5 +20,7 @@ private:
 
     SDL_Window*             sdlWindow;
     SDL_Renderer*           sdlRenderer;
+    uint32_t                frameEndTime{0};
+    constexpr static int    FPS{60};
 };
 }

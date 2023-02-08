@@ -5,7 +5,6 @@
 Gng2D::Application::Application()
 {
     Window::init("TITLE", 640, 400);
-    renderer = Window::renderer();
     LOG::OK("Created Gng2D application");
 }
 
@@ -36,7 +35,7 @@ void Gng2D::Application::mainLoop()
     eventLoop();
     scene.update();
     scene.render();
-    renderFrame();
+    Window::renderFrame();
 
     if (scene.isCompleted()) sceneRegistry.switchScene();
 }
@@ -53,15 +52,5 @@ void Gng2D::Application::eventLoop()
                 break;
         }
     }
-}
-
-void Gng2D::Application::renderFrame()
-{
-    SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
-    auto timeNow = SDL_GetTicks();
-    auto expectedEnd = frameEndTime + (1000/FPS);
-    if (expectedEnd > timeNow) SDL_Delay(expectedEnd - timeNow);
-    frameEndTime = SDL_GetTicks();
 }
 
