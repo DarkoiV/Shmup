@@ -36,9 +36,8 @@ struct ColliderRendererSystem
         auto view = registry.view<Collider, Position>();
         for (const auto& [_, collider, position] : view.each())
         {
-            drawCircle(collider.radius, position.x, position.y);
-            if (collider.radius > 2) drawCircle(collider.radius - 1, position.x, position.y);
-            if (collider.radius > 3) drawCircle(collider.radius - 2, position.x, position.y);
+            for (int r = collider.radius; r > 0; r--) drawCircle(r, position.x, position.y);
+            SDL_RenderDrawPoint(renderer, position.x, position.y);
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     };
