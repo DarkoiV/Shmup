@@ -4,6 +4,5 @@
 struct PlayerShip : Gng2D::GameObject
 {
     PlayerShip(entt::registry&);
-    ~PlayerShip() = default;
 };
 

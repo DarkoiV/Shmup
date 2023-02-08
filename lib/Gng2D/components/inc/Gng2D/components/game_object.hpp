@@ -6,18 +6,24 @@ namespace Gng2D
 struct GameObject
 {
     GameObject(entt::registry&);
-    virtual ~GameObject();
+    virtual ~GameObject() = default;
     
     entt::entity getId() const;
-
-protected:
-    entt::registry&     registry;
-    const entt::entity  id;
 
     template<typename Component, typename... Args>
     void addComponent(Args&&... args)
     {
         registry.emplace<Component>(id, std::forward<Args>(args)...);
     }
+
+    template<typename Component>
+    auto& getComponent()
+    {
+        return registry.get<Component>(id);
+    }
+
+protected:
+    entt::registry&     registry;
+    const entt::entity  id;
 };
 }

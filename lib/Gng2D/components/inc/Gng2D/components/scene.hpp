@@ -24,21 +24,16 @@ struct Scene
 protected:
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
-    entt::entity spawnObject(Args&&... args)
+    GameObject spawnObject(Args&&... args)
     {
-        auto& entity = sceneObjects.emplace_back(
-            std::make_unique<Obj>(entityRegistry, std::forward<Args>(args)...));
-        return entity->getId();
+        return Obj(entityRegistry, std::forward<Args>(args)...);
     }
 
     bool isKeyPressed(SDL_Scancode);
 
-    using SceneObject = std::unique_ptr<GameObject>;
-
     entt::registry              entityRegistry;
     SceneRegistry               sceneRegistry;
     SDL_Renderer*               sceneRenderer;
-    std::deque<SceneObject>     sceneObjects;
 };
 
 }

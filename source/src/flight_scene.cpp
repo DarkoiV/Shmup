@@ -6,7 +6,6 @@
 void FlightScene::onEnter()
 {
     Gng2D::LOG::INFO("Entering flight scene");
-    spawnObject<PlayerShip>();
 }
 
 void FlightScene::onExit()
@@ -21,7 +20,7 @@ bool FlightScene::isCompleted()
 
 void FlightScene::update()
 {
-    auto& playerAcc = entityRegistry.get<Gng2D::Acceleration>(sceneObjects[0]->getId());
+    auto& playerAcc = playerShip.getComponent<Gng2D::Acceleration>();
     playerAcc.value = {0, 0};
     if (isKeyPressed(SDL_SCANCODE_DOWN))    playerAcc.value.y += 2.0f;
     if (isKeyPressed(SDL_SCANCODE_UP))      playerAcc.value.y -= 2.0f;

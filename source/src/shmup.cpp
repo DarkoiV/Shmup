@@ -6,8 +6,8 @@
 void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
-    sceneRegistry.setNextScene<FlightScene>();
     assetRegistry.loadSprite("player_ship");
+    sceneRegistry.setNextScene<FlightScene>();
 }
 
 void Shmup::onQuit()
