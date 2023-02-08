@@ -3,8 +3,7 @@
 
 namespace Gng2D
 {
-struct Acceleration
+struct Acceleration : public V2d
 {
-    V2d     value;
 };
 }

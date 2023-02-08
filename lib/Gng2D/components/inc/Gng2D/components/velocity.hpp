@@ -3,9 +3,8 @@
 
 namespace Gng2D
 {
-struct Velocity
+struct Velocity : public V2d
 {
-    V2d     value;
     float   max;
     float   dragFactor;
 };

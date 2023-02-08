@@ -3,9 +3,8 @@
 
 namespace Gng2D
 {
-struct Position
+struct Position : public V2d
 {
-    V2d value;
 };
 }
 

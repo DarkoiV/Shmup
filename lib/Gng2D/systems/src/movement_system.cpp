@@ -21,13 +21,12 @@ void Gng2D::MovementSystem::updateVelocity()
     for (const auto& [_, acceleration, velocity] : view.each())
     {
         const auto& max = velocity.max;
-        auto& value     = velocity.value;
 
-        value += acceleration.value;
-        if (value.x > max and value.x > 0) value.x = max;
-        if (value.y > max and value.y > 0) value.y = max;
-        if (value.x < -max and value.x < 0) value.x = -max;
-        if (value.y < -max and value.y < 0) value.y = -max;
+        velocity += acceleration;
+        if (velocity.x > max and velocity.x > 0) velocity.x = max;
+        if (velocity.y > max and velocity.y > 0) velocity.y = max;
+        if (velocity.x < -max and velocity.x < 0) velocity.x = -max;
+        if (velocity.y < -max and velocity.y < 0) velocity.y = -max;
     }
 }
 
@@ -36,12 +35,11 @@ void Gng2D::MovementSystem::updatePosition()
     auto view = registry.view<Velocity, Position>();
     for(const auto& [_, velocity, position] : view.each())
     {
-        position.value += velocity.value;
+        position += velocity;
 
-        auto& value = velocity.value;
-        value.x -= value.x * velocity.dragFactor;
-        if (value.x * value.x < 0.01f) value.x = 0;
-        value.y -= value.y * velocity.dragFactor;
-        if (value.y * value.y < 0.01f) value.y = 0;
+        velocity.x -= velocity.x * velocity.dragFactor;
+        if (velocity.x * velocity.x < 0.01f) velocity.x = 0;
+        velocity.y -= velocity.y * velocity.dragFactor;
+        if (velocity.y * velocity.y < 0.01f) velocity.y = 0;
     }
 }
