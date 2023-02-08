@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include "Gng2D/systems/movement_system.hpp"
 #include "Gng2D/components/scene.hpp"
 #include "Gng2D/components/game_object.hpp"
 
@@ -12,6 +13,5 @@ struct FlightScene : public Gng2D::Scene
     void update()       override;
 
 private:
-    using SceneObject = std::unique_ptr<Gng2D::GameObject>;
-    std::vector<SceneObject> sceneObjects;
+    Gng2D::MovementSystem   movementSystem{entityRegistry};
 };

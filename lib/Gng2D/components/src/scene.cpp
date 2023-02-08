@@ -19,13 +19,19 @@ void Gng2D::Scene::render()
         SDL_Rect dstRect;
         dstRect.w = sprite.srcRect.w * sprite.scale;
         dstRect.h = sprite.srcRect.h * sprite.scale;
-        dstRect.x = static_cast<int>(pos.x) - (dstRect.w / 2);
-        dstRect.y = static_cast<int>(pos.y) - (dstRect.h / 2);
+        dstRect.x = static_cast<int>(pos.value.x) - (dstRect.w / 2);
+        dstRect.y = static_cast<int>(pos.value.y) - (dstRect.h / 2);
             
         SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
     }
 
     SDL_RenderPresent(sceneRenderer);
+    SDL_RenderClear(sceneRenderer);
     SDL_Delay(20);
 };
 
+bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode)
+{
+    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
+    return keyboardState[scancode];
+}

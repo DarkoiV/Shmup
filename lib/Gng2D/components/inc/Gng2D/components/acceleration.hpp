@@ -3,9 +3,8 @@
 
 namespace Gng2D
 {
-struct Position
+struct Acceleration
 {
-    V2d value;
+    V2d     value;
 };
 }
-

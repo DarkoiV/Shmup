@@ -2,10 +2,9 @@
 #include <deque>
 #include <memory>
 #include <entt/entity/registry.hpp>
+#include "SDL2/SDL.h"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/components/game_object.hpp"
-
-struct SDL_Renderer;
 
 namespace Gng2D
 {
@@ -22,6 +21,7 @@ struct Scene
     virtual void update()               = 0;
     virtual void render();
 
+protected:
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
     entt::entity spawnObject(Args&&... args)
@@ -31,7 +31,8 @@ struct Scene
         return entity->getId();
     }
 
-protected:
+    bool isKeyPressed(SDL_Scancode);
+
     using SceneObject = std::unique_ptr<GameObject>;
 
     entt::registry              entityRegistry;
