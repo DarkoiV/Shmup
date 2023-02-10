@@ -5,7 +5,5 @@ namespace Gng2D
 {
 struct Velocity : public V2d
 {
-    float   max;
-    float   dragFactor;
 };
 }

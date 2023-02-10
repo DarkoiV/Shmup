@@ -27,14 +27,14 @@ void FlightScene::update()
     }
     spawnCounter++;
 
-    auto& playerAcc = playerShip.getComponent<Gng2D::Acceleration>();
-    playerAcc = {0, 0};
+    auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
+    playerVelocity = {0, 0};
     float speedMod = 1.0f;
     if (isKeyPressed(SDL_SCANCODE_LSHIFT))  speedMod = 0.25f;
-    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerAcc.y += 2.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_UP))      playerAcc.y -= 2.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerAcc.x += 2.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerAcc.x -= 2.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_UP))      playerVelocity.y -= 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
 
     movementSystem();
     playerBulletCollisionSystem();

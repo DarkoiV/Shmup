@@ -14,8 +14,7 @@ struct PlayerShip : Gng2D::GameObject
         : Gng2D::GameObject(reg)
     {
         addComponent<Gng2D::Position>(320.0f, 200.0f);
-        addComponent<Gng2D::Acceleration>(0.0f, 0.0f);
-        addComponent<Gng2D::Velocity>(0.0f, 0.0f, 5.0f, 0.3f);
+        addComponent<Gng2D::Velocity>(0.0f, 0.0f);
         addComponent<Gng2D::Sprite>("player_ship");
         addComponent<Collider>(5.0f);
     }

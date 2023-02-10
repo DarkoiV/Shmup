@@ -9,7 +9,6 @@ struct MovementSystem
     void operator()();
 
 private:
-    void updateVelocity();
     void updatePosition();
 
     entt::registry& registry;

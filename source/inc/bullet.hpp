@@ -12,7 +12,7 @@ struct Bullet : public Gng2D::GameObject
         : Gng2D::GameObject(r)
     {
         addComponent<Gng2D::Position>(320.0f, 0.0f);
-        addComponent<Gng2D::Velocity>(0.0f, 2.0f, 2.0f, 0.0f);
+        addComponent<Gng2D::Velocity>(0.0f, 2.0f);
         addComponent<Collider>(3.0f);
     }
 
