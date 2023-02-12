@@ -1,6 +1,5 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/components/acceleration.hpp"
 
 void FlightScene::onEnter()
 {

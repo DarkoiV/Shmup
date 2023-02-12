@@ -1,6 +1,5 @@
 #include "Gng2D/systems/movement_system.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/components/acceleration.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
 
