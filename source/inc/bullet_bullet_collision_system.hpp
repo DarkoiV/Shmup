@@ -3,11 +3,12 @@
 #include "player_ship.hpp"
 #include "bullet.hpp"
 
-struct PlayerBulletCollisionSystem : Gng2D::OverlapSystem<PlayerShip::Collider, EnemyBullet::Collider>
+struct BulletBulletCollisionSystem : Gng2D::OverlapSystem<AllyBullet::Collider, EnemyBullet::Collider>
 {
-    PlayerBulletCollisionSystem(entt::registry& r)
+    BulletBulletCollisionSystem(entt::registry& r)
         : OverlapSystem(r)
     {}
 
     void onOverlap(entt::entity, entt::entity) override;
 };
+

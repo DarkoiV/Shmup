@@ -33,7 +33,7 @@ struct OverlapSystem
 
     virtual void onOverlap(entt::entity, entt::entity) = 0;
 
-private:
+protected:
     entt::registry&     registry;
 };
 }

@@ -21,7 +21,7 @@ void FlightScene::update()
     static int spawnCounter;
     if (spawnCounter == 60)
     {
-        spawnObject<Bullet>();
+        spawnObject<EnemyBullet>();
         spawnCounter = 0;
     }
     spawnCounter++;
@@ -35,14 +35,25 @@ void FlightScene::update()
     if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
     if (isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
 
+    const auto playerPosition = playerShip.getComponent<Gng2D::Position>();
+    static int weaponCooldown = 0;
+    if (isKeyPressed(SDL_SCANCODE_Z) and not weaponCooldown)
+    {
+        spawnObject<AllyBullet>(playerPosition, Gng2D::Velocity{0, -7});
+        weaponCooldown = 20;
+    }
+    if (weaponCooldown > 0) weaponCooldown--;
+
     movementSystem();
     playerBulletCollisionSystem();
+    bulletBulletCollisionSystem();
 }
 
 void FlightScene::render()
 {
     Gng2D::Scene::render();
     playerColliderRenderer();
-    bulletColliderRenderer();
+    allyBulletColliderRenderer();
+    enemyBulletColliderRenderer();
 }
 

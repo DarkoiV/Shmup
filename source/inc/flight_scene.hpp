@@ -7,6 +7,7 @@
 #include "Gng2D/components/game_object.hpp"
 #include "player_ship.hpp"
 #include "player_bullet_collision_system.hpp"
+#include "bullet_bullet_collision_system.hpp"
 #include "bullet.hpp"
 
 struct FlightScene : public Gng2D::Scene
@@ -20,10 +21,16 @@ struct FlightScene : public Gng2D::Scene
 private:
     Gng2D::GameObject       playerShip = spawnObject<PlayerShip>();
     Gng2D::MovementSystem   movementSystem{entityRegistry};
+
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
         playerColliderRenderer{entityRegistry};
-    Gng2D::ColliderRendererSystem<Bullet::Collider>
-        bulletColliderRenderer{entityRegistry};
+    Gng2D::ColliderRendererSystem<EnemyBullet::Collider>
+        enemyBulletColliderRenderer{entityRegistry};
+    Gng2D::ColliderRendererSystem<AllyBullet::Collider>
+        allyBulletColliderRenderer{entityRegistry};
+
     PlayerBulletCollisionSystem
         playerBulletCollisionSystem{entityRegistry};
+    BulletBulletCollisionSystem
+        bulletBulletCollisionSystem{entityRegistry};
 };

@@ -8,7 +8,7 @@ struct MovementSystem
     MovementSystem(entt::registry&);
     void operator()();
 
-private:
+protected:
     void updatePosition();
 
     entt::registry& registry;
