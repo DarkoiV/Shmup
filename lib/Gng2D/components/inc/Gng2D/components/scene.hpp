@@ -26,7 +26,7 @@ struct Scene
         requires(std::is_base_of<GameObject, Obj>::value)
     Obj spawnObject(Args&&... args)
     {
-        return Obj(registry, std::forward<Args>(args)...);
+        return Obj(*this, std::forward<Args>(args)...);
     }
 
     template<typename... Components>
@@ -46,6 +46,8 @@ protected:
     entt::registry              registry;
     SceneRegistry               sceneRegistry;
     SDL_Renderer*               sceneRenderer;
+
+    friend struct GameObject;
 };
 
 }

@@ -8,8 +8,8 @@ struct AllyBullet : public Gng2D::GameObject
 {
     struct Collider : public Gng2D::CircleCollider {};
 
-    AllyBullet(entt::registry& r, Gng2D::Position p, Gng2D::Velocity v)
-        : Gng2D::GameObject(r)
+    AllyBullet(Gng2D::Scene& s, Gng2D::Position p, Gng2D::Velocity v)
+        : Gng2D::GameObject(s)
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
@@ -21,8 +21,8 @@ struct EnemyBullet : public Gng2D::GameObject
 {
     struct Collider : public Gng2D::CircleCollider {};
 
-    EnemyBullet(entt::registry& r, Gng2D::Position p, Gng2D::Velocity v)
-        : Gng2D::GameObject(r)
+    EnemyBullet(Gng2D::Scene& s, Gng2D::Position p, Gng2D::Velocity v)
+        : Gng2D::GameObject(s)
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);

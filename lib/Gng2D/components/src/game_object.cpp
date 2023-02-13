@@ -1,7 +1,8 @@
 #include "Gng2D/components/game_object.hpp"
+#include "Gng2D/components/scene.hpp"
 
-Gng2D::GameObject::GameObject(entt::registry& reg)
-    : registry(reg)
+Gng2D::GameObject::GameObject(Gng2D::Scene& s)
+    : registry(s.registry)
     , id(registry.create())
 {
 }

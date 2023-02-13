@@ -9,8 +9,8 @@ struct PlayerShip : Gng2D::GameObject
 {
     struct Collider : public Gng2D::CircleCollider {};
 
-    PlayerShip(entt::registry& reg)
-        : Gng2D::GameObject(reg)
+    PlayerShip(Gng2D::Scene& s)
+        : Gng2D::GameObject(s)
     {
         addComponent<Gng2D::Position>(320.0f, 200.0f);
         addComponent<Gng2D::Velocity>(0.0f, 0.0f);

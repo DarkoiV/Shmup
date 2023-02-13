@@ -3,9 +3,10 @@
 
 namespace Gng2D
 {
+struct Scene;
 struct GameObject
 {
-    GameObject(entt::registry&);
+    GameObject(Gng2D::Scene&);
     virtual ~GameObject() = default;
     
     entt::entity getId() const;
