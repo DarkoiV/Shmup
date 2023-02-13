@@ -28,21 +28,12 @@ void FlightScene::update()
     }
     spawnCounter++;
 
-    auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
-    playerVelocity = {0, 0};
-    float speedMod = 1.0f;
-    if (isKeyPressed(SDL_SCANCODE_LSHIFT))  speedMod = 0.25f;
-    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_UP))      playerVelocity.y -= 4.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
-    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
-
-    if (isKeyPressed(SDL_SCANCODE_Z)) playerWeapons.primaryFire();
-
+    playerControlls();
     movement();
     playerWeapons();
     playerBulletCollision();
     bulletBulletCollision();
+    boundPlayerPosition();
 }
 
 void FlightScene::render()
@@ -52,4 +43,28 @@ void FlightScene::render()
     allyBulletColliderRenderer();
     enemyBulletColliderRenderer();
 }
+
+void FlightScene::playerControlls()
+{
+    auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
+    playerVelocity = {0, 0};
+    float speedMod = 1.0f;
+    if (isKeyPressed(SDL_SCANCODE_LSHIFT))  speedMod = 0.25f;
+    if (isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_UP))      playerVelocity.y -= 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
+    if (isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
+
+    if (isKeyPressed(SDL_SCANCODE_Z))       playerWeapons.primaryFire();
+}
+
+void FlightScene::boundPlayerPosition()
+{
+    auto& playerPosition = playerShip.getComponent<Gng2D::Position>();
+    if (playerPosition.x < 0)   playerPosition.x = 0;
+    if (playerPosition.y < 0)   playerPosition.y = 0;
+    if (playerPosition.x > 640) playerPosition.x = 640;
+    if (playerPosition.y > 400) playerPosition.y = 400;
+}
+
 

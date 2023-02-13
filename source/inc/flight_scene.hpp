@@ -20,6 +20,9 @@ struct FlightScene : Gng2D::Scene
     void render()       override;
 
 private:
+    void playerControlls();
+    void boundPlayerPosition();
+
     PlayerShip              playerShip = spawnObject<PlayerShip>();
     PlayerWeapons           playerWeapons{*this, playerShip};
     Gng2D::MovementSystem   movement{*this};

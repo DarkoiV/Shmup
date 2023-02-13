@@ -44,8 +44,10 @@ struct Scene
     SDL_Renderer*   getRenderer() const;
 
 protected:
-    entt::registry                  registry;
     SceneRegistry                   sceneRegistry;
+
+private:
+    entt::registry                  registry;
     inline static SDL_Renderer*     sceneRenderer;
 
     friend struct ::Gng2D::Application;
