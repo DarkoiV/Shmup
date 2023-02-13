@@ -39,10 +39,10 @@ void FlightScene::update()
 
     if (isKeyPressed(SDL_SCANCODE_Z)) playerWeapons.primaryFire();
 
-    movementSystem();
+    movement();
     playerWeapons();
-    playerBulletCollisionSystem();
-    bulletBulletCollisionSystem();
+    playerBulletCollision();
+    bulletBulletCollision();
 }
 
 void FlightScene::render()

@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
-#include "entt/entity/registry.hpp"
-#include "Gng2D/core/log.hpp"
+#include "Gng2D/components/scene.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/position.hpp"
 
@@ -10,24 +9,22 @@ namespace Gng2D
 template<CircleColliderType A, CircleColliderType B>
 struct OverlapSystem
 {
-    OverlapSystem(entt::registry& r)
-        : registry(r)
+    OverlapSystem(Gng2D::Scene& s)
+        : scene(s)
     {};
 
     void operator()()
     {
-        auto colliderAView = registry.view<Position, A>();
-        auto colliderBView = registry.view<Position, B>();
-        for (const auto& [enttityA, posA, colliderA] : colliderAView.each())
+        for (const auto& [enttityA, posA, colliderA] : scene.view<Position, A>())
         {
-            for (const auto& [enttityB, posB, colliderB] : colliderBView.each())
+            for (const auto& [enttityB, posB, colliderB] : scene.view<Position, B>())
             {
                 auto sqrDistance = V2d::sqrDistance(posA, posB);
                 auto sqrRadius = std::pow(colliderA.radius + colliderB.radius, 2);
                 if (sqrDistance < sqrRadius)
                 {
                     onOverlap(enttityA, enttityB);
-                    if (not registry.valid(enttityA)) break;
+                    if (not scene.entityExists(enttityA)) break;
                 }
             }
         }
@@ -36,6 +33,6 @@ struct OverlapSystem
     virtual void onOverlap(entt::entity, entt::entity) = 0;
 
 protected:
-    entt::registry&     registry;
+    Gng2D::Scene&     scene;
 };
 }

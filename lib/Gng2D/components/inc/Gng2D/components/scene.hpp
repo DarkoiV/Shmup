@@ -21,6 +21,7 @@ struct Scene
     virtual void update()               = 0;
     virtual void render();
 
+///// Entity management /////
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
     Obj spawnObject(Args&&... args)
@@ -28,7 +29,18 @@ struct Scene
         return Obj(registry, std::forward<Args>(args)...);
     }
 
-    bool isKeyPressed(SDL_Scancode) const;
+    template<typename... Components>
+    auto view()
+    {
+        return registry.view<Components...>().each();
+    }
+
+    bool entityExists(entt::entity id) const;
+    void destroyEntity(entt::entity id);
+
+///// Other /////
+    bool            isKeyPressed(SDL_Scancode) const;
+    SDL_Renderer*   getRenderer() const;
 
 protected:
     entt::registry              registry;

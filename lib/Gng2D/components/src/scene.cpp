@@ -26,8 +26,24 @@ void Gng2D::Scene::render()
     }
 };
 
+bool Gng2D::Scene::entityExists(entt::entity id) const
+{
+    return registry.valid(id);
+}
+
+void Gng2D::Scene::destroyEntity(entt::entity id)
+{
+    registry.destroy(id);
+}
+
 bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode) const
 {
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
     return keyboardState[scancode];
 }
+
+SDL_Renderer* Gng2D::Scene::getRenderer() const
+{
+    return sceneRenderer;
+}
+

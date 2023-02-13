@@ -5,8 +5,8 @@
 
 struct BulletBulletCollision : Gng2D::OverlapSystem<AllyBullet::Collider, EnemyBullet::Collider>
 {
-    BulletBulletCollision(entt::registry& r)
-        : OverlapSystem(r)
+    BulletBulletCollision(Gng2D::Scene& s)
+        : OverlapSystem(s)
     {}
 
     void onOverlap(entt::entity, entt::entity) override;

@@ -1,16 +1,16 @@
 #pragma once
-#include "entt/entity/registry.hpp"
+#include "Gng2D/components/scene.hpp"
 
 namespace Gng2D
 {
 struct MovementSystem
 {
-    MovementSystem(entt::registry&);
+    MovementSystem(Gng2D::Scene&);
     void operator()();
 
 protected:
     void updatePosition();
 
-    entt::registry& registry;
+    Gng2D::Scene& scene;
 };
 }

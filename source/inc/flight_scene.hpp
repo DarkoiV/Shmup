@@ -22,17 +22,17 @@ struct FlightScene : Gng2D::Scene
 private:
     PlayerShip              playerShip = spawnObject<PlayerShip>();
     PlayerWeapons           playerWeapons{*this, playerShip};
-    Gng2D::MovementSystem   movementSystem{registry};
+    Gng2D::MovementSystem   movement{*this};
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
-        playerColliderRenderer{registry};
+        playerColliderRenderer{*this};
     Gng2D::ColliderRendererSystem<EnemyBullet::Collider>
-        enemyBulletColliderRenderer{registry};
+        enemyBulletColliderRenderer{*this};
     Gng2D::ColliderRendererSystem<AllyBullet::Collider>
-        allyBulletColliderRenderer{registry};
+        allyBulletColliderRenderer{*this};
 
     PlayerBulletCollision
-        playerBulletCollisionSystem{registry};
+        playerBulletCollision{*this};
     BulletBulletCollision
-        bulletBulletCollisionSystem{registry};
+        bulletBulletCollision{*this};
 };
