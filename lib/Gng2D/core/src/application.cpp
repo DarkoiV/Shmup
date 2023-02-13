@@ -5,6 +5,7 @@
 Gng2D::Application::Application()
 {
     Window::init("TITLE", 640, 400);
+    Scene::sceneRenderer = Window::renderer();
     LOG::OK("Created Gng2D application");
 }
 

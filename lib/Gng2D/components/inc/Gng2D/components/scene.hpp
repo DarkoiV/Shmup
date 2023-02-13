@@ -8,9 +8,10 @@
 
 namespace Gng2D
 {
+struct Application;
 struct Scene
 {
-    Scene();
+    Scene()             = default;
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
     virtual ~Scene()    = default;
@@ -43,11 +44,12 @@ struct Scene
     SDL_Renderer*   getRenderer() const;
 
 protected:
-    entt::registry              registry;
-    SceneRegistry               sceneRegistry;
-    SDL_Renderer*               sceneRenderer;
+    entt::registry                  registry;
+    SceneRegistry                   sceneRegistry;
+    inline static SDL_Renderer*     sceneRenderer;
 
-    friend struct GameObject;
+    friend struct ::Gng2D::Application;
+    friend struct ::Gng2D::GameObject;
 };
 
 }

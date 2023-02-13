@@ -6,11 +6,6 @@
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/window.hpp"
 
-Gng2D::Scene::Scene()
-    : sceneRenderer(Window::renderer())
-{
-}
-
 void Gng2D::Scene::render()
 {
     auto view = registry.view<Sprite, Position>();
