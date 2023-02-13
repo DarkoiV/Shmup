@@ -1,6 +1,6 @@
 #pragma once
 #include "Gng2D/components/scene.hpp"
-#include "player_ship.hpp"
+#include "entities/player_ship.hpp"
 
 struct PlayerWeapons
 {

@@ -7,6 +7,12 @@ Gng2D::GameObject::GameObject(Gng2D::Scene& s)
 {
 }
 
+Gng2D::GameObject::GameObject(Gng2D::Scene& s, entt::entity id)
+    : registry(s.registry)
+    , id(id)
+{
+}
+
 entt::entity Gng2D::GameObject::getId() const
 {
     return id;

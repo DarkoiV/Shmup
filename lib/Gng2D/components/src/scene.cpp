@@ -21,6 +21,11 @@ void Gng2D::Scene::render()
     }
 };
 
+Gng2D::GameObject Gng2D::Scene::getEntity(entt::entity id)
+{
+    return GameObject(*this, id);
+}
+
 bool Gng2D::Scene::entityExists(entt::entity id) const
 {
     return registry.valid(id);

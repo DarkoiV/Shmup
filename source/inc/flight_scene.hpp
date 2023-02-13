@@ -5,11 +5,11 @@
 #include "Gng2D/systems/collider_renderer_system.hpp"
 #include "Gng2D/components/scene.hpp"
 #include "Gng2D/components/game_object.hpp"
-#include "player_ship.hpp"
+#include "entities/player_ship.hpp"
+#include "entities/bullet.hpp"
 #include "systems/player_bullet_collision.hpp"
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/player_weapons.hpp"
-#include "bullet.hpp"
 
 struct FlightScene : Gng2D::Scene
 {

@@ -36,8 +36,9 @@ struct Scene
         return registry.view<Components...>().each();
     }
 
-    bool entityExists(entt::entity id) const;
-    void destroyEntity(entt::entity id);
+    GameObject  getEntity(entt::entity id);
+    bool        entityExists(entt::entity id) const;
+    void        destroyEntity(entt::entity id);
 
 ///// Other /////
     bool            isKeyPressed(SDL_Scancode) const;

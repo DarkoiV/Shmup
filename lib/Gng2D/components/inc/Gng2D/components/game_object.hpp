@@ -7,6 +7,7 @@ struct Scene;
 struct GameObject
 {
     GameObject(Gng2D::Scene&);
+    GameObject(Gng2D::Scene&, entt::entity id);
     virtual ~GameObject() = default;
     
     entt::entity getId() const;

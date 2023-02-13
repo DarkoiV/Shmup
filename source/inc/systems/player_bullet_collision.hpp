@@ -1,7 +1,7 @@
 #pragma once
 #include "Gng2D/systems/overlap_system.hpp"
-#include "player_ship.hpp"
-#include "bullet.hpp"
+#include "entities/player_ship.hpp"
+#include "entities/bullet.hpp"
 
 struct PlayerBulletCollision : Gng2D::OverlapSystem<PlayerShip::Collider, EnemyBullet::Collider>
 {
