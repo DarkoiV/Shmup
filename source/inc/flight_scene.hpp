@@ -6,11 +6,12 @@
 #include "Gng2D/components/scene.hpp"
 #include "Gng2D/components/game_object.hpp"
 #include "player_ship.hpp"
-#include "player_bullet_collision_system.hpp"
-#include "bullet_bullet_collision_system.hpp"
+#include "systems/player_bullet_collision.hpp"
+#include "systems/bullet_bullet_collision.hpp"
+#include "systems/player_weapons.hpp"
 #include "bullet.hpp"
 
-struct FlightScene : public Gng2D::Scene
+struct FlightScene : Gng2D::Scene
 {
     void onEnter()      override;
     void onExit()       override;
@@ -19,18 +20,19 @@ struct FlightScene : public Gng2D::Scene
     void render()       override;
 
 private:
-    Gng2D::GameObject       playerShip = spawnObject<PlayerShip>();
-    Gng2D::MovementSystem   movementSystem{entityRegistry};
+    PlayerShip              playerShip = spawnObject<PlayerShip>();
+    PlayerWeapons           playerWeapons{*this, playerShip};
+    Gng2D::MovementSystem   movementSystem{registry};
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
-        playerColliderRenderer{entityRegistry};
+        playerColliderRenderer{registry};
     Gng2D::ColliderRendererSystem<EnemyBullet::Collider>
-        enemyBulletColliderRenderer{entityRegistry};
+        enemyBulletColliderRenderer{registry};
     Gng2D::ColliderRendererSystem<AllyBullet::Collider>
-        allyBulletColliderRenderer{entityRegistry};
+        allyBulletColliderRenderer{registry};
 
-    PlayerBulletCollisionSystem
-        playerBulletCollisionSystem{entityRegistry};
-    BulletBulletCollisionSystem
-        bulletBulletCollisionSystem{entityRegistry};
+    PlayerBulletCollision
+        playerBulletCollisionSystem{registry};
+    BulletBulletCollision
+        bulletBulletCollisionSystem{registry};
 };

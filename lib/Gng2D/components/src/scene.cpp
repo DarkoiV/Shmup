@@ -13,7 +13,7 @@ Gng2D::Scene::Scene()
 
 void Gng2D::Scene::render()
 {
-    auto view = entityRegistry.view<Sprite, Position>();
+    auto view = registry.view<Sprite, Position>();
     for (const auto& [_, sprite, pos] : view.each())
     {
         SDL_Rect dstRect;
@@ -26,7 +26,7 @@ void Gng2D::Scene::render()
     }
 };
 
-bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode)
+bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode) const
 {
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
     return keyboardState[scancode];

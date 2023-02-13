@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include "entt/entity/registry.hpp"
+#include "Gng2D/core/log.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/position.hpp"
 
@@ -26,6 +27,7 @@ struct OverlapSystem
                 if (sqrDistance < sqrRadius)
                 {
                     onOverlap(enttityA, enttityB);
+                    if (not registry.valid(enttityA)) break;
                 }
             }
         }

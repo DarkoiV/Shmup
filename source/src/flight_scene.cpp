@@ -21,7 +21,9 @@ void FlightScene::update()
     static int spawnCounter;
     if (spawnCounter == 60)
     {
-        spawnObject<EnemyBullet>();
+        spawnObject<EnemyBullet>(Gng2D::Position{320.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
+        spawnObject<EnemyBullet>(Gng2D::Position{400.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
+        spawnObject<EnemyBullet>(Gng2D::Position{240.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
         spawnCounter = 0;
     }
     spawnCounter++;
@@ -35,16 +37,10 @@ void FlightScene::update()
     if (isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
     if (isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
 
-    const auto playerPosition = playerShip.getComponent<Gng2D::Position>();
-    static int weaponCooldown = 0;
-    if (isKeyPressed(SDL_SCANCODE_Z) and not weaponCooldown)
-    {
-        spawnObject<AllyBullet>(playerPosition, Gng2D::Velocity{0, -7});
-        weaponCooldown = 20;
-    }
-    if (weaponCooldown > 0) weaponCooldown--;
+    if (isKeyPressed(SDL_SCANCODE_Z)) playerWeapons.primaryFire();
 
     movementSystem();
+    playerWeapons();
     playerBulletCollisionSystem();
     bulletBulletCollisionSystem();
 }

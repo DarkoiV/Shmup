@@ -21,17 +21,17 @@ struct Scene
     virtual void update()               = 0;
     virtual void render();
 
-protected:
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
-    GameObject spawnObject(Args&&... args)
+    Obj spawnObject(Args&&... args)
     {
-        return Obj(entityRegistry, std::forward<Args>(args)...);
+        return Obj(registry, std::forward<Args>(args)...);
     }
 
-    bool isKeyPressed(SDL_Scancode);
+    bool isKeyPressed(SDL_Scancode) const;
 
-    entt::registry              entityRegistry;
+protected:
+    entt::registry              registry;
     SceneRegistry               sceneRegistry;
     SDL_Renderer*               sceneRenderer;
 };
