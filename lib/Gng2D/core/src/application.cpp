@@ -1,18 +1,16 @@
 #include "Gng2D/core/application.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/core/window.hpp"
 
 Gng2D::Application::Application()
 {
-    Window::init("TITLE", 640, 400);
-    Scene::sceneRenderer = Window::renderer();
+    Scene::sceneRenderer        = window.renderer();
+    AssetRegistry::renderer     = window.renderer();
     LOG::OK("Created Gng2D application");
 }
 
 Gng2D::Application::~Application()
 {
     assetRegistry.freeAllSprites();
-    Window::destroy();
 }
 
 void Gng2D::Application::run()
@@ -36,7 +34,7 @@ void Gng2D::Application::mainLoop()
     eventLoop();
     scene.update();
     scene.render();
-    Window::renderFrame();
+    window.renderFrame();
 
     if (scene.isCompleted()) sceneRegistry.switchScene();
 }

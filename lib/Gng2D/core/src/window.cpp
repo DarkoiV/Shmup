@@ -1,22 +1,8 @@
+#include "Gng2D/core/settings.hpp"
 #include "Gng2D/core/window.hpp"
 #include "Gng2D/core/log.hpp"
 
-void Gng2D::Window::init(const std::string& title, int width, int height)
-{
-    if (not instance) instance = new Window(title, width, height);
-    else LOG::WARN("Call to window init when instance exist, aborting");
-}
-
-void Gng2D::Window::destroy()
-{
-    if (instance) 
-    {
-        delete instance;
-        instance = nullptr;
-    }
-}
-
-Gng2D::Window::Window(const std::string& title, int width, int height)
+Gng2D::Window::Window()
 {
     LOG::INFO("Creating Gng2D Window");
 
@@ -25,7 +11,12 @@ Gng2D::Window::Window(const std::string& title, int width, int height)
     if (err) LOG::FATAL("Could not initialize SDL2 Video", SDL_GetError());
 
     LOG::INFO("Creating SDL2 Window");
-    sdlWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+    sdlWindow = SDL_CreateWindow(TITLE.c_str(), 
+                                 SDL_WINDOWPOS_CENTERED, 
+                                 SDL_WINDOWPOS_CENTERED, 
+                                 SCREEN_WIDTH, 
+                                 SCREEN_HEIGHT, 
+                                 0);
     if (not sdlWindow) LOG::FATAL("Could not create SDL2 Window", SDL_GetError());
 
     LOG::INFO("Creating SDL2 Renderer for window");
@@ -45,17 +36,16 @@ Gng2D::Window::~Window()
 
 SDL_Renderer* Gng2D::Window::renderer()
 {
-    if (not instance) LOG::ERROR("Cannot aquire window renderer, no window instance");
-    return instance->sdlRenderer;
+    return sdlRenderer;
 }
 
 void Gng2D::Window::renderFrame()
 {
-    SDL_RenderPresent(instance->sdlRenderer);
-    SDL_RenderClear(instance->sdlRenderer);
+    SDL_RenderPresent(sdlRenderer);
+    SDL_RenderClear(sdlRenderer);
     auto timeNow = SDL_GetTicks();
-    auto expectedEnd = instance->frameEndTime + (1000/FPS);
+    auto expectedEnd = frameEndTime + (1000/FPS);
     if (expectedEnd > timeNow) SDL_Delay(expectedEnd - timeNow);
-    instance->frameEndTime = SDL_GetTicks();
+    frameEndTime = SDL_GetTicks();
 }
 

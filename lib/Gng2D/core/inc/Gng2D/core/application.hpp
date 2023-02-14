@@ -1,5 +1,6 @@
 #pragma once
 #include "Gng2D/types/scene.hpp"
+#include "Gng2D/core/window.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 
@@ -24,7 +25,8 @@ private:
     void mainLoop();
     void eventLoop();
 
-    bool isRunning{true};
+    bool    isRunning{true};
+    Window  window;
 };
 }
 
