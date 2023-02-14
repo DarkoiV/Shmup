@@ -1,5 +1,5 @@
 #pragma once
-#include "Gng2D/components/v2d.hpp"
+#include "Gng2D/types/v2d.hpp"
 
 namespace Gng2D
 {

@@ -19,16 +19,6 @@ constexpr static float sqrDistance(V2d first, V2d second)
     return  std::pow(first.x - second.x, 2) + std::pow(first.y - second.y, 2);
 }
 
-constexpr V2d operator+(const V2d& lhs)
-{
-    return {x + lhs.x, y + lhs.y};
-}
-
-constexpr V2d operator-(const V2d& lhs)
-{
-    return {x - lhs.x, y - lhs.y};
-}
-
 constexpr V2d& operator+=(const V2d& lhs)
 {
     x += lhs.x;
@@ -36,4 +26,14 @@ constexpr V2d& operator+=(const V2d& lhs)
     return *this;
 }
 };
+
+constexpr V2d operator+(const V2d& rhs, const V2d& lhs)
+{
+    return {rhs.x + lhs.x, rhs.y + lhs.y};
+}
+
+constexpr V2d operator-(const V2d& rhs, const V2d& lhs)
+{
+    return {rhs.x - lhs.x, rhs.y - lhs.y};
+}
 }

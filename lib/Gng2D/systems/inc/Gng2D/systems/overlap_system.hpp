@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include "Gng2D/components/scene.hpp"
+#include "Gng2D/types/scene.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/position.hpp"
 

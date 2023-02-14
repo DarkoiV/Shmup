@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Gng2D/components/position.hpp"
-#include "Gng2D/components/scene.hpp"
+#include "Gng2D/types/scene.hpp"
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/window.hpp"

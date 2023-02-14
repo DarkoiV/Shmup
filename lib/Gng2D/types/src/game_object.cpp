@@ -1,5 +1,5 @@
-#include "Gng2D/components/game_object.hpp"
-#include "Gng2D/components/scene.hpp"
+#include "Gng2D/types/game_object.hpp"
+#include "Gng2D/types/scene.hpp"
 
 Gng2D::GameObject::GameObject(Gng2D::Scene& s)
     : registry(s.registry)

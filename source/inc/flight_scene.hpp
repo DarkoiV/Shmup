@@ -3,8 +3,8 @@
 #include <vector>
 #include "Gng2D/systems/movement_system.hpp"
 #include "Gng2D/systems/collider_renderer_system.hpp"
-#include "Gng2D/components/scene.hpp"
-#include "Gng2D/components/game_object.hpp"
+#include "Gng2D/types/scene.hpp"
+#include "Gng2D/types/game_object.hpp"
 #include "entities/player_ship.hpp"
 #include "entities/bullet.hpp"
 #include "systems/player_bullet_collision.hpp"

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "Gng2D/components/game_object.hpp"
+#include "Gng2D/types/game_object.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/systems/overlap_system.hpp"

@@ -1,5 +1,5 @@
 #pragma once
-#include "Gng2D/components/game_object.hpp"
+#include "Gng2D/types/game_object.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/position.hpp"

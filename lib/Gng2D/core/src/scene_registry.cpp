@@ -1,4 +1,4 @@
-#include "Gng2D/components/scene.hpp"
+#include "Gng2D/types/scene.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/log.hpp"
 

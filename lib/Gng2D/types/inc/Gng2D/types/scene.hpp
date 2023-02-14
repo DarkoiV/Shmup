@@ -4,7 +4,7 @@
 #include <entt/entity/registry.hpp>
 #include "SDL2/SDL.h"
 #include "Gng2D/core/scene_registry.hpp"
-#include "Gng2D/components/game_object.hpp"
+#include "Gng2D/types/game_object.hpp"
 
 namespace Gng2D
 {
