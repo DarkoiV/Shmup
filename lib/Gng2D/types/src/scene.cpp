@@ -6,7 +6,7 @@
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/window.hpp"
 
-void Gng2D::Scene::render(uint32_t msLag)
+void Gng2D::Scene::render()
 {
     auto view = registry.view<Sprite, Position>();
     for (const auto& [_, sprite, pos] : view.each())
@@ -14,9 +14,8 @@ void Gng2D::Scene::render(uint32_t msLag)
         SDL_Rect dstRect;
         dstRect.w = sprite.srcRect.w * sprite.scale;
         dstRect.h = sprite.srcRect.h * sprite.scale;
-        const auto ipos = pos(msLag);
-        dstRect.x = ipos.x - (static_cast<float>(dstRect.w) / 2);
-        dstRect.y = ipos.y - (static_cast<float>(dstRect.h) / 2);
+        dstRect.x = pos.x - (static_cast<float>(dstRect.w) / 2);
+        dstRect.y = pos.y - (static_cast<float>(dstRect.h) / 2);
             
         SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
     }

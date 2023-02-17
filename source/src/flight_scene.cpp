@@ -51,12 +51,12 @@ void FlightScene::update()
     bulletBulletCollision();
 }
 
-void FlightScene::render(uint32_t msLag)
+void FlightScene::render()
 {
-    Gng2D::Scene::render(msLag);
-    playerColliderRenderer(msLag);
-    allyBulletColliderRenderer(msLag);
-    enemyBulletColliderRenderer(msLag);
+    Gng2D::Scene::render();
+    playerColliderRenderer();
+    allyBulletColliderRenderer();
+    enemyBulletColliderRenderer();
 }
 
 void FlightScene::playerControlls()
@@ -76,8 +76,9 @@ void FlightScene::playerControlls()
 void FlightScene::boundPlayerPosition()
 {
     auto& playerPosition = playerShip.getComponent<Gng2D::Position>();
-    const float maxX = Gng2D::SCREEN_WIDTH;
-    const float maxY = Gng2D::SCREEN_HEIGHT;
-    playerPosition.bound({0,0}, Gng2D::V2d{maxX, maxY});
+    if (playerPosition.x < 0)                       playerPosition.x = 0;
+    if (playerPosition.y < 0)                       playerPosition.y = 0;
+    if (playerPosition.x > Gng2D::SCREEN_WIDTH)     playerPosition.x = Gng2D::SCREEN_WIDTH;
+    if (playerPosition.y > Gng2D::SCREEN_HEIGHT)    playerPosition.y = Gng2D::SCREEN_HEIGHT;
 }
 

@@ -1,5 +1,4 @@
 #include "Gng2D/core/application.hpp"
-#include "Gng2D/core/settings.hpp"
 #include "Gng2D/core/log.hpp"
 
 Gng2D::Application::Application()
@@ -31,20 +30,11 @@ void Gng2D::Application::stopRunning()
 void Gng2D::Application::mainLoop()
 {
     auto& scene = sceneRegistry.getCurrentScene();
-    uint64_t currentTS  = SDL_GetTicks64();
-    uint32_t elapsed    = currentTS - previousTS;
-    previousTS          = currentTS;
-    logicLag           += elapsed;
 
     eventLoop();
-    while (logicLag >= LOGIC_TICK)
-    {
-        scene.update();
-        logicLag -= LOGIC_TICK;
-    }
-    scene.render(logicLag);
+    scene.update();
+    scene.render();
     window.renderFrame();
-    window.displayFPS();
 
     if (scene.isCompleted()) sceneRegistry.switchScene();
 }

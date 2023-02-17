@@ -19,9 +19,7 @@ struct OverlapSystem
         {
             for (const auto& [enttityB, posB, colliderB] : scene.view<Position, B>())
             {
-                const auto iposA = posA(0);
-                const auto iposB = posB(0);
-                auto sqrDistance = V2d::sqrDistance(iposA, iposB);
+                auto sqrDistance = V2d::sqrDistance(posA, posB);
                 auto sqrRadius = std::pow(colliderA.radius + colliderB.radius, 2);
                 if (sqrDistance < sqrRadius)
                 {

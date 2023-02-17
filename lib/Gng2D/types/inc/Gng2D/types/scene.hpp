@@ -20,7 +20,7 @@ struct Scene
     virtual void onExit()               = 0;
     virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
-    virtual void render(uint32_t);
+    virtual void render();
 
 ///// Entity management /////
     template<typename Obj, typename... Args>

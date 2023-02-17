@@ -13,11 +13,11 @@
 
 struct FlightScene : Gng2D::Scene
 {
-    void onEnter()          override;
-    void onExit()           override;
-    bool isCompleted()      override;
-    void update()           override;
-    void render(uint32_t)   override;
+    void onEnter()      override;
+    void onExit()       override;
+    bool isCompleted()  override;
+    void update()       override;
+    void render()       override;
 
 private:
     PlayerShip              playerShip = spawnObject<PlayerShip>();
