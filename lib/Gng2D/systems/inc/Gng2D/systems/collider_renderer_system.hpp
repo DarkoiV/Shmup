@@ -29,13 +29,14 @@ struct ColliderRendererSystem
         SDL_RenderDrawLines(renderer, points.data(), points.size());
     }
 
-    void operator()()
+    void operator()(uint32_t ms)
     {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         for (const auto& [_, collider, position] : scene.view<Collider, Position>())
         {
-            for (int r = collider.radius; r > 0; r--) drawCircle(r, position.x, position.y);
-            SDL_RenderDrawPoint(renderer, position.x, position.y);
+            const auto ipos = position(ms);
+            for (int r = collider.radius; r > 0; r--) drawCircle(r, ipos.x, ipos.y);
+            SDL_RenderDrawPoint(renderer, ipos.x, ipos.y);
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     };

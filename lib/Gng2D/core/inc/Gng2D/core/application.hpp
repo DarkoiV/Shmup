@@ -25,8 +25,10 @@ private:
     void mainLoop();
     void eventLoop();
 
-    bool    isRunning{true};
-    Window  window;
+    bool        isRunning{true};
+    uint64_t    previousTS{0};
+    uint32_t    logicLag{0};
+    Window      window;
 };
 }
 

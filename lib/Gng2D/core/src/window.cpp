@@ -43,9 +43,25 @@ void Gng2D::Window::renderFrame()
 {
     SDL_RenderPresent(sdlRenderer);
     SDL_RenderClear(sdlRenderer);
-    auto timeNow = SDL_GetTicks();
-    auto expectedEnd = frameEndTime + (1000/FPS);
-    if (expectedEnd > timeNow) SDL_Delay(expectedEnd - timeNow);
-    frameEndTime = SDL_GetTicks();
+}
+
+void Gng2D::Window::displayFPS()
+{
+    static auto oldTS   = SDL_GetTicks64();
+    static auto frames  = 0;
+
+    const auto newTS    = SDL_GetTicks64();
+    const auto elapsed  = newTS - oldTS;
+    ++frames;
+
+    if (elapsed >= 1000)
+    {
+        const auto fps      = (frames * 1000) / elapsed;
+        oldTS               = newTS;
+        frames              = 0;
+
+        std::string titleWithFPS = TITLE + " [FPS: " + std::to_string(fps) + "]";
+        SDL_SetWindowTitle(sdlWindow, titleWithFPS.c_str());
+    }
 }
 
