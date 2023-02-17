@@ -4,6 +4,8 @@
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 
+struct BulletTag {};
+
 struct AllyBullet : public Gng2D::GameObject
 {
     struct Collider : public Gng2D::CircleCollider {};
@@ -13,6 +15,7 @@ struct AllyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
+        addComponent<BulletTag>();
         addComponent<Collider>(3.0f);
     }
 };
@@ -26,6 +29,7 @@ struct EnemyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
+        addComponent<BulletTag>();
         addComponent<Collider>(3.0f);
     }
 };

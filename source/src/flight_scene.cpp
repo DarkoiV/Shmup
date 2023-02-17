@@ -49,6 +49,8 @@ void FlightScene::update()
     playerWeapons();
     playerBulletCollision();
     bulletBulletCollision();
+
+    entityCleaner();
 }
 
 void FlightScene::render()

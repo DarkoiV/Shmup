@@ -10,6 +10,7 @@
 #include "systems/player_bullet_collision.hpp"
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/player_weapons.hpp"
+#include "systems/entity_cleaner.hpp"
 
 struct FlightScene : Gng2D::Scene
 {
@@ -38,4 +39,6 @@ private:
         playerBulletCollision{*this};
     BulletBulletCollision
         bulletBulletCollision{*this};
+
+    EntityCleaner       entityCleaner{*this};
 };
