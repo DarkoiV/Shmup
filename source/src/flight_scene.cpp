@@ -41,6 +41,7 @@ void FlightScene::update()
         spawnCounter = 0;
     }
     spawnCounter++;
+    level();
 
     playerControlls();
     movement();
