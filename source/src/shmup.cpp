@@ -12,7 +12,7 @@ void Shmup::onCreate()
 
 void Shmup::onQuit()
 {
+    stopRunning();
     auto& scene = sceneRegistry.getCurrentScene();
     scene.onExit();
-    stopRunning();
 }

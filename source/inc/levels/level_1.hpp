@@ -3,9 +3,9 @@
 struct Level1 : Gng2D::SceneControl
 {
     Level1(Gng2D::Scene& s)
-        : Gng2D::SceneControl(s, coroutine()){};
+        : Gng2D::SceneControl(coroutine(s)){};
 
-    static Coroutine coroutine()
+    Coroutine coroutine(Gng2D::Scene& s)
     {
         Gng2D::LOG::INFO("Hewwo! xD");
         while (true)

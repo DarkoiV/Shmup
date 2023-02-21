@@ -12,14 +12,15 @@ struct SceneControl
     struct  Promise;
     using   CoroHandle  = std::coroutine_handle<Promise>;
     using   WaitTicks   = unsigned;
+    struct  Completed {};
+    using   Status = std::variant<WaitTicks, Completed>;
 
-    SceneControl(Scene& s, CoroHandle h);
+    SceneControl(CoroHandle h);
     virtual ~SceneControl();
 
     void operator()();
 
 private:
-    Scene&      scene;
     CoroHandle  handle;
     bool        completed{false};
     WaitTicks   waitTicks{10};
@@ -33,7 +34,7 @@ public:
 
         Coroutine get_return_object()
         {
-            return {std::coroutine_handle<Promise>::from_promise(*this)};
+            return {CoroHandle::from_promise(*this)};
         }
 
         std::suspend_always initial_suspend() {
@@ -50,21 +51,18 @@ public:
             LOG::ERROR("Exception in coroutine!");
         };
 
-        using Completed = std::monostate;
-        using ReturnValue = std::variant<WaitTicks, Completed>;
-
-        std::suspend_always yield_value(ReturnValue rv)
+        std::suspend_always yield_value(Status s)
         {
-            returnValue = rv;
+            status = s;
             return {};
         }
 
         void return_void()
         {
-            returnValue = Completed{};
+            status = Completed{};
         }
 
-        ReturnValue returnValue;
+        Status status;
     };
     struct Coroutine : std::coroutine_handle<Promise>
     {

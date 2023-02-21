@@ -1,8 +1,7 @@
 #include "Gng2D/systems/scene_control.hpp"
 
-Gng2D::SceneControl::SceneControl(Scene& s, CoroHandle h)
-    : scene(s)
-    , handle(h)
+Gng2D::SceneControl::SceneControl(CoroHandle h)
+    : handle(h)
 {
 }
 
@@ -21,12 +20,12 @@ void Gng2D::SceneControl::operator()()
     }
 
     handle.resume();
-    auto result = handle.promise().returnValue;
-    if (std::holds_alternative<WaitTicks>(result)) 
+    auto status = handle.promise().status;
+    if (std::holds_alternative<WaitTicks>(status)) 
     {
-        waitTicks = std::get<WaitTicks>(result);
+        waitTicks = std::get<WaitTicks>(status);
     }
-    if (std::holds_alternative<Promise::Completed>(result)) 
+    if (std::holds_alternative<Completed>(status)) 
     {
         completed = true;
         handle.destroy();
