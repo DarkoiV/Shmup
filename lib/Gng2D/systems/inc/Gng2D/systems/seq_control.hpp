@@ -2,11 +2,10 @@
 #include <coroutine>
 #include <variant>
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/types/scene.hpp"
 
 namespace Gng2D
 {
-struct SceneControl 
+struct SeqControl 
 {
     struct  Coroutine;
     struct  Promise;
@@ -15,8 +14,8 @@ struct SceneControl
     struct  Completed {};
     using   Status = std::variant<WaitTicks, Completed>;
 
-    SceneControl(CoroHandle h);
-    virtual ~SceneControl();
+    SeqControl(CoroHandle h);
+    virtual ~SeqControl();
 
     void operator()();
 
@@ -64,10 +63,13 @@ public:
 
         Status status;
     };
+
     struct Coroutine : std::coroutine_handle<Promise>
     {
         using promise_type = Promise;
     };
 };
+
+using Coroutine = SeqControl::Coroutine;
 }
 

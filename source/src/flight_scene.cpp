@@ -24,23 +24,6 @@ bool FlightScene::isCompleted()
 
 void FlightScene::update()
 {
-    static int spawnCounter;
-    if (spawnCounter == 20)
-    {
-        spawnObject<EnemyBullet>(Gng2D::Position{320.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
-        spawnObject<EnemyBullet>(Gng2D::Position{120.0f, 0.0f}, Gng2D::Velocity{1.41f, 1.41f});
-    }
-    if (spawnCounter == 40)
-    {
-        spawnObject<EnemyBullet>(Gng2D::Position{400.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
-    }
-    if (spawnCounter == 60)
-    {
-        spawnObject<EnemyBullet>(Gng2D::Position{240.0f, 0.0f}, Gng2D::Velocity{0.0f, 2.0f});
-        spawnObject<EnemyBullet>(Gng2D::Position{520.0f, 0.0f}, Gng2D::Velocity{-1.41f, 1.41f});
-        spawnCounter = 0;
-    }
-    spawnCounter++;
     level();
 
     playerControlls();

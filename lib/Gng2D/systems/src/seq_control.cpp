@@ -1,16 +1,16 @@
-#include "Gng2D/systems/scene_control.hpp"
+#include "Gng2D/systems/seq_control.hpp"
 
-Gng2D::SceneControl::SceneControl(CoroHandle h)
+Gng2D::SeqControl::SeqControl(CoroHandle h)
     : handle(h)
 {
 }
 
-Gng2D::SceneControl::~SceneControl()
+Gng2D::SeqControl::~SeqControl()
 {
     if (handle) handle.destroy();
 }
 
-void Gng2D::SceneControl::operator()()
+void Gng2D::SeqControl::operator()()
 {
     if (completed) return;
     if (waitTicks > 0)
