@@ -9,11 +9,11 @@ Gng2D::Coroutine empty()
     co_return;
 }
 
-Gng2D::Coroutine waitXTicks(unsigned ticks, bool* beforeYield, bool* afterYield)
+Gng2D::Coroutine waitXTicks(unsigned ticks, bool& beforeYield, bool& afterYield)
 {
-    *beforeYield = true;
+    beforeYield = true;
     co_yield Gng2D::Coroutine::WaitTicks{ticks};
-    *afterYield = true;
+    afterYield = true;
 }
 }
 
@@ -75,7 +75,7 @@ TEST(CoroutineTests, Coroutine_WillWaitXTicksBeforeResuming)
 {
     constexpr unsigned X_TICKS = 20;
     bool checkpoint1{false}, checkpoint2{false};
-    Gng2D::Coroutine waitXTicksCoro{waitXTicks, X_TICKS, &checkpoint1, &checkpoint2};
+    Gng2D::Coroutine waitXTicksCoro{waitXTicks, X_TICKS, checkpoint1, checkpoint2};
 
     waitXTicksCoro();
     ASSERT_TRUE(checkpoint1);
@@ -83,3 +83,21 @@ TEST(CoroutineTests, Coroutine_WillWaitXTicksBeforeResuming)
     for (unsigned i = 0; i < X_TICKS; i++) waitXTicksCoro();
     ASSERT_TRUE(checkpoint2);
 }
+
+TEST(CoroutineTests, Coroutine_MovingWillPreserveWaitTicks)
+{
+    constexpr unsigned X_TICKS = 20;
+    bool checkpoint1{false}, checkpoint2{false};
+    Gng2D::Coroutine waitXTicksCoro{waitXTicks, X_TICKS, checkpoint1, checkpoint2};
+
+    waitXTicksCoro();
+    ASSERT_TRUE(checkpoint1);
+
+    for (unsigned i = 0; i < X_TICKS / 2; i++) waitXTicksCoro();
+    ASSERT_FALSE(checkpoint2);
+
+    auto movedCoro = std::move(waitXTicksCoro);
+    for (unsigned i = 0; i < X_TICKS / 2; i++) movedCoro();
+    ASSERT_TRUE(checkpoint2);
+}
+

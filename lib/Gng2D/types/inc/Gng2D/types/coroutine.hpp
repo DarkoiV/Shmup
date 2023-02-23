@@ -29,8 +29,8 @@ struct Coroutine
     };
 
     template<typename Coro, typename... Args>
-    Coroutine(Coro coro, Args... args)
-        : Coroutine(std::move(coro(args...)))
+    Coroutine(Coro coro, Args&&... args)
+        : Coroutine(std::move(coro(std::forward<Args>(args)...)))
     {
     }
 
