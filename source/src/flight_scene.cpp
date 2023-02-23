@@ -24,8 +24,6 @@ bool FlightScene::isCompleted()
 
 void FlightScene::update()
 {
-    level();
-
     playerControlls();
     movement();
     boundPlayerPosition();

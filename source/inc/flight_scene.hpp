@@ -7,7 +7,6 @@
 #include "Gng2D/types/scene.hpp"
 #include "entities/bullet.hpp"
 #include "entities/player_ship.hpp"
-#include "levels/level_1.hpp"
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/player_bullet_collision.hpp"
@@ -22,8 +21,6 @@ struct FlightScene : Gng2D::Scene
     void render()       override;
 
 private:
-    Level1                  level{*this};
-
     PlayerShip              playerShip = spawnObject<PlayerShip>();
     PlayerWeapons           playerWeapons{*this, playerShip};
 
