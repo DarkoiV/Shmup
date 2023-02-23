@@ -8,7 +8,6 @@ Gng2D::Coroutine empty()
 {
     co_return;
 }
-Gng2D::Coroutine emptyBodyCoro{empty};
 
 Gng2D::Coroutine waitXTicks(unsigned ticks, bool* beforeYield, bool* afterYield)
 {
@@ -21,22 +20,29 @@ Gng2D::Coroutine waitXTicks(unsigned ticks, bool* beforeYield, bool* afterYield)
 TEST(CoroutineTests, EmptyCoroutineObject_HasCompletedStatus)
 {
     Gng2D::Coroutine emptyCoroutineObj;
+
     ASSERT_TRUE(emptyCoroutineObj.isCompleted());
 }
 
 TEST(CoroutineTests, EmptyCoroutineBody_IsNotCompletedUntillCalled)
 {
+    Gng2D::Coroutine emptyBodyCoro{empty};
+
     ASSERT_FALSE(emptyBodyCoro.isCompleted());
 }
 
 TEST(CoroutineTests, EmptyCoroutineBody_IsCompletedAfterBeingCalled)
 {
+    Gng2D::Coroutine emptyBodyCoro{empty};
+
     emptyBodyCoro();
     ASSERT_TRUE(emptyBodyCoro.isCompleted());
 }
 
 TEST(CoroutineTests, Coroutine_IsSafeToCallAfterCompletion)
 {
+    Gng2D::Coroutine emptyBodyCoro{empty};
+
     emptyBodyCoro();
     ASSERT_TRUE(emptyBodyCoro.isCompleted());
     emptyBodyCoro();
@@ -46,9 +52,23 @@ TEST(CoroutineTests, Coroutine_IsSafeToCallAfterCompletion)
 
 TEST(CoroutineTests, Coroutine_CanBeMoved)
 {
+    Gng2D::Coroutine emptyBodyCoro{empty};
     auto newCoro = std::move(emptyBodyCoro);
+
     ASSERT_FALSE(newCoro.isCompleted());
+    newCoro();
     ASSERT_TRUE(emptyBodyCoro.isCompleted());
+    ASSERT_TRUE(newCoro.isCompleted());
+}
+
+TEST(CoroutineTests, CompletedCoroutine_CanBeMoved)
+{
+    Gng2D::Coroutine emptyBodyCoro{empty};
+    emptyBodyCoro();
+    ASSERT_TRUE(emptyBodyCoro.isCompleted());
+
+    auto newCoro = std::move(emptyBodyCoro);
+    ASSERT_TRUE(newCoro.isCompleted());
 }
 
 TEST(CoroutineTests, Coroutine_WillWaitXTicksBeforeResuming)

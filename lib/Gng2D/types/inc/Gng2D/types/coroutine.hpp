@@ -38,7 +38,7 @@ struct Coroutine
     ~Coroutine();
     Coroutine(Coroutine&)               = delete;
     Coroutine(Coroutine&&);
-    Coroutine(HandleType&&);
+    explicit Coroutine(HandleType&&);
     Coroutine& operator=(Coroutine&)    = delete;
     Coroutine& operator=(Coroutine&&);
     Coroutine& operator=(HandleType&&);

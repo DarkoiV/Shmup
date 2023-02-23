@@ -5,7 +5,7 @@ using namespace Gng2D;
 
 Coroutine Coroutine::promise_type::get_return_object()
 {
-    return {std::coroutine_handle<promise_type>::from_promise(*this)};
+    return Coroutine{std::coroutine_handle<promise_type>::from_promise(*this)};
 }
 
 void Coroutine::promise_type::unhandled_exception()
@@ -37,6 +37,7 @@ Coroutine::~Coroutine()
 
 Coroutine::Coroutine(Coroutine&& from)
 {
+    status = from.status;
     handle = from.handle;
     from.handle = nullptr;
     from.status = Completed{};
