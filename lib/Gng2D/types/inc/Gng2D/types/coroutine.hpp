@@ -19,9 +19,9 @@ struct Coroutine
         promise_type()  noexcept    = default;
         ~promise_type() noexcept    = default;
 
-        HandleType              get_return_object();
-        std::suspend_always     initial_suspend()       { return {}; };
-        std::suspend_always     final_suspend()         { return {}; };
+        Coroutine               get_return_object();
+        std::suspend_always     initial_suspend() noexcept  { return {}; };
+        std::suspend_always     final_suspend()   noexcept  { return {}; };
         void                    unhandled_exception();
         std::suspend_always     yield_value(Status);
         void                    return_void();
@@ -30,18 +30,21 @@ struct Coroutine
 
     template<typename Coro, typename... Args>
     Coroutine(Coro coro, Args... args)
+        : Coroutine(std::move(coro(args...)))
     {
-        handle = coro(args...);
     }
 
     Coroutine();
     ~Coroutine();
     Coroutine(Coroutine&)               = delete;
     Coroutine(Coroutine&&);
+    Coroutine(HandleType&&);
     Coroutine& operator=(Coroutine&)    = delete;
     Coroutine& operator=(Coroutine&&);
+    Coroutine& operator=(HandleType&&);
 
     void operator()();
+    bool isCompleted();
 
 private:
     HandleType  handle;

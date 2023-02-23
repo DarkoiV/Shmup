@@ -3,7 +3,7 @@
 
 using namespace Gng2D;
 
-Coroutine::HandleType Coroutine::promise_type::get_return_object()
+Coroutine Coroutine::promise_type::get_return_object()
 {
     return {std::coroutine_handle<promise_type>::from_promise(*this)};
 }
@@ -42,6 +42,12 @@ Coroutine::Coroutine(Coroutine&& from)
     from.status = Completed{};
 }
 
+Coroutine::Coroutine(HandleType&& h)
+{
+    handle = h;
+    h = nullptr;
+}
+
 Coroutine& Coroutine::operator=(Coroutine&& from)
 {
     if (handle) handle.destroy();
@@ -53,11 +59,24 @@ Coroutine& Coroutine::operator=(Coroutine&& from)
     return *this;
 }
 
+Coroutine& Coroutine::operator=(HandleType&& h)
+{
+    handle = h;
+    h = nullptr;
+    return *this;
+}
+
 void Coroutine::operator()()
 {
     if (not resumable()) return;
     handle.resume();
     status = handle.promise().retVal;
+}
+
+bool Coroutine::isCompleted()
+{
+    if(std::holds_alternative<Completed>(status)) return true;
+    return false;
 }
 
 template<class... Ts> struct Overload : Ts... { using Ts::operator()...; };
@@ -72,7 +91,10 @@ bool Coroutine::resumable()
         },
         [](WaitTicks& wt) -> bool
         {
-            if (wt == 0) return true;
+            // Waiting 0 ticks has no logical sens imho,
+            // But idk how to constrain it for now
+            // so it will act as waiting 1 tick
+            if (wt <= 1) return true;
             --wt;
             return false;
         }
