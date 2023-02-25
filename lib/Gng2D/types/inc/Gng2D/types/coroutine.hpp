@@ -44,7 +44,7 @@ struct Coroutine
     Coroutine& operator=(HandleType&&);
 
     void operator()();
-    bool isCompleted();
+    bool isCompleted() const;
 
 private:
     HandleType  handle;

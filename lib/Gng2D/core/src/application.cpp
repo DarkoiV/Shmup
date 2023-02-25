@@ -32,8 +32,7 @@ void Gng2D::Application::mainLoop()
     auto& scene = sceneRegistry.getCurrentScene();
 
     eventLoop();
-    scene.update();
-    scene.render();
+    scene();
     window.renderFrame();
 
     if (scene.isCompleted()) sceneRegistry.switchScene();

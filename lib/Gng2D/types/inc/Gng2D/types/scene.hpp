@@ -4,6 +4,7 @@
 #include <entt/entity/registry.hpp>
 #include "SDL2/SDL.h"
 #include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/core/scene_controller.hpp"
 #include "Gng2D/types/game_object.hpp"
 
 namespace Gng2D
@@ -21,6 +22,8 @@ struct Scene
     virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
     virtual void render();
+
+    void operator()();
 
 ///// Entity management /////
     template<typename Obj, typename... Args>
@@ -45,7 +48,8 @@ struct Scene
     SDL_Renderer*   getRenderer() const;
 
 protected:
-    SceneRegistry                   sceneRegistry;
+    SceneRegistry       sceneRegistry;
+    SceneController     sceneController{*this};
 
 private:
     entt::registry                  registry;

@@ -74,7 +74,7 @@ void Coroutine::operator()()
     status = handle.promise().retVal;
 }
 
-bool Coroutine::isCompleted()
+bool Coroutine::isCompleted() const
 {
     if(std::holds_alternative<Completed>(status)) return true;
     return false;

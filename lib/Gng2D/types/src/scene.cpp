@@ -19,7 +19,14 @@ void Gng2D::Scene::render()
             
         SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
     }
-};
+}
+
+void Gng2D::Scene::operator()()
+{
+    sceneController();
+    update();
+    render();
+}
 
 Gng2D::GameObject Gng2D::Scene::getEntity(entt::entity id)
 {
