@@ -14,6 +14,8 @@
 
 struct FlightScene : Gng2D::Scene
 {
+    FlightScene();
+
     void onEnter()      override;
     void onExit()       override;
     bool isCompleted()  override;

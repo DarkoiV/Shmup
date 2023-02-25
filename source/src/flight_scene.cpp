@@ -1,6 +1,12 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/settings.hpp"
+#include "levels.hpp"
+
+FlightScene::FlightScene()
+{
+    sceneController.addSceneCoroutine(levelOne);
+}
 
 void FlightScene::onEnter()
 {

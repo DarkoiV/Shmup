@@ -6,5 +6,6 @@ target_sources(shmup PRIVATE
     src/systems/player_bullet_collision.cpp
     src/systems/player_weapons.cpp
     src/flight_scene.cpp
+    src/levels.cpp
     src/main.cpp
     src/shmup.cpp)
