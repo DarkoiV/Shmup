@@ -26,11 +26,17 @@ FetchContent_MakeAvailable(googletest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
+# sdl2_image
+FetchContent_Declare(
+    SDL2_image
+    GIT_REPOSITORY  https://github.com/libsdl-org/SDL_image
+    GIT_TAG         release-2.6.3
+)
+
 find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
 target_link_libraries(Gng2D
     "${SDL2_LIBRARIES}"
-    "${SDL2_IMAGE_LIBRARIES}"
+    SDL2_image
     EnTT::EnTT)
 
 # Testing

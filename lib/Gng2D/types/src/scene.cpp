@@ -23,7 +23,7 @@ void Gng2D::Scene::render()
 
 void Gng2D::Scene::operator()()
 {
-    sceneController();
+    runCoroutines();
     update();
     render();
 }
@@ -52,5 +52,14 @@ bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode) const
 SDL_Renderer* Gng2D::Scene::getRenderer() const
 {
     return sceneRenderer;
+}
+
+void Gng2D::Scene::runCoroutines()
+{
+    for (auto& coro : coroutines) coro();
+    std::erase_if(coroutines, [](Coroutine& coro) 
+    {
+        return coro.isCompleted(); 
+    });
 }
 

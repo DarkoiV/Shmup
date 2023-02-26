@@ -1,11 +1,11 @@
 #pragma once
-#include <deque>
 #include <memory>
+#include <vector>
+#include <SDL2/SDL.h>
 #include <entt/entity/registry.hpp>
-#include "SDL2/SDL.h"
 #include "Gng2D/core/scene_registry.hpp"
-#include "Gng2D/core/scene_controller.hpp"
 #include "Gng2D/types/game_object.hpp"
+#include "Gng2D/types/coroutine.hpp"
 
 namespace Gng2D
 {
@@ -24,6 +24,12 @@ struct Scene
     virtual void render();
 
     void operator()();
+
+    template<typename Coro, typename... Args>
+    void addCoroutine(Coro coro, Args&&... args)
+    {
+        coroutines.emplace_back(coro, std::forward<Args>(args)...);
+    }
 
 ///// Entity management /////
     template<typename Obj, typename... Args>
@@ -49,10 +55,12 @@ struct Scene
 
 protected:
     SceneRegistry       sceneRegistry;
-    SceneController     sceneController{*this};
 
 private:
+    void        runCoroutines();
+
     entt::registry                  registry;
+    std::vector<Coroutine>          coroutines;
     inline static SDL_Renderer*     sceneRenderer;
 
     friend struct ::Gng2D::Application;
