@@ -1,16 +1,8 @@
 cmake_minimum_required(VERSION 3.22) 
 project(Gng2D)
 include(FetchContent)
-include(GoogleTest)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
-
-add_library(Gng2D)
-
-# Libraries
+# EnTT
 FetchContent_Declare(
     EnTT
     GIT_REPOSITORY https://github.com/skypjack/entt.git
@@ -18,6 +10,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Entt)
 
+# GoogleTest
+include(GoogleTest)
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
@@ -26,18 +20,13 @@ FetchContent_MakeAvailable(googletest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
-# sdl2_image
-FetchContent_Declare(
-    SDL2_image
-    GIT_REPOSITORY  https://github.com/libsdl-org/SDL_image
-    GIT_TAG         release-2.6.3
-)
-
-find_package(SDL2 REQUIRED)
+# Gng2D
+add_library(Gng2D)
 target_link_libraries(Gng2D
-    "${SDL2_LIBRARIES}"
+    SDL2
     SDL2_image
     EnTT::EnTT)
+set_property(TARGET Gng2D PROPERTY CXX_STANDARD 20)
 
 # Testing
 enable_testing()
@@ -54,3 +43,4 @@ add_subdirectory(components)
 add_subdirectory(core)
 add_subdirectory(systems)
 add_subdirectory(types)
+add_subdirectory(gui)
