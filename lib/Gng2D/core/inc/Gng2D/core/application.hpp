@@ -24,9 +24,12 @@ protected:
 private:
     void mainLoop();
     void eventLoop();
+    void switchScene();
 
-    bool    isRunning{true};
-    Window  window;
+    bool        isRunning{true};
+    Window      window;
+    uint64_t    previousTS{0};
+    uint32_t    logicLag{0};
 };
 }
 

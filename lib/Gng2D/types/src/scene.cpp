@@ -25,7 +25,6 @@ void Gng2D::Scene::operator()()
 {
     runCoroutines();
     update();
-    render();
 }
 
 Gng2D::GameObject Gng2D::Scene::getEntity(entt::entity id)

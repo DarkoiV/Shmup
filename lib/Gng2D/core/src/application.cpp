@@ -1,5 +1,6 @@
 #include "Gng2D/core/application.hpp"
 #include "Gng2D/core/log.hpp"
+#include "Gng2D/core/settings.hpp"
 
 Gng2D::Application::Application()
 {
@@ -17,7 +18,7 @@ void Gng2D::Application::run()
 {
     onCreate();
     LOG::INFO("Switching to first scene");
-    sceneRegistry.switchScene();
+    switchScene();
     while (isRunning) mainLoop();
 }
 
@@ -30,12 +31,22 @@ void Gng2D::Application::stopRunning()
 void Gng2D::Application::mainLoop()
 {
     auto& scene = sceneRegistry.getCurrentScene();
+    uint64_t currentTS  = SDL_GetTicks64();
+    uint32_t elapsed    = currentTS - previousTS;
+    previousTS          = currentTS;
+    logicLag           += elapsed;
 
     eventLoop();
-    scene();
+    while (logicLag >= LOGIC_TICK)
+    {
+        scene();
+        logicLag -= LOGIC_TICK;
+    }
+    scene.render();
     window.renderFrame();
+    window.displayFPS();
 
-    if (scene.isCompleted()) sceneRegistry.switchScene();
+    if (scene.isCompleted()) switchScene(); 
 }
 
 void Gng2D::Application::eventLoop()
@@ -50,5 +61,12 @@ void Gng2D::Application::eventLoop()
                 break;
         }
     }
+}
+
+void Gng2D::Application::switchScene()
+{
+    sceneRegistry.switchScene();
+    previousTS  = SDL_GetTicks();
+    logicLag    = 0;
 }
 
