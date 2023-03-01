@@ -17,7 +17,14 @@ void EntityCleaner::bulletCleaner()
     constexpr int margin = 10;
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
-    for (const auto& [e, pos] : scene.view<Gng2D::Position, BulletTag>())
+    for (const auto& [e, pos] : scene.view<Gng2D::Position, Gng2D::Tag<EnemyBullet>>())
+    {
+        bool outside 
+            =   pos.x < -margin or pos.y < -margin
+            or  pos.x > maxX    or pos.y > maxY;
+        if (outside) scene.destroyEntity(e);
+    }
+    for (const auto& [e, pos] : scene.view<Gng2D::Position, Gng2D::Tag<AllyBullet>>())
     {
         bool outside 
             =   pos.x < -margin or pos.y < -margin

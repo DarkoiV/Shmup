@@ -3,6 +3,7 @@
 #include <vector>
 #include <SDL2/SDL.h>
 #include <entt/entity/registry.hpp>
+#include "Gng2D/components/tag.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/types/coroutine.hpp"
@@ -36,7 +37,10 @@ struct Scene
         requires(std::is_base_of<GameObject, Obj>::value)
     Obj spawnObject(Args&&... args)
     {
-        return Obj(*this, std::forward<Args>(args)...);
+        using ObjTag = Tag<Obj>;
+        Obj o(*this, std::forward<Args>(args)...);
+        o.template addComponent<ObjTag>();
+        return o;
     }
 
     template<typename... Components>
