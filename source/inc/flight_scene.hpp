@@ -33,10 +33,6 @@ private:
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
         playerColliderRenderer{*this};
-    Gng2D::ColliderRendererSystem<EnemyBullet::Collider>
-        enemyBulletColliderRenderer{*this};
-    Gng2D::ColliderRendererSystem<AllyBullet::Collider>
-        allyBulletColliderRenderer{*this};
 
     PlayerBulletCollision
         playerBulletCollision{*this};

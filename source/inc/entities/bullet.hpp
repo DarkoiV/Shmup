@@ -1,6 +1,7 @@
 #pragma once
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/components/position.hpp"
+#include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 
@@ -13,7 +14,8 @@ struct AllyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
-        addComponent<Collider>(3.0f);
+        addComponent<Gng2D::Sprite>("bullet");
+        addComponent<Collider>(4.0f);
     }
 };
 
@@ -26,6 +28,7 @@ struct EnemyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
-        addComponent<Collider>(3.0f);
+        addComponent<Gng2D::Sprite>("bullet");
+        addComponent<Collider>(4.0f);
     }
 };

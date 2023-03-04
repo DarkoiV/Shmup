@@ -14,14 +14,18 @@ Gng2D::Window::Window()
     sdlWindow = SDL_CreateWindow(TITLE.c_str(), 
                                  SDL_WINDOWPOS_CENTERED, 
                                  SDL_WINDOWPOS_CENTERED, 
-                                 SCREEN_WIDTH, 
-                                 SCREEN_HEIGHT, 
+                                 SCREEN_WIDTH * SCALE, 
+                                 SCREEN_HEIGHT * SCALE, 
                                  0);
     if (not sdlWindow) LOG::FATAL("Could not create SDL2 Window", SDL_GetError());
+    LOG::INFO("Window size set to", SCREEN_WIDTH * SCALE, "x", SCREEN_HEIGHT * SCALE);
 
     LOG::INFO("Creating SDL2 Renderer for window");
-    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED);
+    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (not sdlRenderer) LOG::FATAL("Could not create SDL2 Renderer", SDL_GetError());
+
+    SDL_RenderSetLogicalSize(sdlRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    LOG::INFO("Renderer logical size set to", SCREEN_WIDTH, "x", SCREEN_HEIGHT);
 
     LOG::OK("Created Gng2D Window");
 }

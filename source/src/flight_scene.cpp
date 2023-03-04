@@ -46,12 +46,10 @@ void FlightScene::update()
 void FlightScene::render()
 {
     Gng2D::Scene::render();
-    playerColliderRenderer();
-    allyBulletColliderRenderer();
-    enemyBulletColliderRenderer();
 
     if (focusMode)
     {
+        playerColliderRenderer();
         Gng2D::gui::Text t("charmap-oldschool_white", "FOCUS MODE");
         t.render(getRenderer(), 5, 5);
     }
