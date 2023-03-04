@@ -8,8 +8,12 @@
 
 void Gng2D::Scene::render()
 {
-    auto view = registry.view<Sprite, Position>();
-    for (const auto& [_, sprite, pos] : view.each())
+    auto renderable = registry.group<Sprite, Position>();
+    renderable.sort<Sprite>([](const auto& lhs, const auto& rhs)
+    {
+        return lhs.layer > rhs.layer;
+    });
+    for (const auto& [_, sprite, pos] : renderable.each())
     {
         SDL_Rect dstRect;
         dstRect.w = sprite.srcRect.w * sprite.scale;
