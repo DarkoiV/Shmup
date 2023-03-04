@@ -46,12 +46,12 @@ void FlightScene::update()
 void FlightScene::render()
 {
     Gng2D::Scene::render();
+    playerColliderRenderer();
+    allyBulletColliderRenderer();
+    enemyBulletColliderRenderer();
 
     if (focusMode)
     {
-        playerColliderRenderer();
-        allyBulletColliderRenderer();
-        enemyBulletColliderRenderer();
         Gng2D::gui::Text t("charmap-oldschool_white", "FOCUS MODE");
         t.render(getRenderer(), 5, 5);
     }
@@ -61,8 +61,8 @@ void FlightScene::playerControlls()
 {
     auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
     playerVelocity = {0, 0};
-    if (isKeyPressed(SDL_SCANCODE_LSHIFT))  focusMode = true;
-    else                                    focusMode = false;
+
+    focusMode = isKeyPressed(SDL_SCANCODE_LSHIFT) ? true : false;
     float speedMod = focusMode ? 0.3f : 1.0f;
 
     if (isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;
