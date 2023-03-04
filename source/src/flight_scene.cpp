@@ -1,6 +1,8 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/settings.hpp"
+#include "Gng2D/core/asset_registry.hpp"
+#include "Gng2D/gui/text.hpp"
 #include "levels.hpp"
 
 FlightScene::FlightScene()
@@ -47,6 +49,8 @@ void FlightScene::render()
     playerColliderRenderer();
     allyBulletColliderRenderer();
     enemyBulletColliderRenderer();
+    Gng2D::gui::Text t("charmap-oldschool_white", "Hello!");
+    t.render(getRenderer(), 20, 20);
 }
 
 void FlightScene::playerControlls()

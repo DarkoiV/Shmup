@@ -3,6 +3,7 @@ target_include_directories(Gng2D PUBLIC
 target_sources(Gng2D PRIVATE
     src/coroutine.cpp
     src/game_object.cpp
+    src/font.cpp
     src/scene.cpp)
 
 # Testing

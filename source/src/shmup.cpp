@@ -7,6 +7,7 @@ void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
     assetRegistry.loadSprite("player_ship");
+    assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();
 }
 
