@@ -14,7 +14,7 @@ struct AllyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
-        addComponent<Gng2D::Sprite>("bullet");
+        addComponent<Gng2D::Sprite>("ally_bullet");
         addComponent<Collider>(4.0f);
     }
 };
@@ -28,7 +28,7 @@ struct EnemyBullet : public Gng2D::GameObject
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
-        addComponent<Gng2D::Sprite>("bullet");
+        addComponent<Gng2D::Sprite>("enemy_bullet");
         addComponent<Collider>(4.0f);
     }
 };

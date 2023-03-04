@@ -13,7 +13,7 @@ void PlayerWeapons::primaryFire()
     {
         const auto& playerPosition = playerShip.getComponent<Gng2D::Position>();
         const Gng2D::Position bulletSpawnPosition{playerPosition.x, playerPosition.y - 10};
-        scene.spawnObject<AllyBullet>(bulletSpawnPosition, Gng2D::Velocity{0, -7});
+        scene.spawnObject<AllyBullet>(bulletSpawnPosition, Gng2D::Velocity{0, -5});
         remainingCooldown = cooldownFrames;
     }
 }

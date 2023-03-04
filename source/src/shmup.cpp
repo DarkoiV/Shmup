@@ -7,7 +7,8 @@ void Shmup::onCreate()
 {
     Gng2D::LOG::INFO("Creating Shmup");
     assetRegistry.loadSprite("player_ship");
-    assetRegistry.loadSprite("bullet");
+    assetRegistry.loadSprite("ally_bullet");
+    assetRegistry.loadSprite("enemy_bullet");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();
 }
