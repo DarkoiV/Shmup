@@ -27,6 +27,7 @@ private:
     PlayerWeapons           playerWeapons{*this, playerShip};
 
     void                    playerControlls();
+    bool                    focusMode{false};
     void                    boundPlayerPosition();
     Gng2D::MovementSystem   movement{*this};
 

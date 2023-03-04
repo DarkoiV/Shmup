@@ -1,6 +1,6 @@
 #include "Gng2D/gui/text.hpp"
+#include <ranges>
 #include "Gng2D/core/asset_registry.hpp"
-#include <iostream>
 
 using namespace Gng2D::gui;
 
@@ -22,3 +22,19 @@ void Text::render(SDL_Renderer* r, int originPointX, int originPointY)
         dst.x += font.charWidth * static_cast<int>(scale);
     }
 }
+
+void Text::setScale(unsigned s)
+{
+    scale = s;
+}
+
+int Text::width()
+{
+    return font.charWidth * str.size();
+}
+
+int Text::height()
+{
+    return font.charHeight;
+}
+
