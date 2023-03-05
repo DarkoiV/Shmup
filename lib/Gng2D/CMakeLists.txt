@@ -36,6 +36,7 @@ target_link_libraries(Gng2D_TESTS
     GTest::gtest_main
     GTest::gmock_main)
 gtest_discover_tests(Gng2D_TESTS)
+set_property(TARGET Gng2D_TESTS PROPERTY CXX_STANDARD 20)
 add_custom_target(Gng2D_run_test
     COMMAND Gng2D_TESTS)
 
