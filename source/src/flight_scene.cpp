@@ -60,7 +60,7 @@ void FlightScene::playerControlls()
     auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
     playerVelocity = {0, 0};
 
-    focusMode = isKeyPressed(SDL_SCANCODE_LSHIFT) ? true : false;
+    focusMode = isKeyPressed(SDL_SCANCODE_LSHIFT);
     float speedMod = focusMode ? 0.3f : 1.0f;
 
     if (isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;

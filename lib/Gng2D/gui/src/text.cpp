@@ -10,16 +10,16 @@ Text::Text(const std::string& font, const std::string& str)
 {
 }
 
-void Text::render(SDL_Renderer* r, int originPointX, int originPointY)
+void Text::render(SDL_Renderer* r, int originPointX, int originPointY) const
 {
     SDL_Rect dst = {originPointX, 
                     originPointY, 
-                    font.charWidth  * static_cast<int>(scale), 
-                    font.charHeight * static_cast<int>(scale)};
+                    font.width()  * static_cast<int>(scale), 
+                    font.height() * static_cast<int>(scale)};
     for(const char& c : str)
     {
         font.renderChar(r, c, dst);
-        dst.x += font.charWidth * static_cast<int>(scale);
+        dst.x += font.width() * static_cast<int>(scale);
     }
 }
 
@@ -28,13 +28,18 @@ void Text::setScale(unsigned s)
     scale = s;
 }
 
-int Text::width()
+void Text::changeFont(const std::string& fname)
 {
-    return font.charWidth * str.size();
+    font = AssetRegistry().getFont(fname);
 }
 
-int Text::height()
+int Text::width() const
 {
-    return font.charHeight;
+    return font.width() * str.size();
+}
+
+int Text::height() const
+{
+    return font.height();
 }
 

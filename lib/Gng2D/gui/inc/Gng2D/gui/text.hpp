@@ -8,11 +8,12 @@ namespace Gng2D::gui
 struct Text
 {
     Text(const std::string& font, const std::string& str);
-    void    render(SDL_Renderer*, int originPointX, int originPointY);
+    void    render(SDL_Renderer*, int originPointX, int originPointY) const;
 
     void    setScale(unsigned);
-    int     width();
-    int     height();
+    void    changeFont(const std::string& font);
+    int     width()     const;
+    int     height()    const;
 
 private:
     unsigned        scale{1};

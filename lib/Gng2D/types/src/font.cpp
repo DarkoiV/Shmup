@@ -12,15 +12,7 @@ Font::Font(SDL_Texture* t, int cw, int ch, int cpr)
     LOG::INFO("Loaded font dimensions", charWidth, charHeight, charsPerRow);
 }
 
-Font::Font(const Font& from)
-    : charWidth(from.charWidth)
-    , charHeight(from.charHeight)
-    , charsPerRow(from.charsPerRow)
-    , fontTexutre(from.fontTexutre)
-{
-}
-
-void Font::renderChar(SDL_Renderer* r, char c, SDL_Rect dst)
+void Font::renderChar(SDL_Renderer* r, char c, SDL_Rect dst) const
 {
     const char offsetedChar = c - 32;
     int srcx = offsetedChar % charsPerRow * charWidth;
@@ -28,3 +20,15 @@ void Font::renderChar(SDL_Renderer* r, char c, SDL_Rect dst)
     SDL_Rect src = {srcx, srcy, charWidth, charHeight};
     SDL_RenderCopy(r, fontTexutre, &src, &dst);
 }
+
+int Font::width() const
+{
+    return charWidth;
+}
+
+int Font::height() const
+{
+    return charHeight;
+}
+
+
