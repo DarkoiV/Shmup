@@ -5,6 +5,7 @@ target_sources(shmup PRIVATE
     src/systems/entity_cleaner.cpp
     src/systems/player_bullet_collision.cpp
     src/systems/player_weapons.cpp
+    src/systems/player_controlls.cpp
     src/flight_scene.cpp
     src/levels.cpp
     src/main.cpp

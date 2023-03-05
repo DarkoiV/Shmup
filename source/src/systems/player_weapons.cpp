@@ -20,5 +20,6 @@ void PlayerWeapons::primaryFire()
 
 void PlayerWeapons::operator()()
 {
-    if (remainingCooldown > 0) remainingCooldown--;
+    if (remainingCooldown > 0)                  remainingCooldown--;
+    if (scene.isKeyPressed(SDL_SCANCODE_Z))     primaryFire();
 }

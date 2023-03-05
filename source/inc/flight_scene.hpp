@@ -10,6 +10,7 @@
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/player_bullet_collision.hpp"
+#include "systems/player_controlls.hpp"
 #include "systems/player_weapons.hpp"
 
 struct FlightScene : Gng2D::Scene
@@ -25,10 +26,8 @@ struct FlightScene : Gng2D::Scene
 private:
     PlayerShip              playerShip = spawnObject<PlayerShip>();
     PlayerWeapons           playerWeapons{*this, playerShip};
+    PlayerControlls         playerControlls{*this, playerShip};
 
-    void                    playerControlls();
-    bool                    focusMode{false};
-    void                    boundPlayerPosition();
     Gng2D::MovementSystem   movement{*this};
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
