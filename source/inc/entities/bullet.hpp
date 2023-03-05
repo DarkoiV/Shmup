@@ -7,10 +7,10 @@
 
 struct AllyBullet : public Gng2D::GameObject
 {
+    using Gng2D::GameObject::GameObject;
     struct Collider : public Gng2D::CircleCollider {};
 
-    AllyBullet(Gng2D::Scene& s, Gng2D::Position p, Gng2D::Velocity v)
-        : Gng2D::GameObject(s)
+    void onCreate(Gng2D::Position p, Gng2D::Velocity v)
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);
@@ -21,10 +21,10 @@ struct AllyBullet : public Gng2D::GameObject
 
 struct EnemyBullet : public Gng2D::GameObject
 {
+    using Gng2D::GameObject::GameObject;
     struct Collider : public Gng2D::CircleCollider {};
 
-    EnemyBullet(Gng2D::Scene& s, Gng2D::Position p, Gng2D::Velocity v)
-        : Gng2D::GameObject(s)
+    void onCreate(Gng2D::Position p, Gng2D::Velocity v)
     {
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(v);

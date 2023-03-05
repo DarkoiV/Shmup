@@ -38,8 +38,9 @@ struct Scene
     Obj spawnObject(Args&&... args)
     {
         using ObjTag = Tag<Obj>;
-        Obj o(*this, std::forward<Args>(args)...);
+        Obj o(*this);
         o.template addComponent<ObjTag>();
+        o.onCreate(std::forward<Args>(args)...);
         return o;
     }
 
