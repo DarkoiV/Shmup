@@ -11,7 +11,7 @@ struct Font
     Font& operator= (const Font&)   = default;
     Font& operator= (Font&&)        = default;
 
-    void    renderChar(SDL_Renderer*, char, SDL_Rect dst) const;
+    void    renderChar(SDL_Renderer*, char, SDL_Rect dst, uint8_t alpha) const;
     int     width()     const;
     int     height()    const;
 

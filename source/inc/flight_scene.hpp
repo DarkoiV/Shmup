@@ -40,3 +40,4 @@ private:
 
     EntityCleaner       entityCleaner{*this};
 };
+

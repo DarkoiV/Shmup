@@ -2,6 +2,7 @@
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/gui/text.hpp"
+#include "game_over_scene.hpp"
 #include "levels.hpp"
 
 FlightScene::FlightScene()
@@ -23,7 +24,7 @@ bool FlightScene::isCompleted()
 {
     if (const auto& stats = playerShip.getComponent<Stats>(); stats.health <= 0)
     {
-        // TODO switch to GameOver scene
+        sceneRegistry.setNextScene<GameOverScene>();
         return true;
     }
     return false;
