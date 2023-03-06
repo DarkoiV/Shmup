@@ -33,8 +33,10 @@ bool FlightScene::isCompleted()
 void FlightScene::update()
 {
     movement();
+
     playerControlls();
     playerWeapons();
+
     playerBulletCollision();
     bulletBulletCollision();
 
@@ -44,6 +46,10 @@ void FlightScene::update()
 void FlightScene::render()
 {
     Gng2D::Scene::render();
-    playerColliderRenderer();
+    if (playerControlls.inFocusMode()) 
+    {
+        playerColliderRenderer();
+        focusModeTextRenderer();
+    }
 }
 

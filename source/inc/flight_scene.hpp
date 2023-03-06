@@ -9,6 +9,7 @@
 #include "entities/player_ship.hpp"
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/entity_cleaner.hpp"
+#include "systems/focus_mode_text_renderer.hpp"
 #include "systems/player_bullet_collision.hpp"
 #include "systems/player_controlls.hpp"
 #include "systems/player_weapons.hpp"
@@ -32,6 +33,8 @@ private:
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
         playerColliderRenderer{*this};
+    FocusModeTextRenderer
+        focusModeTextRenderer{*this};
 
     PlayerBulletCollision
         playerBulletCollision{*this};

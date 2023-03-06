@@ -3,29 +3,35 @@
 
 void PlayerControlls::playerControlls()
 {
-    auto& playerVelocity = playerShip.getComponent<Gng2D::Velocity>();
-    playerVelocity = {0, 0};
-
-    bool focusMode = scene.isKeyPressed(SDL_SCANCODE_LSHIFT);
+    auto& velo  = playerShip.getComponent<Gng2D::Velocity>();
+    velo        = {0, 0};
     float speedMod = focusMode ? 0.3f : 1.0f;
 
-    if (scene.isKeyPressed(SDL_SCANCODE_DOWN))    playerVelocity.y += 4.0f * speedMod;
-    if (scene.isKeyPressed(SDL_SCANCODE_UP))      playerVelocity.y -= 4.0f * speedMod;
-    if (scene.isKeyPressed(SDL_SCANCODE_RIGHT))   playerVelocity.x += 4.0f * speedMod;
-    if (scene.isKeyPressed(SDL_SCANCODE_LEFT))    playerVelocity.x -= 4.0f * speedMod;
+    if (scene.isKeyPressed(SDL_SCANCODE_DOWN))    velo.y += 4.0f * speedMod;
+    if (scene.isKeyPressed(SDL_SCANCODE_UP))      velo.y -= 4.0f * speedMod;
+    if (scene.isKeyPressed(SDL_SCANCODE_RIGHT))   velo.x += 4.0f * speedMod;
+    if (scene.isKeyPressed(SDL_SCANCODE_LEFT))    velo.x -= 4.0f * speedMod;
 }
 
 void PlayerControlls::boundPlayerPosition()
 {
-    auto& playerPosition = playerShip.getComponent<Gng2D::Position>();
-    if (playerPosition.x < 0)                       playerPosition.x = 0;
-    if (playerPosition.y < 0)                       playerPosition.y = 0;
-    if (playerPosition.x > Gng2D::SCREEN_WIDTH)     playerPosition.x = Gng2D::SCREEN_WIDTH;
-    if (playerPosition.y > Gng2D::SCREEN_HEIGHT)    playerPosition.y = Gng2D::SCREEN_HEIGHT;
+    auto& pos = playerShip.getComponent<Gng2D::Position>();
+
+    if (pos.x < 0)                       pos.x = 0;
+    if (pos.y < 0)                       pos.y = 0;
+    if (pos.x > Gng2D::SCREEN_WIDTH)     pos.x = Gng2D::SCREEN_WIDTH;
+    if (pos.y > Gng2D::SCREEN_HEIGHT)    pos.y = Gng2D::SCREEN_HEIGHT;
+}
+
+bool PlayerControlls::inFocusMode()
+{
+    return focusMode;
 }
 
 void PlayerControlls::operator()()
 {
+    focusMode   = scene.isKeyPressed(SDL_SCANCODE_LSHIFT);
+
     playerControlls();
     boundPlayerPosition();
 }

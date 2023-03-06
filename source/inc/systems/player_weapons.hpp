@@ -4,7 +4,10 @@
 
 struct PlayerWeapons
 {
-    PlayerWeapons(Gng2D::Scene&, PlayerShip&);
+    PlayerWeapons(Gng2D::Scene& s, PlayerShip ps)
+        : scene(s)
+        , playerShip(ps) {}
+
     void primaryFire();
 
     void operator()();
@@ -14,5 +17,6 @@ struct PlayerWeapons
 
 private:
     Gng2D::Scene&   scene;
-    PlayerShip&     playerShip;
+    PlayerShip      playerShip;
 };
+

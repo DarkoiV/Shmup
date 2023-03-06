@@ -1,12 +1,6 @@
 #include "systems/player_weapons.hpp"
 #include "entities/bullet.hpp"
 
-PlayerWeapons::PlayerWeapons(Gng2D::Scene& s, PlayerShip& ps)
-    : scene(s)
-    , playerShip(ps)
-{
-}
-
 void PlayerWeapons::primaryFire()
 {
     if (not remainingCooldown)

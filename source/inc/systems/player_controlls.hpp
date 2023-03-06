@@ -4,18 +4,20 @@
 
 struct PlayerControlls
 {
-    PlayerControlls(Gng2D::Scene& s, PlayerShip& ps)
+    PlayerControlls(Gng2D::Scene& s, PlayerShip ps)
         : scene(s)
         , playerShip(ps) {};
 
     void playerControlls();
     void boundPlayerPosition();
+    bool inFocusMode();
 
     void operator()();
 
 private:
     Gng2D::Scene&   scene;
-    PlayerShip&     playerShip;
+    PlayerShip      playerShip;
+    bool            focusMode;
 };
 
 
