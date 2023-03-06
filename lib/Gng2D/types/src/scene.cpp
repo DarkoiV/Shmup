@@ -6,7 +6,7 @@
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/window.hpp"
 
-void Gng2D::Scene::render()
+void Gng2D::Scene::render(SDL_Renderer* r)
 {
     auto renderable = registry.group<Sprite, Position>();
     renderable.sort<Sprite>([](const auto& lhs, const auto& rhs)
@@ -21,7 +21,7 @@ void Gng2D::Scene::render()
         dstRect.x = static_cast<int>(pos.x) - dstRect.w / 2;
         dstRect.y = static_cast<int>(pos.y) - dstRect.h / 2;
             
-        SDL_RenderCopy(sceneRenderer, sprite.texture, &sprite.srcRect, &dstRect);
+        SDL_RenderCopy(r, sprite.texture, &sprite.srcRect, &dstRect);
     }
 }
 
@@ -50,11 +50,6 @@ bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode) const
 {
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
     return keyboardState[scancode];
-}
-
-SDL_Renderer* Gng2D::Scene::getRenderer() const
-{
-    return sceneRenderer;
 }
 
 void Gng2D::Scene::runCoroutines()

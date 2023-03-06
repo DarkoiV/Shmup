@@ -5,11 +5,11 @@
 
 struct GameOverScene : Gng2D::Scene
 {
-    void onEnter()      override;
-    void onExit()       override;
-    bool isCompleted()  override;
-    void update()       override;
-    void render()       override;
+    void onEnter()              override;
+    void onExit()               override;
+    bool isCompleted()          override;
+    void update()               override;
+    void render(SDL_Renderer*)  override;
 
 private:
     Gng2D::gui::Text gameOverText{"charmap-oldschool_white", "GAME OVER"};

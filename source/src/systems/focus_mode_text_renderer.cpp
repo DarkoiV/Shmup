@@ -29,8 +29,8 @@ FocusModeTextRenderer::FocusModeTextRenderer(Gng2D::Scene& s)
     focus.setOriginPoint(5, 5);
 }
 
-void FocusModeTextRenderer::operator()()
+void FocusModeTextRenderer::operator()(SDL_Renderer* r)
 {
     textAnimation();
-    focus.render(scene.getRenderer());
+    focus.render(r);
 }

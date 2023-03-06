@@ -22,7 +22,7 @@ struct Scene
     virtual void onExit()               = 0;
     virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
-    virtual void render();
+    virtual void render(SDL_Renderer*);
 
     void operator()();
 
@@ -56,7 +56,6 @@ struct Scene
 
 ///// Other /////
     bool            isKeyPressed(SDL_Scancode) const;
-    SDL_Renderer*   getRenderer() const;
 
 protected:
     SceneRegistry       sceneRegistry;
@@ -66,9 +65,7 @@ private:
 
     entt::registry                  registry;
     std::vector<Coroutine>          coroutines;
-    inline static SDL_Renderer*     sceneRenderer;
 
-    friend struct ::Gng2D::Application;
     friend struct ::Gng2D::GameObject;
 };
 

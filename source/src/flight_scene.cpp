@@ -43,13 +43,13 @@ void FlightScene::update()
     entityCleaner();
 }
 
-void FlightScene::render()
+void FlightScene::render(SDL_Renderer* r)
 {
-    Gng2D::Scene::render();
+    Gng2D::Scene::render(r);
     if (playerControlls.inFocusMode()) 
     {
-        playerColliderRenderer();
-        focusModeTextRenderer();
+        playerColliderRenderer(r);
+        focusModeTextRenderer(r);
     }
 }
 

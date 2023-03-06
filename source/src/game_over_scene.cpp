@@ -36,8 +36,8 @@ void GameOverScene::update()
 {
 }
 
-void GameOverScene::render()
+void GameOverScene::render(SDL_Renderer* r)
 {
-    gameOverText.render(getRenderer());
+    gameOverText.render(r);
 }
 

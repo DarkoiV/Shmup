@@ -4,7 +4,6 @@
 
 Gng2D::Application::Application()
 {
-    Scene::sceneRenderer        = window.renderer();
     AssetRegistry::renderer     = window.renderer();
     LOG::OK("Created Gng2D application");
 }
@@ -42,7 +41,7 @@ void Gng2D::Application::mainLoop()
         scene();
         logicLag -= LOGIC_TICK;
     }
-    scene.render();
+    scene.render(window.renderer());
     window.renderFrame();
     window.displayFPS();
 

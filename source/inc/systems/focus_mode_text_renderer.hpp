@@ -6,7 +6,7 @@ struct FocusModeTextRenderer
 {
     FocusModeTextRenderer(Gng2D::Scene& s);
 
-    void operator()();
+    void operator()(SDL_Renderer*);
 private:
     Gng2D::Scene&       scene;
     Gng2D::gui::Text    focus{"charmap-oldschool_white", "FOCUS"};
