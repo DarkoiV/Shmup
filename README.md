@@ -1,10 +1,12 @@
 ## Controls
-Arrows - movement  
-Z - shot  
-Shift - focus mode  
+```
+Arrows  - movement  
+z       - shot  
+Shift   - focus mode  
+```
 
 ## Building and running on Linux
-Make sure you have CMake(3.22 or newer), SDL2 and SDL2_image.  
+Make sure you have ` CMake(3.22 or newer), SDL2 and SDL2_image.  `
 
 ```bash
 mkdir build; cd build 
