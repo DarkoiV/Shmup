@@ -16,7 +16,7 @@ struct MockScene : Gng2D::Scene
     MOCK_METHOD(void, onExit, (), (override));
     MOCK_METHOD(bool, isCompleted, (), (override));
     MOCK_METHOD(void, update, (), (override));
-    MOCK_METHOD(void, render, (), (override));
+    MOCK_METHOD(void, render, (SDL_Renderer*), (override));
 };
 
 struct EntityA : Gng2D::GameObject
