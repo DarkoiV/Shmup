@@ -13,5 +13,6 @@ struct Sprite
     SDL_Rect        srcRect;
     unsigned        layer;
     float           scale;
+    uint8_t         opacity{255};
 };
 }

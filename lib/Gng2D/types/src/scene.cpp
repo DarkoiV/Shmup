@@ -16,6 +16,8 @@ void Gng2D::Scene::render(SDL_Renderer* r)
     for (const auto& [_, sprite, pos] : renderable.each())
     {
         SDL_Rect dstRect;
+        SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);
+
         dstRect.w = sprite.srcRect.w * sprite.scale;
         dstRect.h = sprite.srcRect.h * sprite.scale;
         dstRect.x = static_cast<int>(pos.x) - dstRect.w / 2;

@@ -22,7 +22,7 @@ void FlightScene::onExit()
 
 bool FlightScene::isCompleted()
 {
-    if (const auto& stats = playerShip.getComponent<Stats>(); stats.health <= 0)
+    if (const auto& hp = playerShip.getComponent<HitPoints>(); hp.value <= 0)
     {
         sceneRegistry.setNextScene<GameOverScene>();
         return true;

@@ -1,5 +1,6 @@
 #include "systems/player_controlls.hpp"
 #include "Gng2D/core/settings.hpp"
+#include "components/invulnerability.hpp"
 
 void PlayerControlls::playerControlls()
 {
@@ -47,5 +48,22 @@ void PlayerControlls::operator()()
 
     playerControlls();
     boundPlayerPosition();
+
+    auto& sprite    = playerShip.getComponent<Gng2D::Sprite>();
+    if (playerShip.hasComponents<Invulnerability>())
+    {
+        auto& inv = playerShip.getComponent<Invulnerability>();
+        if (inv.ticksRemaining == 0) 
+        {
+            playerShip.removeComponent<Invulnerability>();
+            sprite.opacity = 255;
+        }
+        else
+        {
+            inv.ticksRemaining--;
+            bool blinking = inv.ticksRemaining % 20 > 10;
+            sprite.opacity = 200 - (100 * blinking);
+        }
+    }
 }
 

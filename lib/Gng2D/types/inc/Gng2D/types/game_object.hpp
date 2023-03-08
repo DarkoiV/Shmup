@@ -26,6 +26,18 @@ struct GameObject
         return registry.emplace<Component>(id, std::forward<Args>(args)...);
     }
 
+    template<typename... Components>
+    bool hasComponents()
+    {
+        return registry.all_of<Components...>(id);
+    }
+
+    template<typename Component>
+    void removeComponent()
+    {
+        registry.remove<Component>(id);
+    }
+
     template<typename Component>
     auto& getComponent()
     {

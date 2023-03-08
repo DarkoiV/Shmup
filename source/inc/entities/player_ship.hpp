@@ -4,7 +4,7 @@
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
-#include "components/stats.hpp"
+#include "components/hit_points.hpp"
 
 struct PlayerShip : Gng2D::GameObject
 {
@@ -21,7 +21,7 @@ struct PlayerShip : Gng2D::GameObject
         srcRect.w /= 3;
 
         addComponent<Collider>(6.0f);
-        addComponent<Stats>(100);
+        addComponent<HitPoints>(5u);
     }
 };
 
