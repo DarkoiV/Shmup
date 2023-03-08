@@ -35,7 +35,7 @@ void Gng2D::Application::mainLoop()
     previousTS          = currentTS;
     logicLag           += elapsed;
 
-    eventLoop();
+    eventLoop(scene);
     while (logicLag >= LOGIC_TICK)
     {
         scene();
@@ -48,7 +48,7 @@ void Gng2D::Application::mainLoop()
     if (scene.isCompleted()) switchScene(); 
 }
 
-void Gng2D::Application::eventLoop()
+void Gng2D::Application::eventLoop(Scene& scene)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -57,6 +57,13 @@ void Gng2D::Application::eventLoop()
         {
             case SDL_QUIT: 
                 onQuit();
+                break;
+            case SDL_KEYDOWN:
+                if (event.key.repeat) break;
+                scene.onKeyDown(event.key); 
+                break;
+            case SDL_KEYUP:
+                scene.onKeyUp(event.key);
                 break;
         }
     }

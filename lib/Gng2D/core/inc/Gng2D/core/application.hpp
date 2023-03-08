@@ -23,7 +23,7 @@ protected:
 
 private:
     void mainLoop();
-    void eventLoop();
+    void eventLoop(Scene&);
     void switchScene();
 
     bool        isRunning{true};

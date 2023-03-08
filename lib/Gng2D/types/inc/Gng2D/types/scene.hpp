@@ -24,6 +24,9 @@ struct Scene
     virtual void update()               = 0;
     virtual void render(SDL_Renderer*);
 
+    virtual void onKeyDown(SDL_KeyboardEvent&)  {};
+    virtual void onKeyUp(SDL_KeyboardEvent&)    {};
+
     void operator()();
 
     template<typename Coro, typename... Args>

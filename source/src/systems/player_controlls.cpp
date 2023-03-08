@@ -6,8 +6,8 @@ void PlayerControlls::playerControlls()
     auto& velo      = playerShip.getComponent<Gng2D::Velocity>();
     auto& sprite    = playerShip.getComponent<Gng2D::Sprite>();
     velo            = {0, 0};
-    float speedMod  = focusMode ? 0.5f : 1.0f;
-    float shipSpeed = 3.0f;
+    const float speedMod  = focusMode ? 0.5f : 1.0f;
+    const float shipSpeed = 3.0f;
 
     if (scene.isKeyPressed(SDL_SCANCODE_DOWN))    velo.y += shipSpeed * speedMod;
     if (scene.isKeyPressed(SDL_SCANCODE_UP))      velo.y -= shipSpeed * speedMod;
