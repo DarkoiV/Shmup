@@ -16,7 +16,7 @@ struct PlayerShip : Gng2D::GameObject
         addComponent<Gng2D::Position>(320.0f, 200.0f);
         addComponent<Gng2D::Velocity>(0.0f, 0.0f);
 
-        // There are 3 animation status forward/right/left
+        // There are 3 animation states forward/right/left
         auto& srcRect = addComponent<Gng2D::Sprite>("player_ship", 1).srcRect;
         srcRect.w /= 3;
 
