@@ -3,7 +3,7 @@ target_include_directories(shmup PUBLIC
 target_sources(shmup PRIVATE
     src/systems/bullet_bullet_collision.cpp
     src/systems/entity_cleaner.cpp
-    src/systems/focus_mode_text_renderer.cpp
+    src/systems/flight_scene_gui.cpp
     src/systems/player_bullet_collision.cpp
     src/systems/player_controlls.cpp
     src/systems/player_weapons.cpp

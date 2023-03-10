@@ -9,6 +9,7 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("player_ship");
     assetRegistry.loadSprite("ally_bullet");
     assetRegistry.loadSprite("enemy_bullet");
+    assetRegistry.loadSprite("hitpoints");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();

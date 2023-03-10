@@ -26,6 +26,14 @@ void Element::setPosition(Align a, int x, int y)
         x = (SCREEN_WIDTH  / 2) - (width()  / 2) + x;
         y = (SCREEN_HEIGHT / 2) - (height() / 2) + y;
     }
+    if (a == Align::TopRight or a == Align::BottomRight)
+    {
+        x = SCREEN_WIDTH - width() + x;
+    }
+    if (a == Align::BottomRight or a == Align::BottomLeft)
+    {
+        y = SCREEN_HEIGHT - height() + y;
+    }
 
     setOriginPoint(x, y);
 }

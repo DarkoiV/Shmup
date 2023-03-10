@@ -8,6 +8,10 @@ struct Element
     enum class Align 
     {
         Center,
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight
     };
 
     virtual void    render(SDL_Renderer*) const      = 0;

@@ -40,6 +40,9 @@ void FlightScene::update()
     playerBulletCollision();
     bulletBulletCollision();
 
+    const auto& [HP, maxHP] = playerShip.getComponent<HitPoints>();
+    flightSceneGui.setHP(HP, maxHP);
+
     entityCleaner();
 }
 
@@ -49,7 +52,8 @@ void FlightScene::render(SDL_Renderer* r)
     if (playerControlls.inFocusMode()) 
     {
         playerColliderRenderer(r);
-        focusModeTextRenderer(r);
+        flightSceneGui.renderFocusMode(r);
     }
+    flightSceneGui.renderHitPoints(r);
 }
 

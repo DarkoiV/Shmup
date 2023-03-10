@@ -10,7 +10,7 @@ void PlayerBulletCollision::onOverlap(entt::entity player, entt::entity bullet)
     if (not playerObject.hasComponents<Invulnerability>())
     {
         playerObject.addComponent<Invulnerability>(150u);
-        auto& [hp] = playerObject.getComponent<HitPoints>();
+        auto& hp = playerObject.getComponent<HitPoints>().value;
         hp -= 1;
     }
 }

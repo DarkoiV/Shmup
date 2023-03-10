@@ -21,7 +21,7 @@ struct PlayerShip : Gng2D::GameObject
         srcRect.w /= 3;
 
         addComponent<Collider>(6.0f);
-        addComponent<HitPoints>(5u);
+        addComponent<HitPoints>(5u, 5u);
     }
 };
 
