@@ -1,22 +1,20 @@
 #pragma once
 #include <string>
-#include "Gng2D/types/font.hpp"
 #include "Gng2D/gui/element.hpp"
 
 namespace Gng2D::gui
 {
-struct Text : Element
+struct Icon : Element
 {
-    Text(const std::string& font, const std::string& str);
+    Icon(const std::string& spriteName, SDL_Rect srcRect);
 
     void    render(SDL_Renderer*)   const override;
     int     width()                 const override;
     int     height()                const override;
 
-    void    changeFont(const std::string& font);
-
 private:
-    Font            font;
-    std::string     str;
+    SDL_Texture*    texture;
+    SDL_Rect        srcRect;
 };
 }
+

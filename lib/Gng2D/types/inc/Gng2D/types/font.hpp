@@ -19,7 +19,7 @@ private:
     int     charWidth;
     int     charHeight;
     int     charsPerRow;
-    SDL_Texture*    fontTexutre;
+    SDL_Texture*    fontTexture;
 };
 }
 

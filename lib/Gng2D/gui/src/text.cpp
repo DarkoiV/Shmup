@@ -1,6 +1,5 @@
 #include "Gng2D/gui/text.hpp"
 #include "Gng2D/core/asset_registry.hpp"
-#include "Gng2D/core/settings.hpp"
 
 using namespace Gng2D::gui;
 
@@ -21,33 +20,6 @@ void Text::render(SDL_Renderer* r) const
         font.renderChar(r, c, dst, opacity);
         dst.x += font.width() * static_cast<int>(scale);
     }
-}
-
-void Text::setOriginPoint(int x, int y)
-{
-    originPointX = x;
-    originPointY = y;
-}
-
-void Text::setPosition(Align a, int x, int y)
-{
-    if (a == Align::Center)
-    {
-        x = (SCREEN_WIDTH  / 2) - (width()  / 2) + x;
-        y = (SCREEN_HEIGHT / 2) - (height() / 2) + y;
-    }
-
-    setOriginPoint(x, y);
-}
-
-void Text::setScale(unsigned s)
-{
-    scale = s;
-}
-
-void Text::setOpacity(uint8_t o)
-{
-    opacity = o;
 }
 
 void Text::changeFont(const std::string& fname)

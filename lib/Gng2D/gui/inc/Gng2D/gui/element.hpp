@@ -11,12 +11,13 @@ struct Element
     };
 
     virtual void    render(SDL_Renderer*) const      = 0;
-    virtual void    setOriginPoint(int x, int y)     = 0;
-    virtual void    setPosition(Align, int x, int y) = 0;
-    virtual void    setScale(unsigned)               = 0;
-    virtual void    setOpacity(uint8_t)              = 0;
     virtual int     width()     const                = 0;
     virtual int     height()    const                = 0;
+
+    void    setScale(unsigned); 
+    void    setOpacity(uint8_t);
+    void    setOriginPoint(int x, int y); 
+    void    setPosition(Align, int x, int y);
 
 protected:
     int             originPointX{0};
