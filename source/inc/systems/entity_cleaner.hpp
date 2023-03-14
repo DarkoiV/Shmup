@@ -9,6 +9,6 @@ struct EntityCleaner
 private:
     Gng2D::Scene& scene;
 
-    void bulletCleaner();
+    void outOfScreenCleaner();
 };
 
