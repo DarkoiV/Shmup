@@ -22,7 +22,7 @@ struct Scene
     virtual void onExit()               = 0;
     virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
-    virtual void render(SDL_Renderer*);
+    virtual void render(SDL_Renderer*)  = 0;
 
     virtual void onKeyDown(SDL_KeyboardEvent&)  {};
     virtual void onKeyUp(SDL_KeyboardEvent&)    {};

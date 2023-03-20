@@ -48,7 +48,7 @@ void FlightScene::update()
 
 void FlightScene::render(SDL_Renderer* r)
 {
-    Gng2D::Scene::render(r);
+    entityRenderer(r);
     if (playerControlls.inFocusMode()) 
     {
         playerColliderRenderer(r);

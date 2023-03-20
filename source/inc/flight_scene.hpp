@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include "Gng2D/systems/collider_renderer_system.hpp"
+#include "Gng2D/systems/entity_renderer.hpp"
 #include "Gng2D/systems/movement_system.hpp"
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/types/scene.hpp"
@@ -33,6 +34,8 @@ private:
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
         playerColliderRenderer{*this};
+    Gng2D::EntityRenderer
+        entityRenderer{*this};
     FlightSceneGui
         flightSceneGui{*this};
 
