@@ -8,13 +8,15 @@ struct PlayerControlls
         : scene(s)
         , playerShip(ps) {};
 
-    void playerControlls();
-    void boundPlayerPosition();
     bool inFocusMode();
-
     void operator()();
 
 private:
+    void playerMovement();
+    void boundPlayerPosition();
+    void primaryFire();
+    void invulnerabilityAnimation();
+
     Gng2D::Scene&   scene;
     PlayerShip      playerShip;
     bool            focusMode;

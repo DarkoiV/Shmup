@@ -13,7 +13,6 @@
 #include "systems/flight_scene_gui.hpp"
 #include "systems/player_bullet_collision.hpp"
 #include "systems/player_controlls.hpp"
-#include "systems/player_weapons.hpp"
 
 struct FlightScene : Gng2D::Scene
 {
@@ -27,7 +26,6 @@ struct FlightScene : Gng2D::Scene
 
 private:
     PlayerShip              playerShip = spawnObject<PlayerShip>();
-    PlayerWeapons           playerWeapons{*this, playerShip};
     PlayerControlls         playerControlls{*this, playerShip};
 
     Gng2D::MovementSystem   movement{*this};

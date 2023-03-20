@@ -1,8 +1,10 @@
 #include "systems/player_controlls.hpp"
 #include "Gng2D/core/settings.hpp"
+#include "components/basic_weapon.hpp"
 #include "components/invulnerability.hpp"
+#include "entities/bullet.hpp"
 
-void PlayerControlls::playerControlls()
+void PlayerControlls::playerMovement()
 {
     auto& velo      = playerShip.getComponent<Gng2D::Velocity>();
     auto& sprite    = playerShip.getComponent<Gng2D::Sprite>();
@@ -37,18 +39,26 @@ void PlayerControlls::boundPlayerPosition()
     if (pos.y > Gng2D::SCREEN_HEIGHT)    pos.y = Gng2D::SCREEN_HEIGHT;
 }
 
-bool PlayerControlls::inFocusMode()
+void PlayerControlls::primaryFire()
 {
-    return focusMode;
+    const bool fire = scene.isKeyPressed(SDL_SCANCODE_Z);
+
+    for (const auto [_, weapon, pos] : scene.view<BasicWeapon, Gng2D::Position>())
+    {
+        if (weapon.remainigCooldown > 0) weapon.remainigCooldown--;
+
+        if (fire and not weapon.remainigCooldown)
+        {
+            const Gng2D::Position bulletSpawnPosition{pos.x, pos.y - 7};
+            const Gng2D::Velocity bulletVelocity{0, -4};
+            scene.spawnObject<AllyBullet>(bulletSpawnPosition, bulletVelocity);
+            weapon.remainigCooldown = weapon.cooldownTicks;
+        }
+    }
 }
 
-void PlayerControlls::operator()()
+void PlayerControlls::invulnerabilityAnimation()
 {
-    focusMode   = scene.isKeyPressed(SDL_SCANCODE_LSHIFT);
-
-    playerControlls();
-    boundPlayerPosition();
-
     auto& sprite    = playerShip.getComponent<Gng2D::Sprite>();
     if (playerShip.hasComponents<Invulnerability>())
     {
@@ -65,5 +75,20 @@ void PlayerControlls::operator()()
             sprite.opacity = 200 - (100 * blinking);
         }
     }
+}
+
+bool PlayerControlls::inFocusMode()
+{
+    return focusMode;
+}
+
+void PlayerControlls::operator()()
+{
+    focusMode = scene.isKeyPressed(SDL_SCANCODE_LSHIFT);
+
+    playerMovement();
+    boundPlayerPosition();
+    primaryFire();
+    invulnerabilityAnimation();
 }
 

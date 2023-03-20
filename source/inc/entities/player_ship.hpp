@@ -4,6 +4,7 @@
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
+#include "components/basic_weapon.hpp"
 #include "components/hit_points.hpp"
 
 struct PlayerShip : Gng2D::GameObject
@@ -22,6 +23,7 @@ struct PlayerShip : Gng2D::GameObject
 
         addComponent<Collider>(6.0f);
         addComponent<HitPoints>(5u, 5u);
+        addComponent<BasicWeapon>();
     }
 };
 
