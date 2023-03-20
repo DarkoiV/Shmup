@@ -73,6 +73,6 @@ void Gng2D::Application::switchScene()
 {
     sceneRegistry.switchScene();
     previousTS  = SDL_GetTicks();
-    logicLag    = 0;
+    logicLag    = LOGIC_TICK;
 }
 

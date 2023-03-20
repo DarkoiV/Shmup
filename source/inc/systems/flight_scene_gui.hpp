@@ -18,6 +18,6 @@ private:
     Gng2D::Coroutine    textAnimation;
 
     unsigned HP{5};
-    unsigned maxHP;
+    unsigned maxHP{5};
 };
 
