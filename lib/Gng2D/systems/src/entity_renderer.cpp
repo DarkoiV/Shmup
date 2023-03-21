@@ -8,11 +8,12 @@ using namespace Gng2D;
 EntityRenderer::EntityRenderer(Scene& s)
     : scene(s)
 {
+    scene.group<Sprite, Position>();
 }
 
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
-    for (const auto& [_, sprite, pos] : scene.view<Sprite, Position>())
+    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>())
     {
         SDL_Rect dstRect;
         SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);

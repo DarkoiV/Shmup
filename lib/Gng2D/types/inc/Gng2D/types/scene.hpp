@@ -53,6 +53,12 @@ struct Scene
         return registry.view<Components...>().each();
     }
 
+    template<typename... OwnedComponents>
+    auto group()
+    {
+        return registry.group<OwnedComponents...>().each();
+    }
+
     GameObject  getEntity(entt::entity id);
     bool        entityExists(entt::entity id) const;
     void        destroyEntity(entt::entity id);
