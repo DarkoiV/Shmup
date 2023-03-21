@@ -50,13 +50,13 @@ struct Scene
     template<typename... Components>
     auto view()
     {
-        return registry.view<Components...>();
+        return registry.view<Components...>().each();
     }
 
     template<typename... OwnedComponents>
     auto group()
     {
-        return registry.group<OwnedComponents...>();
+        return registry.group<OwnedComponents...>().each();
     }
 
     GameObject  getEntity(entt::entity id);

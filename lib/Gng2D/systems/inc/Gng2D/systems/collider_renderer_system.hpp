@@ -34,7 +34,7 @@ struct ColliderRendererSystem
     void operator()(SDL_Renderer* renderer)
     {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        for (const auto& [_, collider, position] : scene.view<Collider, Position>().each())
+        for (const auto& [_, collider, position] : scene.view<Collider, Position>())
         {
             drawCircle(renderer, collider.radius, position.x, position.y);
         }
