@@ -56,7 +56,7 @@ struct Scene
     template<typename... OwnedComponents>
     auto group()
     {
-        return registry.group<OwnedComponents...>().each();
+        return registry.group<OwnedComponents...>();
     }
 
     GameObject  getEntity(entt::entity id);

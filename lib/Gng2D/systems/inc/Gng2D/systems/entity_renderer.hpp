@@ -9,6 +9,7 @@ struct EntityRenderer
     EntityRenderer(Scene&);
 
     void operator()(SDL_Renderer*);
+    void sortRenderables();
 
 private:
     Scene& scene;

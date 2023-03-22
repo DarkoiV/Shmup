@@ -1,6 +1,7 @@
 #include "Gng2D/systems/entity_renderer.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
+#include "Gng2D/components/layer.hpp"
 #include "Gng2D/types/scene.hpp"
 
 using namespace Gng2D;
@@ -13,7 +14,8 @@ EntityRenderer::EntityRenderer(Scene& s)
 
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
-    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>())
+    sortRenderables();
+    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>().each())
     {
         SDL_Rect dstRect;
         SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);
@@ -25,5 +27,20 @@ void EntityRenderer::operator()(SDL_Renderer* r)
             
         SDL_RenderCopy(r, sprite.texture, &sprite.srcRect, &dstRect);
     }
+}
+
+void EntityRenderer::sortRenderables()
+{
+    auto renderables = scene.group<Sprite, Position>();
+    renderables.sort([&s = scene](const entt::entity lhs, const entt::entity rhs)
+    {
+        auto leftObj  = s.getEntity(lhs);
+        auto rightObj = s.getEntity(rhs);
+        bool leftHasLayer  = leftObj.hasComponents<Layer>();
+        bool rightHasLayer = rightObj.hasComponents<Layer>();
+        if (not rightHasLayer) return false;
+        if (not leftHasLayer)  return true;
+        return leftObj.getComponent<Layer>().value < rightObj.getComponent<Layer>().value;
+    });
 }
 
