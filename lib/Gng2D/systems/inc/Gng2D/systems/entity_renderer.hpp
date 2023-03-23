@@ -9,10 +9,13 @@ struct EntityRenderer
     EntityRenderer(Scene&);
 
     void operator()(SDL_Renderer*);
-    void sortRenderables();
+    void markForSorting();
 
 private:
-    Scene& scene;
+    void    sortRenderables();
+
+    Scene&  scene;
+    bool    needsSorting{false};
 };
 }
 

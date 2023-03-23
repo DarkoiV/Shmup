@@ -10,11 +10,14 @@ EntityRenderer::EntityRenderer(Scene& s)
     : scene(s)
 {
     scene.group<Sprite, Position>();
+    scene.onConstruct<Sprite>().connect<&EntityRenderer::markForSorting>(this);
+    scene.onConstruct<Layer>().connect<&EntityRenderer::markForSorting>(this);
+    scene.onUpdate<Layer>().connect<&EntityRenderer::markForSorting>(this);
 }
 
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
-    sortRenderables();
+    if (needsSorting) sortRenderables();
     for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>().each())
     {
         SDL_Rect dstRect;
@@ -27,6 +30,11 @@ void EntityRenderer::operator()(SDL_Renderer* r)
             
         SDL_RenderCopy(r, sprite.texture, &sprite.srcRect, &dstRect);
     }
+}
+
+void EntityRenderer::markForSorting()
+{
+    needsSorting = true;
 }
 
 void EntityRenderer::sortRenderables()
@@ -42,5 +50,7 @@ void EntityRenderer::sortRenderables()
         if (not leftHasLayer)  return true;
         return leftObj.getComponent<Layer>().value < rightObj.getComponent<Layer>().value;
     });
+
+    needsSorting = false;
 }
 

@@ -59,6 +59,18 @@ struct Scene
         return registry.group<OwnedComponents...>();
     }
 
+    template<typename Component>
+    auto onConstruct()
+    {
+        return registry.on_construct<Component>();
+    }
+
+    template<typename Component>
+    auto onUpdate()
+    {
+        return registry.on_update<Component>();
+    }
+
     GameObject  getEntity(entt::entity id);
     bool        entityExists(entt::entity id) const;
     void        destroyEntity(entt::entity id);
