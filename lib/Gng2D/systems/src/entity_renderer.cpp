@@ -15,6 +15,13 @@ EntityRenderer::EntityRenderer(Scene& s)
     scene.onUpdate<Layer>().connect<&EntityRenderer::markForSorting>(this);
 }
 
+EntityRenderer::~EntityRenderer()
+{
+    scene.onConstruct<Sprite>().disconnect<&EntityRenderer::markForSorting>(this);
+    scene.onConstruct<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
+    scene.onUpdate<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
+}
+
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
     if (needsSorting) sortRenderables();

@@ -7,6 +7,11 @@ struct Scene;
 struct EntityRenderer
 {
     EntityRenderer(Scene&);
+    EntityRenderer(EntityRenderer&)                 = delete;
+    EntityRenderer(EntityRenderer&&)                = delete;
+    EntityRenderer& operator= (EntityRenderer&)     = delete;
+    EntityRenderer& operator= (EntityRenderer&&)    = delete;
+    ~EntityRenderer();
 
     void operator()(SDL_Renderer*);
     void markForSorting();
