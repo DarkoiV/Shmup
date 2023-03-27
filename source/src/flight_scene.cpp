@@ -35,6 +35,7 @@ void FlightScene::update()
     movement();
 
     playerControlls();
+    enemyBulletSpawner();
 
     playerBulletCollision();
     bulletBulletCollision();

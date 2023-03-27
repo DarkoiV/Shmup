@@ -8,8 +8,16 @@ using namespace Gng2D;
 
 Coroutine levelOne(Scene& scene)
 {
+    co_yield Coroutine::WaitTicks{80};
+
     scene.spawnObject<Sparrow>(Position{320.0f, 0.0f});
-    co_yield Coroutine::WaitTicks{30};
+    co_yield Coroutine::WaitTicks{80};
+    
+    scene.spawnObject<Sparrow>(Position{120.0f, 0.0f});
+    co_yield Coroutine::WaitTicks{80};
+
+    scene.spawnObject<Sparrow>(Position{520.0f, 0.0f});
+    co_yield Coroutine::WaitTicks{90};
 
     for (int i = 0; i < 10; ++i)
     {

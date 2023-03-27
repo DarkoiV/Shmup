@@ -10,6 +10,7 @@
 #include "entities/player_ship.hpp"
 #include "systems/bullet_bullet_collision.hpp"
 #include "systems/bullet_enemy_collision.hpp"
+#include "systems/enemy_bullet_spawner.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/flight_scene_gui.hpp"
 #include "systems/player_bullet_collision.hpp"
@@ -28,6 +29,9 @@ struct FlightScene : Gng2D::Scene
 private:
     PlayerShip              playerShip = spawnObject<PlayerShip>();
     PlayerControlls         playerControlls{*this, playerShip};
+
+    EnemyBulletSpawner
+        enemyBulletSpawner{*this};
 
     Gng2D::MovementSystem   movement{*this};
 
