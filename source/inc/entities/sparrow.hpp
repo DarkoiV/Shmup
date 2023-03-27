@@ -18,7 +18,11 @@ struct Sparrow : Gng2D::GameObject
         addComponent<Gng2D::Position>(p);
         addComponent<Gng2D::Velocity>(0.0f, 2.0f);
         addComponent<Gng2D::Layer>(FlightSceneLayer::Ships);
-        addComponent<Gng2D::Sprite>("sparrow", 1);
+
+        // 2 Animation frames normal/hurt
+        auto& srcRect = addComponent<Gng2D::Sprite>("sparrow", 1).srcRect;
+        srcRect.h /= 2;
+
         addComponent<EnemyShipCollider>(5.0f);
         addComponent<HitPoints>(3u, 3u);
     }
