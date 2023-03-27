@@ -38,6 +38,7 @@ void FlightScene::update()
 
     playerBulletCollision();
     bulletBulletCollision();
+    bulletEnemyCollision();
 
     const auto& [HP, maxHP] = playerShip.getComponent<HitPoints>();
     flightSceneGui.setHP(HP, maxHP);

@@ -9,6 +9,7 @@
 #include "entities/bullet.hpp"
 #include "entities/player_ship.hpp"
 #include "systems/bullet_bullet_collision.hpp"
+#include "systems/bullet_enemy_collision.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/flight_scene_gui.hpp"
 #include "systems/player_bullet_collision.hpp"
@@ -41,6 +42,8 @@ private:
         playerBulletCollision{*this};
     BulletBulletCollision
         bulletBulletCollision{*this};
+    BulletEnemyCollision
+        bulletEnemyCollision{*this};
 
     EntityCleaner       entityCleaner{*this};
 };
