@@ -2,11 +2,15 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
 #include "entities/bullet.hpp"
+#include "entities/sparrow.hpp"
 
 using namespace Gng2D;
 
 Coroutine levelOne(Scene& scene)
 {
+    scene.spawnObject<Sparrow>(Position{320.0f, 0.0f});
+    co_yield Coroutine::WaitTicks{30};
+
     for (int i = 0; i < 10; ++i)
     {
         constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
