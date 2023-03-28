@@ -20,8 +20,11 @@ Gng2D::Coroutine BulletEnemyCollision::flashShip(Gng2D::GameObject enemyObject)
     }
     co_yield Gng2D::Coroutine::WaitTicks{7};
     {
-        auto& srcRect = enemyObject.getComponent<Gng2D::Sprite>().srcRect;
-        srcRect.y = 0;
+        if(enemyObject.isValid())
+        {
+            auto& srcRect = enemyObject.getComponent<Gng2D::Sprite>().srcRect;
+            srcRect.y = 0;
+        }
     }
 }
 

@@ -17,3 +17,9 @@ entt::entity Gng2D::GameObject::getId() const
 {
     return id;
 }
+
+bool Gng2D::GameObject::isValid() const 
+{
+    return registry.valid(id);
+}
+

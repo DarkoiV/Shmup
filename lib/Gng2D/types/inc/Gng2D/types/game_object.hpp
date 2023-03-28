@@ -1,5 +1,6 @@
 #pragma once
 #include "entt/entity/registry.hpp"
+#include "Gng2D/components/tag.hpp"
 
 namespace Gng2D
 {
@@ -10,7 +11,15 @@ struct GameObject
     GameObject(Gng2D::Scene&, entt::entity id);
     virtual ~GameObject() = default;
     
-    entt::entity getId() const;
+    entt::entity    getId() const;
+    bool            isValid() const;
+
+    template<typename T>
+        requires(std::is_base_of<GameObject, T>::value)
+    bool is() const
+    {
+        return hasComponents<Tag<T>>;
+    }
 
     template<typename Component, typename... Args>
         requires(std::is_empty<Component>::value)
@@ -27,7 +36,7 @@ struct GameObject
     }
 
     template<typename... Components>
-    bool hasComponents()
+    bool hasComponents() const
     {
         return registry.all_of<Components...>(id);
     }
