@@ -8,6 +8,7 @@ target_sources(shmup PRIVATE
     src/systems/flight_scene_gui.cpp
     src/systems/player_bullet_collision.cpp
     src/systems/player_controlls.cpp
+    src/systems/player_enemy_collision.cpp
     src/flight_scene.cpp
     src/game_over_scene.cpp
     src/levels.cpp

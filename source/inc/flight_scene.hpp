@@ -15,6 +15,7 @@
 #include "systems/flight_scene_gui.hpp"
 #include "systems/player_bullet_collision.hpp"
 #include "systems/player_controlls.hpp"
+#include "systems/player_enemy_collision.hpp"
 
 struct FlightScene : Gng2D::Scene
 {
@@ -44,6 +45,8 @@ private:
 
     PlayerBulletCollision
         playerBulletCollision{*this};
+    PlayerEnemyCollision 
+        playerEnemyCollision{*this};
     BulletBulletCollision
         bulletBulletCollision{*this};
     BulletEnemyCollision
