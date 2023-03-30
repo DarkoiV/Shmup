@@ -17,7 +17,7 @@ void Text::render(SDL_Renderer* r) const
                     font.height() * static_cast<int>(scale)};
     for(const char& c : str)
     {
-        font.renderChar(r, c, dst, opacity);
+        font.renderChar(r, c, dst, redMod, greenMod, blueMod, opacity);
         dst.x += font.width() * static_cast<int>(scale);
     }
 }
@@ -25,6 +25,13 @@ void Text::render(SDL_Renderer* r) const
 void Text::changeFont(const std::string& fname)
 {
     font = AssetRegistry().getFont(fname);
+}
+
+void Text::setColorMod(uint8_t r, uint8_t g, uint8_t b)
+{
+    redMod      = r;
+    greenMod    = g;
+    blueMod     = b;
 }
 
 int Text::width() const

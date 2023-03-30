@@ -19,6 +19,7 @@ void GameOverScene::onEnter()
     gameOverText.setScale(5);
     gameOverText.setPosition(Text::Align::Center, 0, 0);
     gameOverText.setOpacity(0);
+    gameOverText.setColorMod(255, 35, 25);
     addCoroutine(fadeIn, gameOverText);
 }
 

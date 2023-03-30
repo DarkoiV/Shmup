@@ -14,9 +14,14 @@ struct Text : Element
     int     height()                const override;
 
     void    changeFont(const std::string& font);
+    void    setColorMod(uint8_t r, uint8_t g, uint8_t b);
 
 private:
     Font            font;
     std::string     str;
+
+    uint8_t     redMod{255};
+    uint8_t     greenMod{255};
+    uint8_t     blueMod{255};
 };
 }
