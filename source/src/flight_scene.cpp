@@ -45,6 +45,7 @@ void FlightScene::update()
     const auto& [HP, maxHP] = playerShip.getComponent<HitPoints>();
     flightSceneGui.setHP(HP, maxHP);
 
+    animationSystem();
     entityCleaner();
 }
 

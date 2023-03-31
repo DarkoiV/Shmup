@@ -1,4 +1,5 @@
 #include "systems/bullet_enemy_collision.hpp"
+#include "components/flashing_enemy.hpp"
 
 void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
 {
@@ -9,22 +10,6 @@ void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
     enemyHP--;
 
     if (enemyHP == 0) scene.destroyEntity(enemy);
-    else scene.addCoroutine(flashShip, enemyObject);
-}
-
-Gng2D::Coroutine BulletEnemyCollision::flashShip(Gng2D::GameObject enemyObject)
-{
-    {
-        auto& srcRect = enemyObject.getComponent<Gng2D::Sprite>().srcRect;
-        srcRect.y = srcRect.h;
-    }
-    co_yield Gng2D::Coroutine::WaitTicks{7};
-    {
-        if(enemyObject.isValid())
-        {
-            auto& srcRect = enemyObject.getComponent<Gng2D::Sprite>().srcRect;
-            srcRect.y = 0;
-        }
-    }
+    else enemyObject.addOrReplaceComponent<FlashingEnemy>(enemyObject);
 }
 

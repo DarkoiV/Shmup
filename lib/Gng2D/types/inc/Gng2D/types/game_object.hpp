@@ -35,6 +35,20 @@ struct GameObject
         return registry.emplace<Component>(id, std::forward<Args>(args)...);
     }
 
+    template<typename Component, typename... Args>
+        requires(std::is_empty<Component>::value)
+    void addOrReplaceComponent(Args&&... args)
+    {
+        registry.emplace_or_replace<Component>(id, std::forward<Args>(args)...);
+    }
+
+    template<typename Component, typename... Args>
+        requires(not std::is_empty<Component>::value)
+    Component& addOrReplaceComponent(Args&&... args)
+    {
+        return registry.emplace_or_replace<Component>(id, std::forward<Args>(args)...);
+    }
+
     template<typename... Components>
     bool hasComponents() const
     {
