@@ -23,8 +23,9 @@ static Coroutine pulse(Text& t)
     }
 }
 
-FlightSceneGui::FlightSceneGui(Gng2D::Scene& s)
+FlightSceneGui::FlightSceneGui(Gng2D::Scene& s, PlayerShip ps)
     : scene(s)
+    , playerShip(ps)
 {
     textAnimation = Coroutine(pulse, focus);
     focus.setOriginPoint(5, 5);
@@ -32,8 +33,9 @@ FlightSceneGui::FlightSceneGui(Gng2D::Scene& s)
     hitPointsEmpty.setOpacity(240);
 }
 
-void FlightSceneGui::setHP(unsigned HP, unsigned maxHP)
+void FlightSceneGui::operator()()
 {
+    const auto& [HP, maxHP] = playerShip.getComponent<HitPoints>();
     this->HP    = HP;
     this->maxHP = maxHP;
 }

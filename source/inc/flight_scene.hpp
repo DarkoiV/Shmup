@@ -34,6 +34,8 @@ private:
 
     AnimationsSystem
         animationSystem{*this};
+    FlightSceneGui
+        flightSceneGui{*this, playerShip};
 
     EnemyBulletSpawner
         enemyBulletSpawner{*this};
@@ -44,8 +46,6 @@ private:
         playerColliderRenderer{*this};
     Gng2D::EntityRenderer
         entityRenderer{*this};
-    FlightSceneGui
-        flightSceneGui{*this};
 
     PlayerBulletCollision
         playerBulletCollision{*this};

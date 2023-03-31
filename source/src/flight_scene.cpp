@@ -42,11 +42,10 @@ void FlightScene::update()
     bulletEnemyCollision();
     playerEnemyCollision();
 
-    const auto& [HP, maxHP] = playerShip.getComponent<HitPoints>();
-    flightSceneGui.setHP(HP, maxHP);
-
     animationSystem();
     entityCleaner();
+
+    flightSceneGui();
 }
 
 void FlightScene::render(SDL_Renderer* r)
