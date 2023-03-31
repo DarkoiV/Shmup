@@ -11,6 +11,5 @@ struct BulletEnemyCollision : Gng2D::OverlapSystem<AllyBullet::Collider, EnemySh
     {}
 
     void onOverlap(entt::entity, entt::entity) override;
-    static Gng2D::Coroutine flashShip(Gng2D::GameObject);
 };
 
