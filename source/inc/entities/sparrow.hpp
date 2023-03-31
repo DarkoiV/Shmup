@@ -26,7 +26,7 @@ struct Sparrow : Gng2D::GameObject
 
         addComponent<EnemyShipCollider>(5.0f);
         addComponent<HitPoints>(3u, 3u);
-        addComponent<EnemyBasicWeapon>();
+        addComponent<EnemyBasicWeapon>(75u);
     }
 };
 
