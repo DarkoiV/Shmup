@@ -3,6 +3,7 @@
 using Gng2D::Coroutine;
 using Gng2D::gui::Text;
 using Gng2D::gui::Icon;
+using Gng2D::gui::Element;
 
 static Coroutine pulse(Text& t)
 {
@@ -27,8 +28,13 @@ FlightSceneGui::FlightSceneGui(Gng2D::Scene& s, PlayerShip ps)
     : scene(s)
     , playerShip(ps)
 {
-    textAnimation = Coroutine(pulse, focus);
+    focusAnimation = Coroutine(pulse, focus);
     focus.setOriginPoint(5, 5);
+
+    pauseAnimation = Coroutine(pulse, pause);
+    pause.setScale(2);
+    pause.setPosition(Element::Align::Center, 0, 0);
+
     hitPointsFull.setOpacity(240);
     hitPointsEmpty.setOpacity(240);
 }
@@ -61,7 +67,13 @@ void FlightSceneGui::renderHitPoints(SDL_Renderer* r)
 
 void FlightSceneGui::renderFocusMode(SDL_Renderer* r)
 {
-    textAnimation();
+    focusAnimation();
     focus.render(r);
+}
+
+void FlightSceneGui::renderPauseText(SDL_Renderer* r)
+{
+    pauseAnimation();
+    pause.render(r);
 }
 

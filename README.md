@@ -3,6 +3,7 @@
 Arrows  - movement  
 z       - shot  
 Shift   - focus mode  
+p       - pause
 ```
 
 ## Building and running on Linux

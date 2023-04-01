@@ -5,6 +5,8 @@
 
 void Gng2D::Scene::operator()()
 {
+    if (pause) return;
+
     runCoroutines();
     update();
 }

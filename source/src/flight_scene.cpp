@@ -57,5 +57,17 @@ void FlightScene::render(SDL_Renderer* r)
         flightSceneGui.renderFocusMode(r);
     }
     flightSceneGui.renderHitPoints(r);
+
+    if (pause) flightSceneGui.renderPauseText(r);
+}
+
+void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
+{
+    switch (e.keysym.sym)
+    {
+        case SDLK_p:
+            pause = !pause;
+            break;
+    }
 }
 
