@@ -13,6 +13,7 @@ struct Element
         BottomLeft,
         BottomRight
     };
+    virtual ~Element() = default;
 
     virtual void    render(SDL_Renderer*) const      = 0;
     virtual int     width()     const                = 0;
