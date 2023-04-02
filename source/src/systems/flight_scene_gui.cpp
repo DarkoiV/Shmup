@@ -1,7 +1,6 @@
 #include "systems/flight_scene_gui.hpp"
 #include "Gng2D/gui/text_animations.hpp"
 
-using Gng2D::Coroutine;
 using Gng2D::gui::pulse;
 using Gng2D::gui::Icon;
 using Gng2D::gui::Element;
@@ -10,12 +9,12 @@ FlightSceneGui::FlightSceneGui(Gng2D::Scene& s, PlayerShip ps)
     : scene(s)
     , playerShip(ps)
 {
-    focusAnimation = Coroutine(pulse, focus);
     focus.setOriginPoint(5, 5);
+    focus.addAnimation(pulse);
 
-    pauseAnimation = Coroutine(pulse, pause);
     pause.setScale(2);
     pause.setPosition(Element::Align::Center, 0, 0);
+    pause.addAnimation(pulse);
 
     hitPointsFull.setOpacity(240);
     hitPointsEmpty.setOpacity(240);
@@ -49,13 +48,11 @@ void FlightSceneGui::renderHitPoints(SDL_Renderer* r)
 
 void FlightSceneGui::renderFocusMode(SDL_Renderer* r)
 {
-    focusAnimation();
     focus.render(r);
 }
 
 void FlightSceneGui::renderPauseText(SDL_Renderer* r)
 {
-    pauseAnimation();
     pause.render(r);
 }
 

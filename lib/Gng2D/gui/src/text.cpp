@@ -11,6 +11,7 @@ Text::Text(const std::string& font, const std::string& str)
 
 void Text::render(SDL_Renderer* r) const
 {
+    animation();
     SDL_Rect dst = {originPointX, 
                     originPointY, 
                     font.width()  * static_cast<int>(scale), 

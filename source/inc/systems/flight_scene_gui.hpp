@@ -21,8 +21,6 @@ private:
     Gng2D::gui::Text    pause{"charmap-oldschool_white", "PAUSE"};
     Gng2D::gui::Icon    hitPointsFull{"hitpoints", SDL_Rect{0, 0, 24, 20}};
     Gng2D::gui::Icon    hitPointsEmpty{"hitpoints", SDL_Rect{24, 0, 24, 20}};
-    Gng2D::Coroutine    focusAnimation;
-    Gng2D::Coroutine    pauseAnimation;
 
     unsigned HP{5};
     unsigned maxHP{5};
