@@ -28,6 +28,11 @@ void Text::changeFont(const std::string& fname)
     font = AssetRegistry().getFont(fname);
 }
 
+void Text::changeString(const std::string& newStr)
+{
+    str = newStr;
+}
+
 void Text::setColorMod(uint8_t r, uint8_t g, uint8_t b)
 {
     redMod      = r;

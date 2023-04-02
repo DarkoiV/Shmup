@@ -22,7 +22,7 @@ struct Element
     void    setScale(unsigned); 
     void    setOpacity(uint8_t);
     void    setOriginPoint(int x, int y); 
-    void    setPosition(Align, int x, int y);
+    void    setPosition(Align, int x = 0, int y = 0);
 
 protected:
     int             originPointX{0};

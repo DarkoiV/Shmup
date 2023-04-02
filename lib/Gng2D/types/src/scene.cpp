@@ -11,6 +11,11 @@ void Gng2D::Scene::operator()()
     update();
 }
 
+bool Gng2D::Scene::isPaused() const
+{
+    return pause;
+}
+
 Gng2D::GameObject Gng2D::Scene::getEntity(entt::entity id)
 {
     return GameObject(*this, id);

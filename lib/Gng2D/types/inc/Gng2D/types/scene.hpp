@@ -28,6 +28,7 @@ struct Scene
     virtual void onKeyUp(SDL_KeyboardEvent&)    {};
 
     void operator()();
+    bool isPaused()     const;
 
     template<typename Coro, typename... Args>
     void addCoroutine(Coro coro, Args&&... args)

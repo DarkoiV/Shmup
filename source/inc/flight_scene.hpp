@@ -37,7 +37,7 @@ private:
     AnimationsSystem
         animationSystem{*this};
     FlightSceneGui
-        flightSceneGui{*this, playerShip};
+        flightSceneGui{*this, playerControlls, playerShip};
 
     EnemyBulletSpawner
         enemyBulletSpawner{*this};

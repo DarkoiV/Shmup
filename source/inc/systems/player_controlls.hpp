@@ -8,7 +8,7 @@ struct PlayerControlls
         : scene(s)
         , playerShip(ps) {};
 
-    bool inFocusMode();
+    bool inFocusMode()  const;
     void operator()();
 
 private:

@@ -77,7 +77,7 @@ void PlayerControlls::invulnerabilityAnimation()
     }
 }
 
-bool PlayerControlls::inFocusMode()
+bool PlayerControlls::inFocusMode() const
 {
     return focusMode;
 }

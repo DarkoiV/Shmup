@@ -15,6 +15,7 @@ struct Text : Element
     int     height()                const override;
 
     void    changeFont(const std::string& font);
+    void    changeString(const std::string& str);
     void    setColorMod(uint8_t r, uint8_t g, uint8_t b);
 
     template<typename Coro, typename... Args>

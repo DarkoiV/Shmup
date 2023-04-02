@@ -51,14 +51,8 @@ void FlightScene::update()
 void FlightScene::render(SDL_Renderer* r)
 {
     entityRenderer(r);
-    if (playerControlls.inFocusMode()) 
-    {
-        playerColliderRenderer(r);
-        flightSceneGui.renderFocusMode(r);
-    }
-    flightSceneGui.renderHitPoints(r);
-
-    if (pause) flightSceneGui.renderPauseText(r);
+    if (playerControlls.inFocusMode()) playerColliderRenderer(r);
+    flightSceneGui.render(r);
 }
 
 void FlightScene::onKeyDown(SDL_KeyboardEvent& e)

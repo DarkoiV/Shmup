@@ -1,13 +1,21 @@
 #include "levels.hpp"
+#include <memory>
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
+#include "Gng2D/gui/text.hpp"
+#include "Gng2D/gui/text_animations.hpp"
 #include "entities/bullet.hpp"
 #include "entities/sparrow.hpp"
 
 using namespace Gng2D;
+using Gng2D::gui::pulse;
 
 Coroutine levelOne(Scene& scene)
 {
+    {
+        gui::Text title{"charmap-oldschool_white", "LEVEL ONE"};
+        title.addAnimation(pulse);
+    }
     co_yield Coroutine::WaitTicks{80};
 
     scene.spawnObject<Sparrow>(Position{320.0f, 0.0f});
