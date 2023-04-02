@@ -7,7 +7,7 @@
 
 FlightScene::FlightScene()
 {
-    addCoroutine(levelOne, *this);
+    addCoroutine(levelOne, *this, flightSceneGui);
 }
 
 void FlightScene::onEnter()

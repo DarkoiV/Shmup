@@ -8,15 +8,11 @@
 #include "entities/sparrow.hpp"
 
 using namespace Gng2D;
-using Gng2D::gui::pulse;
 
-Coroutine levelOne(Scene& scene)
+Coroutine levelOne(Scene& scene, FlightSceneGui& gui)
 {
-    {
-        gui::Text title{"charmap-oldschool_white", "LEVEL ONE"};
-        title.addAnimation(pulse);
-    }
-    co_yield Coroutine::WaitTicks{80};
+    gui.addPopUpText("LEVEL ONE");
+    co_yield Coroutine::WaitTicks{180};
 
     scene.spawnObject<Sparrow>(Position{320.0f, 0.0f});
     co_yield Coroutine::WaitTicks{80};
