@@ -1,17 +1,8 @@
 #include "game_over_scene.hpp"
+#include "Gng2D/gui/text_animations.hpp"
 
 using Gng2D::gui::Text;
-using Gng2D::Coroutine;
-
-static Coroutine fadeIn(Text& t)
-{
-    for (int i = 0; i <= 240; i += 2)
-    {
-        t.setOpacity(i);
-        co_yield Coroutine::WaitTicks{1};
-    }
-    t.setOpacity(255);
-};
+using Gng2D::gui::fadeIn;
 
 void GameOverScene::onEnter()
 {

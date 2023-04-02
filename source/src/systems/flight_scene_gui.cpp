@@ -1,28 +1,10 @@
 #include "systems/flight_scene_gui.hpp"
+#include "Gng2D/gui/text_animations.hpp"
 
 using Gng2D::Coroutine;
-using Gng2D::gui::Text;
+using Gng2D::gui::pulse;
 using Gng2D::gui::Icon;
 using Gng2D::gui::Element;
-
-static Coroutine pulse(Text& t)
-{
-    while (true)
-    {
-        for (int i = 0; i <= 25; ++i)
-        {
-            t.setOpacity(255 - (i * 7));
-            co_yield Coroutine::WaitTicks{2};
-        }
-        co_yield Coroutine::WaitTicks{15};
-        for (int i = 25; i >= 0; --i)
-        {
-            t.setOpacity(255 - (i * 7));
-            co_yield Coroutine::WaitTicks{2};
-        }
-        co_yield Coroutine::WaitTicks{15};
-    }
-}
 
 FlightSceneGui::FlightSceneGui(Gng2D::Scene& s, PlayerShip ps)
     : scene(s)
