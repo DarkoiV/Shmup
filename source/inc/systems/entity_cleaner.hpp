@@ -10,5 +10,6 @@ private:
     Gng2D::Scene& scene;
 
     void outOfScreenCleaner();
+    void timedExistence();
 };
 

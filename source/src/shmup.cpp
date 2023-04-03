@@ -11,6 +11,7 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("enemy_bullet");
     assetRegistry.loadSprite("hitpoints");
     assetRegistry.loadSprite("sparrow");
+    assetRegistry.loadSprite("red_x");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();

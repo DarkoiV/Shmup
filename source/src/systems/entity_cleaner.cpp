@@ -1,6 +1,7 @@
 #include "systems/entity_cleaner.hpp"
-#include "entities/bullet.hpp"
 #include "Gng2D/core/settings.hpp"
+#include "Gng2D/components/position.hpp"
+#include "components/timed_existence.hpp"
 
 EntityCleaner::EntityCleaner(Gng2D::Scene& s)
     : scene(s)
@@ -10,6 +11,7 @@ EntityCleaner::EntityCleaner(Gng2D::Scene& s)
 void EntityCleaner::operator()()
 {
     outOfScreenCleaner();
+    timedExistence();
 }
 
 void EntityCleaner::outOfScreenCleaner()
@@ -24,6 +26,15 @@ void EntityCleaner::outOfScreenCleaner()
             =   pos.x < -margin or pos.y < -margin
             or  pos.x > maxX    or pos.y > maxY;
         if (outside) scene.destroyEntity(e);
+    }
+}
+
+void EntityCleaner::timedExistence()
+{
+    for (const auto& [e, te] : scene.view<TimedExistence>())
+    {
+        te.remainingTicks--;
+        if (te.remainingTicks == 0) scene.destroyEntity(e);
     }
 }
 
