@@ -17,9 +17,9 @@ struct ColliderRendererSystem
 
     void drawCircle(SDL_Renderer* r, int radius, int x, int y)
     {
-        for (int w = 0; w < radius * 2; w++)
+        for (int w = 0; w <= radius * 2; w++)
         {
-            for (int h = 0; h < radius * 2; h++)
+            for (int h = 0; h <= radius * 2; h++)
             {
                 int dx = radius - w;
                 int dy = radius - h;
@@ -33,7 +33,8 @@ struct ColliderRendererSystem
 
     void operator()(SDL_Renderer* renderer)
     {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 175);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         for (const auto& [_, collider, position] : scene.view<Collider, Position>())
         {
             drawCircle(renderer, collider.radius, position.x, position.y);
@@ -45,3 +46,4 @@ private:
     Gng2D::Scene& scene;
 };
 }
+
