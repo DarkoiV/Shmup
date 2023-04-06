@@ -19,14 +19,15 @@ void PlayerControlls::playerMovement()
     if (right)
     {
         velo.x += shipSpeed * speedMod;
-        sprite.srcRect.x = sprite.srcRect.w;
+        PlayerShip::setFrame(PlayerShip::Frame::Right, sprite);
     }
     if (left)
     {
         velo.x -= shipSpeed * speedMod;
-        sprite.srcRect.x = sprite.srcRect.w * 2;
+        PlayerShip::setFrame(PlayerShip::Frame::Left, sprite);
     }
-    if (right == left) sprite.srcRect.x = 0;
+    if (right == left) PlayerShip::setFrame(PlayerShip::Frame::Forward, sprite);
+;
 }
 
 void PlayerControlls::boundPlayerPosition()
