@@ -80,7 +80,7 @@ struct Scene
     bool            isKeyPressed(SDL_Scancode) const;
 
 protected:
-    bool                pause;
+    bool                pause{false};
     SceneRegistry       sceneRegistry;
 
 private:
