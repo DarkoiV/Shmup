@@ -9,6 +9,7 @@
 #include "components/hit_points.hpp"
 #include "components/enemy_basic_weapon.hpp"
 #include "flight_scene_layers.hpp"
+#include "sprite_sheets.hpp"
 
 struct Sparrow : Gng2D::GameObject
 {
@@ -21,8 +22,9 @@ struct Sparrow : Gng2D::GameObject
         addComponent<Gng2D::Layer>(FlightSceneLayer::Ships);
 
         // 2 Animation frames normal/hurt
-        auto& srcRect = addComponent<Gng2D::Sprite>("sparrow", 1).srcRect;
-        srcRect.h /= 2;
+        auto& sprite = addComponent<Gng2D::Sprite>("sparrow", 1);
+        EnemySpriteSheet::divideSprite(sprite);
+        EnemySpriteSheet::setHFrame(EnemySpriteSheet::HFrame::Forward, sprite);
 
         addComponent<EnemyShipCollider>(5.0f);
         addComponent<HitPoints>(3u, 3u);

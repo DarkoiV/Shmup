@@ -2,6 +2,7 @@
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/types/coroutine.hpp"
 #include "Gng2D/types/game_object.hpp"
+#include "sprite_sheets.hpp"
 
 struct FlashingEnemy
 {
@@ -20,13 +21,13 @@ private:
     static Gng2D::Coroutine flashShip(Gng2D::GameObject ship)
     {
         {
-            auto& srcRect = ship.getComponent<Gng2D::Sprite>().srcRect;
-            srcRect.y = srcRect.h;
+            auto& sprite = ship.getComponent<Gng2D::Sprite>();
+            EnemySpriteSheet::setVFrame(EnemySpriteSheet::VFrame::Flashing, sprite);
         }
         co_yield Gng2D::Coroutine::WaitTicks{7};
         {
-            auto& srcRect = ship.getComponent<Gng2D::Sprite>().srcRect;
-            srcRect.y = 0;
+            auto& sprite = ship.getComponent<Gng2D::Sprite>();
+            EnemySpriteSheet::setVFrame(EnemySpriteSheet::VFrame::Normal, sprite);
         }
     }
 };
