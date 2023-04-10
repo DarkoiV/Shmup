@@ -1,6 +1,7 @@
 target_include_directories(shmup PUBLIC
     inc/)
 target_sources(shmup PRIVATE
+    src/components/enemy_animation.cpp
     src/systems/animations_system.cpp
     src/systems/bullet_bullet_collision.cpp
     src/systems/bullet_enemy_collision.cpp

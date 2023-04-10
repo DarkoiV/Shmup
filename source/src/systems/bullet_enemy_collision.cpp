@@ -1,5 +1,5 @@
 #include "systems/bullet_enemy_collision.hpp"
-#include "components/flashing_enemy.hpp"
+#include "components/enemy_animation.hpp"
 #include "entities/red_x.hpp"
 
 void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
@@ -16,6 +16,6 @@ void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
         scene.spawnObject<RedX>(pos);
         scene.destroyEntity(enemy);
     }
-    else enemyObject.addOrReplaceComponent<FlashingEnemy>(enemyObject);
+    else enemyObject.addOrReplaceComponent<EnemyAnimation>(enemyObject, EnemyAnimation::Type::flash);
 }
 

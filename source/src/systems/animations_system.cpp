@@ -1,11 +1,11 @@
 #include "systems/animations_system.hpp"
-#include "components/flashing_enemy.hpp"
+#include "components/enemy_animation.hpp"
 
 void AnimationsSystem::operator()()
 {
-    for (const auto& [_, flashing] : scene.view<FlashingEnemy>())
+    for (const auto& [_, animation] : scene.view<EnemyAnimation>())
     {
-        flashing();
+        animation();
     }
 }
 
