@@ -72,7 +72,7 @@ struct Scene
         return registry.on_update<Component>();
     }
 
-    GameObject  getEntity(entt::entity id);
+    GameObject  getGameObject(entt::entity id);
     bool        entityExists(entt::entity id) const;
     void        destroyEntity(entt::entity id);
 

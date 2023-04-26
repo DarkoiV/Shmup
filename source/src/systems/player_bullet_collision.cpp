@@ -5,7 +5,7 @@
 void PlayerBulletCollision::onOverlap(entt::entity player, entt::entity bullet)
 {
     scene.destroyEntity(bullet);
-    auto playerObject = scene.getEntity(player);
+    auto playerObject = scene.getGameObject(player);
 
     if (not playerObject.hasComponents<Invulnerability>())
     {

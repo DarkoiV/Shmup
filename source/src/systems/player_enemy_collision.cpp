@@ -4,11 +4,11 @@
 
 void PlayerEnemyCollision::onOverlap(entt::entity player, entt::entity enemy)
 { 
-    auto enemyObject = scene.getEntity(enemy);
+    auto enemyObject = scene.getGameObject(enemy);
     auto pos = enemyObject.getComponent<Gng2D::Position>();
     scene.spawnObject<RedX>(pos);
     scene.destroyEntity(enemy);
-    auto playerObject = scene.getEntity(player);
+    auto playerObject = scene.getGameObject(player);
 
     if (not playerObject.hasComponents<Invulnerability>())
     {

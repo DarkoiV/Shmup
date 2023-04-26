@@ -49,8 +49,8 @@ void EntityRenderer::sortRenderables()
     auto renderables = scene.group<Sprite, Position>();
     renderables.sort([&s = scene](const entt::entity lhs, const entt::entity rhs)
     {
-        auto leftObj  = s.getEntity(lhs);
-        auto rightObj = s.getEntity(rhs);
+        auto leftObj  = s.getGameObject(lhs);
+        auto rightObj = s.getGameObject(rhs);
         bool leftHasLayer  = leftObj.hasComponents<Layer>();
         bool rightHasLayer = rightObj.hasComponents<Layer>();
         if (not rightHasLayer) return false;

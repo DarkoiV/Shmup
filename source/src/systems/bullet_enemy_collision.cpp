@@ -5,7 +5,7 @@
 void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
 {
     scene.destroyEntity(bullet);
-    auto enemyObject = scene.getEntity(enemy);
+    auto enemyObject = scene.getGameObject(enemy);
 
     auto& enemyHP = enemyObject.getComponent<HitPoints>().value;
     enemyHP--;

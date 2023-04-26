@@ -16,7 +16,7 @@ bool Gng2D::Scene::isPaused() const
     return pause;
 }
 
-Gng2D::GameObject Gng2D::Scene::getEntity(entt::entity id)
+Gng2D::GameObject Gng2D::Scene::getGameObject(entt::entity id)
 {
     return GameObject(*this, id);
 }

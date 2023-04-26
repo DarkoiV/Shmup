@@ -9,7 +9,7 @@ void EnemyBulletSpawner::operator()()
     {
         if (bw.remainigCooldown == 0)
         {
-            auto enemyObject = scene.getEntity(e);
+            auto enemyObject = scene.getGameObject(e);
             const auto enemyPos = enemyObject.getComponent<Gng2D::Position>();
             const auto enemyVel = enemyObject.getComponent<Gng2D::Velocity>();
             const auto bulletPos  = Gng2D::Position{enemyPos + Gng2D::Position{0, 15.0f}};
