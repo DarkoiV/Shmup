@@ -32,7 +32,7 @@ struct Sparrow : Gng2D::GameObject
         addComponent<EnemyBasicWeapon>(75u);
     }
 
-    static void onDestroy()
+    void onDestroy()
     {
         Gng2D::LOG::INFO("Sparrow destroyed");
     }

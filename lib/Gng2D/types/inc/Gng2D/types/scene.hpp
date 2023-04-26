@@ -47,14 +47,14 @@ struct Scene
         o.template addComponent<ObjTag>();
         o.onCreate(std::forward<Args>(args)...);
 
-        constexpr bool hasDestroyFunction = requires(const Obj&)
+        constexpr bool hasDestroyFunction = requires(Obj& o)
         {
-            Obj::onDestroy();
+            o.onDestroy();
         };
         if constexpr (hasDestroyFunction)
         {
             registry.on_destroy<ObjTag>()
-                .template connect<&Obj::onDestroy>();
+                .template connect<&Scene::callDestroy<Obj>>(this);
         }
         return o;
     }
@@ -96,6 +96,12 @@ protected:
 
 private:
     void        runCoroutines();
+
+    template<typename Obj>
+    void callDestroy(entt::registry&, entt::entity e)
+    {
+        Obj(*this, e).onDestroy();
+    }
 
     entt::registry                  registry;
     std::vector<Coroutine>          coroutines;
