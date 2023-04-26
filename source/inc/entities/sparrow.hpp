@@ -5,6 +5,7 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/velocity.hpp"
+#include "Gng2D/core/log.hpp"
 #include "components/enemy_ship_collider.hpp"
 #include "components/hit_points.hpp"
 #include "components/enemy_basic_weapon.hpp"
@@ -29,6 +30,11 @@ struct Sparrow : Gng2D::GameObject
         addComponent<EnemyShipCollider>(5.0f);
         addComponent<HitPoints>(3u, 3u);
         addComponent<EnemyBasicWeapon>(75u);
+    }
+
+    static void onDestroy()
+    {
+        Gng2D::LOG::INFO("Sparrow destroyed");
     }
 };
 

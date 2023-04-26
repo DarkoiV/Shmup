@@ -42,9 +42,20 @@ struct Scene
     Obj spawnObject(Args&&... args)
     {
         using ObjTag = Tag<Obj>;
+
         Obj o(*this);
         o.template addComponent<ObjTag>();
         o.onCreate(std::forward<Args>(args)...);
+
+        constexpr bool hasDestroyFunction = requires(const Obj&)
+        {
+            Obj::onDestroy();
+        };
+        if constexpr (hasDestroyFunction)
+        {
+            registry.on_destroy<ObjTag>()
+                .template connect<&Obj::onDestroy>();
+        }
         return o;
     }
 
