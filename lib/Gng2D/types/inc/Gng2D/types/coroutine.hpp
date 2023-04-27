@@ -2,6 +2,7 @@
 #include <coroutine>
 #include <functional>
 #include <variant>
+#include "Gng2D/core/settings.hpp"
 
 namespace Gng2D
 {
@@ -9,9 +10,9 @@ struct Coroutine
 {
     struct promise_type;
 
-    using  WaitTicks    = unsigned;
+    using  Wait         = unsigned;
     struct Completed {};
-    using  Status       = std::variant<WaitTicks, Completed>;
+    using  Status       = std::variant<Wait, Completed>;
 
     using HandleType    = std::coroutine_handle<promise_type>;
     struct promise_type
@@ -52,5 +53,16 @@ private:
 
     bool resumable();
 };
+
+consteval Coroutine::Wait operator""_seconds(unsigned long long s)
+{
+    return s * Gng2D::LOGIC_TICK;
+}
+
+consteval Coroutine::Wait operator""_seconds(long double s)
+{
+    return s * Gng2D::LOGIC_TICK;
+}
+
 }
 

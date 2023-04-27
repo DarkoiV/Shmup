@@ -90,7 +90,7 @@ bool Coroutine::resumable()
         { 
             return false; 
         },
-        [](WaitTicks& wt) -> bool
+        [](Wait& wt) -> bool
         {
             // Waiting 0 ticks has no logical sens imho,
             // But idk how to constrain it for now

@@ -6,7 +6,7 @@ static Gng2D::Coroutine flashShip(Gng2D::GameObject ship)
         auto& sprite = ship.getComponent<Gng2D::Sprite>();
         EnemySpriteSheet::setVFrame(EnemySpriteSheet::VFrame::Flashing, sprite);
     }
-    co_yield Gng2D::Coroutine::WaitTicks{7};
+    co_yield Gng2D::Coroutine::Wait{7};
     {
         auto& sprite = ship.getComponent<Gng2D::Sprite>();
         EnemySpriteSheet::setVFrame(EnemySpriteSheet::VFrame::Normal, sprite);

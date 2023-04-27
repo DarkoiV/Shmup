@@ -12,7 +12,7 @@ Gng2D::Coroutine empty()
 Gng2D::Coroutine waitXTicks(unsigned ticks, bool& beforeYield, bool& afterYield)
 {
     beforeYield = true;
-    co_yield Gng2D::Coroutine::WaitTicks{ticks};
+    co_yield Gng2D::Coroutine::Wait{ticks};
     afterYield = true;
 }
 }
