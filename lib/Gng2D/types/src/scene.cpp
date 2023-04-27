@@ -28,6 +28,11 @@ bool Gng2D::Scene::entityExists(entt::entity id) const
 
 void Gng2D::Scene::destroyEntity(entt::entity id)
 {
+    if (registry.all_of<CallDestroy>(id))
+    {
+        auto& onDestroy = registry.get<CallDestroy>(id);
+        onDestroy(*this, id);
+    }
     registry.destroy(id);
 }
 

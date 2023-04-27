@@ -53,8 +53,10 @@ struct Scene
         };
         if constexpr (hasDestroyFunction)
         {
-            registry.on_destroy<ObjTag>()
-                .template connect<&Scene::callDestroy<Obj>>(this);
+            o.template addComponent<CallDestroy>([](Scene& s, entt::entity e)
+            {
+                Obj(s, e).onDestroy();
+            });
         }
         return o;
     }
@@ -88,7 +90,7 @@ struct Scene
     void        destroyEntity(entt::entity id);
 
 ///// Other /////
-    bool            isKeyPressed(SDL_Scancode) const;
+    bool        isKeyPressed(SDL_Scancode) const;
 
 protected:
     bool                pause{false};
@@ -97,11 +99,7 @@ protected:
 private:
     void        runCoroutines();
 
-    template<typename Obj>
-    void callDestroy(entt::registry&, entt::entity e)
-    {
-        Obj(*this, e).onDestroy();
-    }
+    struct CallDestroy : std::function<void(Scene&, entt::entity)> {};
 
     entt::registry                  registry;
     std::vector<Coroutine>          coroutines;
