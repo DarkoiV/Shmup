@@ -68,6 +68,9 @@ struct GameObject
     }
 
 protected:
+    Scene&              scene;
+
+private:
     entt::registry&     registry;
     const entt::entity  id;
 };
