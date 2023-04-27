@@ -1,5 +1,6 @@
 #include "systems/bullet_enemy_collision.hpp"
 #include "components/enemy_animation.hpp"
+#include "components/destroyed_by_player.hpp"
 #include "entities/red_x.hpp"
 
 void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
@@ -12,8 +13,7 @@ void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
 
     if (enemyHP == 0) 
     {
-        auto pos = enemyObject.getComponent<Gng2D::Position>();
-        scene.spawnObject<RedX>(pos);
+        enemyObject.addComponent<DestroyedByPlayer>();
         scene.destroyEntity(enemy);
     }
     else enemyObject.addOrReplaceComponent<EnemyAnimation>(enemyObject, EnemyAnimation::Type::flash);

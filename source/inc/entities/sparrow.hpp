@@ -1,5 +1,6 @@
 #pragma once
 #include "Gng2D/types/game_object.hpp"
+#include "Gng2D/types/scene.hpp"
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/components/position.hpp"
@@ -9,6 +10,8 @@
 #include "components/enemy_ship_collider.hpp"
 #include "components/hit_points.hpp"
 #include "components/enemy_basic_weapon.hpp"
+#include "components/destroyed_by_player.hpp"
+#include "entities/red_x.hpp"
 #include "flight_scene_layers.hpp"
 #include "sprite_sheets.hpp"
 
@@ -34,7 +37,11 @@ struct Sparrow : Gng2D::GameObject
 
     void onDestroy()
     {
-        Gng2D::LOG::INFO("Sparrow destroyed");
+        if (hasComponents<DestroyedByPlayer>())
+        {
+            scene.spawnObject<RedX>(getComponent<Gng2D::Position>());
+            Gng2D::LOG::INFO("Sparrow destroyed");
+        }
     }
 };
 
