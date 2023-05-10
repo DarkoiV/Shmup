@@ -50,3 +50,8 @@ int Text::height() const
     return font.height() * scale;
 }
 
+bool Text::isAnimationCompleted() const 
+{
+    return animation.isCompleted();
+}
+

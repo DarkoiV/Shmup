@@ -24,6 +24,8 @@ struct Text : Element
         animation = coro(*this, std::forward<Args>(args)...);
     }
 
+    bool isAnimationCompleted() const;
+
 private:
     Font                font;
     std::string         str;
