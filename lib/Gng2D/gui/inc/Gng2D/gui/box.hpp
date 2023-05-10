@@ -14,7 +14,6 @@ struct Box : ::Gng2D::gui::Element
     int     height() const;
 
     void    setCapacity(int width, int height, int margin = 0);
-
     std::pair<int, int> innerOrgin() const;
 
 private:

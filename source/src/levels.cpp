@@ -14,13 +14,13 @@ Coroutine levelOne(Scene& scene, FlightSceneGui& gui)
     gui.addPopUpText("LEVEL ONE");
     co_yield Coroutine::Wait{10_seconds};
 
-    scene.spawnObject<Sparrow>(Position{320.0f, 0.0f});
+    scene.spawn<Sparrow>(Position{320.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
     
-    scene.spawnObject<Sparrow>(Position{120.0f, 0.0f});
+    scene.spawn<Sparrow>(Position{120.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
 
-    scene.spawnObject<Sparrow>(Position{520.0f, 0.0f});
+    scene.spawn<Sparrow>(Position{520.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
 
     for (int i = 0; i < 10; ++i)
@@ -28,15 +28,15 @@ Coroutine levelOne(Scene& scene, FlightSceneGui& gui)
         constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
         constexpr auto DR_DIR   = Velocity{1.41f, 1.41f};
         constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
-        scene.spawnObject<EnemyBullet>(Position{320.0f, 0.0f}, D_DIR);
-        scene.spawnObject<EnemyBullet>(Position{120.0f, 0.0f}, DR_DIR);
+        scene.spawn<EnemyBullet>(Position{320.0f, 0.0f}, D_DIR);
+        scene.spawn<EnemyBullet>(Position{120.0f, 0.0f}, DR_DIR);
         co_yield Coroutine::Wait{20};
 
-        scene.spawnObject<EnemyBullet>(Position{400.0f, 0.0f}, D_DIR);
+        scene.spawn<EnemyBullet>(Position{400.0f, 0.0f}, D_DIR);
         co_yield Coroutine::Wait{20};
 
-        scene.spawnObject<EnemyBullet>(Position{240.0f, 0.0f}, D_DIR);
-        scene.spawnObject<EnemyBullet>(Position{520.0f, 0.0f}, DL_DIR);
+        scene.spawn<EnemyBullet>(Position{240.0f, 0.0f}, D_DIR);
+        scene.spawn<EnemyBullet>(Position{520.0f, 0.0f}, DL_DIR);
         co_yield Coroutine::Wait{20};
     }
     for (int i = 0; i < 500; ++i)
@@ -45,7 +45,7 @@ Coroutine levelOne(Scene& scene, FlightSceneGui& gui)
         {
             const float degrees = (10 * i) % 360 + (j * 40);
             const auto velocity = Velocity{V2d::rot(degrees, 2.0f)};
-            scene.spawnObject<EnemyBullet>(Position{320.0f, 55.0f}, velocity);
+            scene.spawn<EnemyBullet>(Position{320.0f, 55.0f}, velocity);
         }
         co_yield Coroutine::Wait{3};
     }

@@ -39,7 +39,7 @@ struct Sparrow : Gng2D::GameObject
     {
         if (hasComponents<DestroyedByPlayer>())
         {
-            scene.spawnObject<RedX>(getComponent<Gng2D::Position>());
+            scene.spawn<RedX>(getComponent<Gng2D::Position>());
             Gng2D::LOG::INFO("Sparrow destroyed");
         }
     }

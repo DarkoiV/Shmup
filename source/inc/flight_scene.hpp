@@ -31,7 +31,7 @@ struct FlightScene : Gng2D::Scene
     void onKeyDown(SDL_KeyboardEvent&) override;
 
 private:
-    PlayerShip              playerShip = spawnObject<PlayerShip>();
+    PlayerShip              playerShip = spawn<PlayerShip>();
     PlayerControlls         playerControlls{*this, playerShip};
 
     AnimationsSystem

@@ -14,7 +14,7 @@ void EnemyBulletSpawner::operator()()
             const auto enemyVel = enemyObject.getComponent<Gng2D::Velocity>();
             const auto bulletPos  = Gng2D::Position{enemyPos + Gng2D::Position{0, 15.0f}};
             const auto bulletVelo = Gng2D::Velocity{enemyVel + Gng2D::Velocity{0, 1.0f}};
-            scene.spawnObject<EnemyBullet>(bulletPos, bulletVelo);
+            scene.spawn<EnemyBullet>(bulletPos, bulletVelo);
             bw.remainigCooldown = bw.cooldownTicks;
         }
         else --bw.remainigCooldown;

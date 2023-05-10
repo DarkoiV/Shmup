@@ -39,7 +39,7 @@ struct Scene
 ///// Entity management /////
     template<typename Obj, typename... Args>
         requires(std::is_base_of<GameObject, Obj>::value)
-    Obj spawnObject(Args&&... args)
+    Obj spawn(Args&&... args)
     {
         using ObjTag = Tag<Obj>;
 

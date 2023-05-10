@@ -52,7 +52,7 @@ void PlayerControlls::primaryFire()
         {
             const Gng2D::Position bulletSpawnPosition{pos.x, pos.y - 7};
             const Gng2D::Velocity bulletVelocity{0, -4};
-            scene.spawnObject<AllyBullet>(bulletSpawnPosition, bulletVelocity);
+            scene.spawn<AllyBullet>(bulletSpawnPosition, bulletVelocity);
             weapon.remainigCooldown = weapon.cooldownTicks;
         }
     }
