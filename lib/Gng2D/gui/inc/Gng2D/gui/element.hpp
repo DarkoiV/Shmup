@@ -31,3 +31,4 @@ protected:
     uint8_t         opacity{255};
 };
 }
+
