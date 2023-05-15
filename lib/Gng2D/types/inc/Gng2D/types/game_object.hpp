@@ -49,6 +49,12 @@ struct GameObject
         return registry.emplace_or_replace<Component>(id, std::forward<Args>(args)...);
     }
 
+    template<typename Component>
+    void patchComponent(std::function<void(Component&)> patchFunc)
+    {
+        registry.patch<Component>(id, patchFunc);
+    }
+
     template<typename... Components>
     bool hasComponents() const
     {

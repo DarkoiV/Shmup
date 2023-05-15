@@ -24,3 +24,4 @@ void Gng2D::SceneRegistry::switchScene()
 
     if (not currentScene) LOG::FATAL("No current scene after switching!");
 }
+

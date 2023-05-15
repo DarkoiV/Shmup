@@ -4,3 +4,4 @@ namespace Gng2D
 {
     void requestQuit();
 }
+
