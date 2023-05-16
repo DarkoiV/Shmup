@@ -2,7 +2,11 @@
 
 struct Sandbox : public Gng2D::Application
 {
-    void onCreate() override    {};
+    void onCreate() override
+    {
+
+    }
+
     void onQuit() override      {};
 };
 

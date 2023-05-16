@@ -1,16 +1,10 @@
 cmake_minimum_required(VERSION 3.22) 
 project(Sandbox)
-include(FetchContent)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-FetchContent_Declare(
-    Gng2D
-    GIT_REPOSITORY  https://github.com/DarkoiV/Gng2D.git
-    GIT_TAG         main
-)
-FetchContent_MakeAvailable(Gng2D)
+add_subdirectory(.. build/Gng2D_files)
 
 add_executable(sandbox)
 target_link_libraries(sandbox
