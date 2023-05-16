@@ -15,9 +15,9 @@ struct Element
     };
     virtual ~Element() = default;
 
-    virtual void    render(SDL_Renderer*) const      = 0;
-    virtual int     width()     const                = 0;
-    virtual int     height()    const                = 0;
+    virtual void    render(SDL_Renderer*) const = 0;
+    virtual int     width()     const           = 0;
+    virtual int     height()    const           = 0;
 
     void    setScale(unsigned); 
     void    setOpacity(uint8_t);

@@ -14,6 +14,8 @@ Box::Box(const std::string& boxSprite)
 
 void Box::render(SDL_Renderer* r) const 
 {
+    SDL_SetTextureAlphaMod(texture, opacity);
+
     // TOP LEFT
     SDL_Rect dstRect{originPointX, 
                      originPointY, 

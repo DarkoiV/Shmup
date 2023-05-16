@@ -6,7 +6,8 @@ namespace Gng2D::gui
 {
 struct Icon : Element
 {
-    Icon(const std::string& spriteName, SDL_Rect srcRect);
+    Icon(const std::string& sprite);
+    Icon(const std::string& sprite, SDL_Rect srcRect);
 
     void    render(SDL_Renderer*)   const override;
     int     width()                 const override;

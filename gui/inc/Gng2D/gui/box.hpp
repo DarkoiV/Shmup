@@ -5,7 +5,7 @@
 
 namespace Gng2D::gui 
 {
-struct Box : ::Gng2D::gui::Element
+struct Box : Element
 {
     Box(const std::string& boxSprite);
 

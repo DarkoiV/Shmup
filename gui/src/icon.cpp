@@ -4,8 +4,16 @@
 using Gng2D::gui::Icon;
 using namespace Gng2D;
 
-Icon::Icon(const std::string& spriteName, SDL_Rect src)
-    : texture(AssetRegistry().getSprite(spriteName))
+Icon::Icon(const std::string& sprite)
+    : texture(AssetRegistry().getSprite(sprite))
+{
+    SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
+    srcRect.x = 0;
+    srcRect.y = 0;
+}
+
+Icon::Icon(const std::string& sprite, SDL_Rect src)
+    : texture(AssetRegistry().getSprite(sprite))
     , srcRect(src)
 {
 }
