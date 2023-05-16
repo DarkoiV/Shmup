@@ -21,5 +21,8 @@ Gng2D::Sprite::Sprite(const Text& text, float scale)
     : texture(text.getSprite())
     , scale(scale)
 {
+    srcRect.x = 0;
+    srcRect.y = 0;
+    SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
 }
 
