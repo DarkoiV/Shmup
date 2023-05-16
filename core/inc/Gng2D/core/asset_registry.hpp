@@ -2,6 +2,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <functional>
 #include "SDL2/SDL.h"
 #include "Gng2D/types/font.hpp"
 
@@ -16,6 +17,18 @@ struct AssetRegistry
     void            loadBMFont(const std::string& name, int charW, int charH);
     SDL_Texture*    getSprite(const std::string& name)  const;
     Font            getFont(const std::string& name)    const;
+
+    struct RenderToTexture
+    {
+        RenderToTexture(int width, int height);
+        ~RenderToTexture();
+
+        RenderToTexture&    renderCommands(std::function<void(SDL_Renderer*)>);
+        SDL_Texture*        getTexture();
+
+    private:
+        SDL_Texture* target;
+    };
 
 private:
     SDL_Texture*    loadSpriteFile(const std::string& name, 

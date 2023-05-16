@@ -4,13 +4,15 @@
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/window.hpp"
 
-void Gng2D::AssetRegistry::loadSprite(const std::string& name)
+using Gng2D::AssetRegistry;
+
+void AssetRegistry::loadSprite(const std::string& name)
 {
     if (globalSprites.contains(name)) return LOG::WARN("Sprite", name, "already loaded");
     if (auto* sprite = loadSpriteFile(name)) globalSprites[name] = sprite; 
 }
 
-void Gng2D::AssetRegistry::loadBMFont(const std::string& name, int charW, int charH)
+void AssetRegistry::loadBMFont(const std::string& name, int charW, int charH)
 {
     if (globalFonts.contains(name)) return LOG::WARN("Font", name, "already loaded");
     auto* fontSprite = loadSpriteFile(name, "data/fonts/");
@@ -24,7 +26,7 @@ void Gng2D::AssetRegistry::loadBMFont(const std::string& name, int charW, int ch
     globalSprites["fonts/" + name] = fontSprite;
 }
 
-SDL_Texture* Gng2D::AssetRegistry::loadSpriteFile(const std::string& name, const std::string& path)
+SDL_Texture* AssetRegistry::loadSpriteFile(const std::string& name, const std::string& path)
 {
     LOG::INFO("Loading:", name);
     const std::string pathToSprite{path + name + ".png"};
@@ -34,7 +36,7 @@ SDL_Texture* Gng2D::AssetRegistry::loadSpriteFile(const std::string& name, const
     return sprite;
 }
 
-SDL_Texture* Gng2D::AssetRegistry::getSprite(const std::string& name) const
+SDL_Texture* AssetRegistry::getSprite(const std::string& name) const
 {
     if (not globalSprites.contains(name))
     {
@@ -44,7 +46,7 @@ SDL_Texture* Gng2D::AssetRegistry::getSprite(const std::string& name) const
     return globalSprites.at(name);
 }
 
-Gng2D::Font Gng2D::AssetRegistry::getFont(const std::string& name) const
+Gng2D::Font AssetRegistry::getFont(const std::string& name) const
 {
     if (not globalFonts.contains(name))
     {
@@ -62,3 +64,33 @@ void Gng2D::AssetRegistry::freeAllSprites()
         SDL_DestroyTexture(texture);
     }
 }
+
+AssetRegistry::RenderToTexture::RenderToTexture(int width, int height)
+{
+    SDL_RendererInfo info;
+    SDL_GetRendererInfo(renderer, &info);
+    target = SDL_CreateTexture(renderer, 
+                               info.texture_formats[0], 
+                               SDL_TEXTUREACCESS_STATIC, 
+                               width, 
+                               height);
+    auto err = SDL_SetRenderTarget(renderer, target);
+    if (err) LOG::ERROR("Cannot change render target:", SDL_GetError());
+}
+
+AssetRegistry::RenderToTexture::~RenderToTexture()
+{
+    SDL_SetRenderTarget(renderer, NULL);
+}
+
+AssetRegistry::RenderToTexture& AssetRegistry::RenderToTexture::renderCommands(std::function<void(SDL_Renderer*)> commands)
+{
+    commands(renderer);
+    return *this;
+}
+
+SDL_Texture* AssetRegistry::RenderToTexture::getTexture()
+{
+    return target;
+}
+
