@@ -32,6 +32,8 @@ EntityRenderer::~EntityRenderer()
     scene.onConstruct<Sprite>().disconnect<&EntityRenderer::markForSorting>(this);
     scene.onConstruct<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
     scene.onUpdate<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
+
+    scene.onUpdate<Text>().disconnect<&replaceTextSprite>();
 }
 
 void EntityRenderer::operator()(SDL_Renderer* r)
