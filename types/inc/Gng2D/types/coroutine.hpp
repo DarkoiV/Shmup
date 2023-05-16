@@ -51,7 +51,7 @@ private:
     HandleType  handle;
     Status      status;
 
-    bool resumable();
+    bool isResumable();
 };
 
 consteval Coroutine::Wait operator""_seconds(unsigned long long s)

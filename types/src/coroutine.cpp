@@ -69,7 +69,7 @@ Coroutine& Coroutine::operator=(HandleType&& h)
 
 void Coroutine::operator()()
 {
-    if (not resumable()) return;
+    if (not isResumable()) return;
     handle.resume();
     status = handle.promise().retVal;
 }
@@ -83,7 +83,7 @@ bool Coroutine::isCompleted() const
 template<class... Ts> struct Overload : Ts... { using Ts::operator()...; };
 template<class... Ts> Overload(Ts...) -> Overload<Ts...>;
 
-bool Coroutine::resumable()
+bool Coroutine::isResumable()
 {
     return std::visit(Overload{
         [](Completed&) -> bool 
