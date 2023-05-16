@@ -67,15 +67,18 @@ void Gng2D::AssetRegistry::freeAllSprites()
 
 AssetRegistry::RenderToTexture::RenderToTexture(int width, int height)
 {
-    SDL_RendererInfo info;
-    SDL_GetRendererInfo(renderer, &info);
     target = SDL_CreateTexture(renderer, 
-                               info.texture_formats[0], 
-                               SDL_TEXTUREACCESS_STATIC, 
+                               SDL_PIXELFORMAT_ARGB32,
+                               SDL_TEXTUREACCESS_TARGET, 
                                width, 
                                height);
+
     auto err = SDL_SetRenderTarget(renderer, target);
     if (err) LOG::ERROR("Cannot change render target:", SDL_GetError());
+ 
+    SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0,0,0,0); 
+    SDL_RenderClear(renderer);
 }
 
 AssetRegistry::RenderToTexture::~RenderToTexture()
