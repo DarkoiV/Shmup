@@ -1,6 +1,7 @@
 #include "flight_scene.hpp"
-#include "Gng2D/core/log.hpp"
 #include "Gng2D/core/asset_registry.hpp"
+#include "Gng2D/core/log.hpp"
+#include "Gng2D/gui/text_object.hpp"
 #include "game_over_scene.hpp"
 #include "levels.hpp"
 
@@ -48,7 +49,9 @@ void FlightScene::update()
 void FlightScene::render(SDL_Renderer* r)
 {
     entityRenderer(r);
+    if (playerControlls.inFocusMode()) playerColliderRenderer(r);
 }
+
 
 void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
 {
@@ -56,6 +59,26 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
     {
         case SDLK_p:
             pause = !pause;
+            break;
+        case SDLK_LSHIFT:
+            spawn<Gng2D::TextObject>(Gng2D::Position{30, 10}, "charmap-oldschool_white", "FOCUS")
+                .addComponent<FocusDisplay>();
+            break;
+        case SDLK_1:
+            spawn<Gng2D::TextObject>(Gng2D::Position{100, 100}, "charmap-oldschool_white", "HELLO");
+            break;
+    }
+}
+
+void FlightScene::onKeyUp(SDL_KeyboardEvent& e)
+{
+    switch (e.keysym.sym)
+    {
+        case SDLK_LSHIFT:
+            for (auto [e] : view<FocusDisplay>())
+            {
+                destroyEntity(e);
+            }
             break;
     }
 }

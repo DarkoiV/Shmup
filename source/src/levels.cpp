@@ -8,16 +8,18 @@
 
 using namespace Gng2D;
 
+static void popLevelText(Scene& scene, const std::string& text)
+{
+    auto levelText = scene.spawn<TextObject>(Gng2D::Position{SCREEN_WIDTH/2.0f, SCREEN_HEIGHT/2.0f},
+                                             "charmap-oldschool_white",
+                                             text,
+                                             3u);
+    levelText.addComponent<TimedExistence>(5_seconds);
+}
+
 Coroutine levelOne(Scene& scene)
 {
-    {
-        auto levelText = scene.spawn<TextObject>(Gng2D::Position{SCREEN_WIDTH/2.0f, SCREEN_HEIGHT/2.0f},
-                                                 "charmap-oldschool_white",
-                                                 "LEVEL ONE",
-                                                 3u);
-        levelText.addComponent<TimedExistence>(5_seconds);
-    }
-
+    popLevelText(scene, "LEVEL ONE");
     co_yield Coroutine::Wait{5_seconds};
 
     scene.spawn<Sparrow>(Position{320.0f, 0.0f});

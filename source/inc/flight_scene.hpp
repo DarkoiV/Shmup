@@ -28,6 +28,7 @@ struct FlightScene : Gng2D::Scene
     void render(SDL_Renderer*)  override;
 
     void onKeyDown(SDL_KeyboardEvent&) override;
+    void onKeyUp(SDL_KeyboardEvent&) override;
 
 private:
     PlayerShip              playerShip = spawn<PlayerShip>();
@@ -56,5 +57,7 @@ private:
         bulletEnemyCollision{*this};
 
     EntityCleaner       entityCleaner{*this};
+
+    struct FocusDisplay {};
 };
 
