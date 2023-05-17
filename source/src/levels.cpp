@@ -2,18 +2,13 @@
 #include <memory>
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
-#include "Gng2D/gui/text.hpp"
-#include "Gng2D/gui/text_animations.hpp"
 #include "entities/bullet.hpp"
 #include "entities/sparrow.hpp"
 
 using namespace Gng2D;
 
-Coroutine levelOne(Scene& scene, FlightSceneGui& gui)
+Coroutine levelOne(Scene& scene)
 {
-    gui.addPopUpText("LEVEL ONE");
-    co_yield Coroutine::Wait{10_seconds};
-
     scene.spawn<Sparrow>(Position{320.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
     

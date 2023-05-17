@@ -13,7 +13,6 @@
 #include "systems/bullet_enemy_collision.hpp"
 #include "systems/enemy_bullet_spawner.hpp"
 #include "systems/entity_cleaner.hpp"
-#include "systems/flight_scene_gui.hpp"
 #include "systems/player_bullet_collision.hpp"
 #include "systems/player_controlls.hpp"
 #include "systems/player_enemy_collision.hpp"
@@ -36,8 +35,6 @@ private:
 
     AnimationsSystem
         animationSystem{*this};
-    FlightSceneGui
-        flightSceneGui{*this, playerControlls, playerShip};
 
     EnemyBulletSpawner
         enemyBulletSpawner{*this};

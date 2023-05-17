@@ -1,13 +1,12 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/asset_registry.hpp"
-#include "Gng2D/gui/text.hpp"
 #include "game_over_scene.hpp"
 #include "levels.hpp"
 
 FlightScene::FlightScene()
 {
-    addCoroutine(levelOne, *this, flightSceneGui);
+    addCoroutine(levelOne, *this);
 }
 
 void FlightScene::onEnter()
@@ -44,15 +43,11 @@ void FlightScene::update()
 
     animationSystem();
     entityCleaner();
-
-    flightSceneGui();
 }
 
 void FlightScene::render(SDL_Renderer* r)
 {
     entityRenderer(r);
-    if (playerControlls.inFocusMode()) playerColliderRenderer(r);
-    flightSceneGui.render(r);
 }
 
 void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
