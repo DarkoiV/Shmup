@@ -1,7 +1,7 @@
 #include "Gng2D/systems/entity_renderer.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
-#include "Gng2D/components/text.hpp"
+#include "Gng2D/components/text_sprite.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/types/scene.hpp"
 
@@ -9,11 +9,7 @@ using namespace Gng2D;
 
 static void replaceTextSprite(entt::registry& r, entt::entity e)
 {
-    if (r.all_of<Sprite>(e)) 
-    {
-        auto scale = r.get<Sprite>(e).scale;
-        r.replace<Sprite>(e, r.get<Text>(e), scale);
-    }
+    r.replace<Sprite>(e, r.get<TextSprite>(e));
 }
 
 EntityRenderer::EntityRenderer(Scene& s)
@@ -24,7 +20,7 @@ EntityRenderer::EntityRenderer(Scene& s)
     scene.onConstruct<Layer>().connect<&EntityRenderer::markForSorting>(this);
     scene.onUpdate<Layer>().connect<&EntityRenderer::markForSorting>(this);
 
-    scene.onUpdate<Text>().connect<&replaceTextSprite>();
+    scene.onUpdate<TextSprite>().connect<&replaceTextSprite>();
 }
 
 EntityRenderer::~EntityRenderer()
@@ -33,7 +29,7 @@ EntityRenderer::~EntityRenderer()
     scene.onConstruct<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
     scene.onUpdate<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
 
-    scene.onUpdate<Text>().disconnect<&replaceTextSprite>();
+    scene.onUpdate<TextSprite>().disconnect<&replaceTextSprite>();
 }
 
 void EntityRenderer::operator()(SDL_Renderer* r)
