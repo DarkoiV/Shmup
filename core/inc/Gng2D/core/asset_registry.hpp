@@ -20,11 +20,12 @@ struct AssetRegistry
 
     struct RenderToTexture
     {
-        RenderToTexture(int width, int height);
+        using Commands = std::function<void(SDL_Renderer*)>;
+        RenderToTexture(int width, int height, Commands);
         ~RenderToTexture();
 
-        RenderToTexture&    renderCommands(std::function<void(SDL_Renderer*)>);
         SDL_Texture*        getTexture();
+        void                saveTexture(const std::string& name);
 
     private:
         SDL_Texture* target;

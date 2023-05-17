@@ -71,7 +71,7 @@ void TextSprite::generateNewTexture()
     int textWidth  = font.width() * str.size();
     int textHeight = font.height();
 
-    textSprite = AssetRegistry::RenderToTexture(textWidth, textHeight).renderCommands([this](SDL_Renderer* r)
+    textSprite = AssetRegistry::RenderToTexture(textWidth, textHeight, [this](SDL_Renderer* r)
     {
         SDL_Rect dst{0,0, font.width(), font.height()};
         for (const auto c : str)

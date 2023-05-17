@@ -65,7 +65,7 @@ void Gng2D::AssetRegistry::freeAllSprites()
     }
 }
 
-AssetRegistry::RenderToTexture::RenderToTexture(int width, int height)
+AssetRegistry::RenderToTexture::RenderToTexture(int width, int height, Commands commands)
 {
     target = SDL_CreateTexture(renderer, 
                                SDL_PIXELFORMAT_ARGB32,
@@ -79,6 +79,7 @@ AssetRegistry::RenderToTexture::RenderToTexture(int width, int height)
     SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, 0,0,0,0); 
     SDL_RenderClear(renderer);
+    commands(renderer);
 }
 
 AssetRegistry::RenderToTexture::~RenderToTexture()
@@ -86,14 +87,13 @@ AssetRegistry::RenderToTexture::~RenderToTexture()
     SDL_SetRenderTarget(renderer, NULL);
 }
 
-AssetRegistry::RenderToTexture& AssetRegistry::RenderToTexture::renderCommands(std::function<void(SDL_Renderer*)> commands)
-{
-    commands(renderer);
-    return *this;
-}
-
 SDL_Texture* AssetRegistry::RenderToTexture::getTexture()
 {
     return target;
+}
+
+void AssetRegistry::RenderToTexture::saveTexture(const std::string& name)
+{
+    globalSprites[name] = target;
 }
 
