@@ -2,6 +2,7 @@
 #include <memory>
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
+#include "Gng2D/gui/text_object.hpp"
 #include "entities/bullet.hpp"
 #include "entities/sparrow.hpp"
 
@@ -9,6 +10,16 @@ using namespace Gng2D;
 
 Coroutine levelOne(Scene& scene)
 {
+    {
+        auto levelText = scene.spawn<TextObject>(Gng2D::Position{SCREEN_WIDTH/2.0f, SCREEN_HEIGHT/2.0f},
+                                                 "charmap-oldschool_white",
+                                                 "LEVEL ONE",
+                                                 3u);
+        levelText.addComponent<TimedExistence>(5_seconds);
+    }
+
+    co_yield Coroutine::Wait{5_seconds};
+
     scene.spawn<Sparrow>(Position{320.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
     
