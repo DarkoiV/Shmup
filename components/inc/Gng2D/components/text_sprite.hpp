@@ -17,6 +17,7 @@ struct TextSprite
     void            changeFont(const std::string& font);
     void            changeString(const std::string& str);
     void            changeScale(float);
+    void            changeRGBAMod(uint8_t, uint8_t, uint8_t, uint8_t);
 
 private:
     void generateNewTexture();
