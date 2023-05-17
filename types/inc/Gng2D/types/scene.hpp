@@ -1,9 +1,10 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <optional>
+#include <unordered_map>
 #include <SDL2/SDL.h>
 #include <entt/entity/registry.hpp>
-#include "Gng2D/components/tag.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/types/coroutine.hpp"
@@ -13,10 +14,10 @@ namespace Gng2D
 struct Application;
 struct Scene
 {
-    Scene()             = default;
+    Scene();
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
-    virtual ~Scene()    = default;
+    virtual ~Scene();
 
     virtual void onEnter()              = 0;
     virtual void onExit()               = 0;
@@ -41,7 +42,7 @@ struct Scene
         requires(std::is_base_of<GameObject, Obj>::value)
     Obj spawn(Args&&... args)
     {
-        using ObjTag = Tag<Obj>;
+        using ObjTag = GameObject::TypeTag<Obj>;
 
         Obj o(*this);
         o.template addComponent<ObjTag>();
@@ -85,6 +86,8 @@ struct Scene
         return registry.on_update<Component>();
     }
 
+    std::optional<GameObject>
+        getGameObject(const std::string&);
     GameObject  getGameObject(entt::entity id);
     bool        entityExists(entt::entity id) const;
     void        destroyEntity(entt::entity id);
@@ -103,6 +106,10 @@ private:
 
     entt::registry                  registry;
     std::vector<Coroutine>          coroutines;
+
+    std::unordered_map<std::string, entt::entity>
+        namedEntities;
+    void removeNamedEntity(entt::registry&, entt::entity);
 
     friend struct ::Gng2D::GameObject;
 };

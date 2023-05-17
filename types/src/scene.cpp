@@ -3,7 +3,24 @@
 #include "Gng2D/core/window.hpp"
 #include "Gng2D/types/scene.hpp"
 
-void Gng2D::Scene::operator()()
+using Gng2D::Scene;
+using Gng2D::GameObject;
+
+Scene::Scene()
+{
+    registry
+        .on_destroy<GameObject::NameTag>()
+        .connect<&Scene::removeNamedEntity>(*this);
+}
+
+Scene::~Scene()
+{
+    registry
+        .on_destroy<GameObject::NameTag>()
+        .disconnect<&Scene::removeNamedEntity>(*this);
+}
+
+void Scene::operator()()
 {
     if (pause) return;
 
@@ -11,22 +28,30 @@ void Gng2D::Scene::operator()()
     update();
 }
 
-bool Gng2D::Scene::isPaused() const
+bool Scene::isPaused() const
 {
     return pause;
 }
 
-Gng2D::GameObject Gng2D::Scene::getGameObject(entt::entity id)
+std::optional<GameObject> Scene::getGameObject(const std::string& name)
+{
+    if (namedEntities.contains(name))
+        return GameObject(*this, namedEntities[name]);
+    else
+        return std::nullopt;
+}
+
+GameObject Scene::getGameObject(entt::entity id)
 {
     return GameObject(*this, id);
 }
 
-bool Gng2D::Scene::entityExists(entt::entity id) const
+bool Scene::entityExists(entt::entity id) const
 {
     return registry.valid(id);
 }
 
-void Gng2D::Scene::destroyEntity(entt::entity id)
+void Scene::destroyEntity(entt::entity id)
 {
     if (registry.all_of<CallDestroy>(id))
     {
@@ -36,18 +61,24 @@ void Gng2D::Scene::destroyEntity(entt::entity id)
     registry.destroy(id);
 }
 
-bool Gng2D::Scene::isKeyPressed(SDL_Scancode scancode) const
+bool Scene::isKeyPressed(SDL_Scancode scancode) const
 {
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
     return keyboardState[scancode];
 }
 
-void Gng2D::Scene::runCoroutines()
+void Scene::runCoroutines()
 {
     for (auto& coro : coroutines) coro();
     std::erase_if(coroutines, [](Coroutine& coro) 
     {
         return coro.isCompleted(); 
     });
+}
+
+void Scene::removeNamedEntity(entt::registry&, entt::entity e)
+{
+    auto& tag = registry.get<GameObject::NameTag>(e);
+    namedEntities.erase(tag.name);
 }
 
