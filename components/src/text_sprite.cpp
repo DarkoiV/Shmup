@@ -13,11 +13,6 @@ TextSprite::TextSprite(const std::string& font, const std::string& str, float sc
     generateNewTexture();
 }
 
-TextSprite::~TextSprite()
-{
-    SDL_DestroyTexture(textSprite);
-}
-
 void TextSprite::onAttach(Gng2D::GameObject owner)
 {
     owner.addComponent<Sprite>(*this);
@@ -25,7 +20,7 @@ void TextSprite::onAttach(Gng2D::GameObject owner)
 
 SDL_Texture* TextSprite::getSprite() const
 {
-    return textSprite;
+    return textSprite.get();
 }
 
 float TextSprite::getScale() const
@@ -62,16 +57,10 @@ void TextSprite::changeRGBAMod(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 
 void TextSprite::generateNewTexture()
 {
-    if (textSprite)
-    {
-        SDL_DestroyTexture(textSprite);
-        textSprite = nullptr;
-    }
-
     int textWidth  = font.width() * str.size();
     int textHeight = font.height();
 
-    textSprite = AssetRegistry::RenderToTexture(textWidth, textHeight, [this](SDL_Renderer* r)
+    auto newSprite = AssetRegistry::RenderToTexture(textWidth, textHeight, [this](SDL_Renderer* r)
     {
         SDL_Rect dst{0,0, font.width(), font.height()};
         for (const auto c : str)
@@ -80,5 +69,7 @@ void TextSprite::generateNewTexture()
             dst.x += dst.w;
         }
     }).getTexture();
+
+    textSprite = OwnedTexture(newSprite, &SDL_DestroyTexture);
 }
 
