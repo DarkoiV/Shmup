@@ -9,3 +9,4 @@ target_sources(Gng2D PRIVATE
 # Testing
 target_sources(Gng2D_TESTS PRIVATE
     tst/coroutine_tests.cpp)
+

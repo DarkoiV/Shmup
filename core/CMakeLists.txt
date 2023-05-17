@@ -6,3 +6,4 @@ target_sources(Gng2D PRIVATE
     src/functions.cpp
     src/scene_registry.cpp
     src/window.cpp)
+

@@ -3,3 +3,4 @@ target_include_directories(Gng2D PUBLIC
 target_sources(Gng2D PRIVATE
     src/sprite.cpp
     src/text_sprite.cpp)
+

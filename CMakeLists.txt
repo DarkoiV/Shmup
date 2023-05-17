@@ -42,6 +42,7 @@ add_custom_target(Gng2D_run_test
 
 add_subdirectory(components)
 add_subdirectory(core)
+add_subdirectory(gui)
 add_subdirectory(systems)
 add_subdirectory(types)
 
