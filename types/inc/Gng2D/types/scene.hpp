@@ -71,7 +71,7 @@ struct Scene
     template<typename... OwnedComponents>
     auto group()
     {
-        return registry.group<OwnedComponents...>();
+        return Group<OwnedComponents...>(*this, registry);
     }
 
     template<typename Component>

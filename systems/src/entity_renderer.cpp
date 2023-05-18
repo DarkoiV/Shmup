@@ -57,15 +57,13 @@ void EntityRenderer::markForSorting()
 void EntityRenderer::sortRenderables()
 {
     auto renderables = scene.group<Sprite, Position>();
-    renderables.sort([&s = scene](const entt::entity lhs, const entt::entity rhs)
+    renderables.sort([](GameObject lhs, GameObject rhs)
     {
-        auto leftObj  = s.getGameObject(lhs);
-        auto rightObj = s.getGameObject(rhs);
-        bool leftHasLayer  = leftObj.hasComponents<Layer>();
-        bool rightHasLayer = rightObj.hasComponents<Layer>();
+        bool leftHasLayer  = lhs.hasComponents<Layer>();
+        bool rightHasLayer = rhs.hasComponents<Layer>();
         if (not rightHasLayer) return false;
         if (not leftHasLayer)  return true;
-        return leftObj.getComponent<Layer>().value < rightObj.getComponent<Layer>().value;
+        return lhs.getComponent<Layer>().value < rhs.getComponent<Layer>().value;
     });
 
     needsSorting = false;
