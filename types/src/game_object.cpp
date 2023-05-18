@@ -28,6 +28,7 @@ void GameObject::addName(const std::string& name)
     else
     {
         scene.namedEntities[name] = id;
+        addComponent<NameTag>(name);
     }
 }
 
