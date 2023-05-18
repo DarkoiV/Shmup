@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 #include <optional>
+#include <ranges>
+#include <tuple>
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <entt/entity/registry.hpp>
@@ -65,7 +67,7 @@ struct Scene
     template<typename... Components>
     auto view()
     {
-        return View<Components...>(registry);
+        return View<Components...>(*this, registry);
     }
 
     template<typename... OwnedComponents>
@@ -119,16 +121,25 @@ public:
     template<typename... Components>
     struct View 
     {
-        View(entt::registry& r)
-            : enttView(r.view<Components...>()) {}
+        View(Scene& s, entt::registry& r)
+            : scene(s)
+            , enttView(r.view<Components...>()) {}
 
         auto each()
         {
-            return enttView.each();
+            return enttView.each()
+                | std::views::transform([&]<typename Tuple>(Tuple&& tuple)
+                {
+                    return std::apply([&](auto id, auto&... rest)
+                    {
+                        return std::tuple_cat(std::make_tuple(scene.getGameObject(id)), std::tie(rest...));
+                    }, tuple);
+                });
         }
     private:
         using EnttView = decltype(registry.view<Components...>());
-        EnttView enttView;
+        Scene&      scene;
+        EnttView    enttView;
     };
 
     template<typename... Components>
@@ -140,7 +151,14 @@ public:
 
         auto each()
         {
-            return enttGroup.each();
+            return enttGroup.each()
+                | std::views::transform([&]<typename Tuple>(Tuple&& tuple)
+                {
+                    return std::apply([&](auto id, auto&... rest)
+                    {
+                        return std::tuple_cat(std::make_tuple(scene.getGameObject(id)), std::tie(rest...));
+                    }, tuple);
+                });
         }
         
         void sort(std::function<bool(GameObject, GameObject)> f)
