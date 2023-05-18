@@ -62,10 +62,7 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
             break;
         case SDLK_LSHIFT:
             spawn<Gng2D::TextObject>(Gng2D::Position{30, 10}, "charmap-oldschool_white", "FOCUS")
-                .addComponent<FocusDisplay>();
-            break;
-        case SDLK_1:
-            spawn<Gng2D::TextObject>(Gng2D::Position{100, 100}, "charmap-oldschool_white", "HELLO");
+                .addName("FocusText");
             break;
     }
 }
@@ -75,9 +72,9 @@ void FlightScene::onKeyUp(SDL_KeyboardEvent& e)
     switch (e.keysym.sym)
     {
         case SDLK_LSHIFT:
-            for (auto [e] : view<FocusDisplay>())
+            if (auto focusDisplay = getGameObject("FocusText"))
             {
-                destroyEntity(e);
+                destroyEntity(focusDisplay->getId());
             }
             break;
     }
