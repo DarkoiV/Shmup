@@ -65,7 +65,7 @@ struct Scene
     template<typename... Components>
     auto view()
     {
-        return registry.view<Components...>().each();
+        return View<Components...>(registry);
     }
 
     template<typename... OwnedComponents>
@@ -112,7 +112,50 @@ private:
     void removeNamedEntity(entt::registry&, entt::entity);
 
     friend struct ::Gng2D::GameObject;
-};
 
+///// View and Group /////
+public:
+
+    template<typename... Components>
+    struct View 
+    {
+        View(entt::registry& r)
+            : enttView(r.view<Components...>()) {}
+
+        auto each()
+        {
+            return enttView.each();
+        }
+    private:
+        using EnttView = decltype(registry.view<Components...>());
+        EnttView enttView;
+    };
+
+    template<typename... Components>
+    struct Group
+    {
+        Group(Scene& s, entt::registry& r)
+            : scene(s)
+            , enttGroup(r.group<Components...>()) {}
+
+        auto each()
+        {
+            return enttGroup.each();
+        }
+        
+        void sort(std::function<bool(GameObject, GameObject)> f)
+        {
+            auto compfunc = [&](entt::entity r, entt::entity l)
+            {
+                return f(GameObject(scene, r), GameObject(scene, l));
+            };
+            return enttGroup.sort(compfunc);
+        }
+    private:
+        using EnttGroup = decltype(registry.group<Components...>());
+        Scene&      scene;
+        EnttGroup   enttGroup;
+    };
+};
 }
 

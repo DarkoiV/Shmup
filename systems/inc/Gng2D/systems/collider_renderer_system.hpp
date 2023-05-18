@@ -35,7 +35,7 @@ struct ColliderRendererSystem
     {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 175);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        for (const auto& [_, collider, position] : scene.view<Collider, Position>())
+        for (const auto& [_, collider, position] : scene.view<Collider, Position>().each())
         {
             drawCircle(renderer, collider.radius, position.x, position.y);
         }
