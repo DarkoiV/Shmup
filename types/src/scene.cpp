@@ -6,20 +6,6 @@
 using Gng2D::Scene;
 using Gng2D::GameObject;
 
-Scene::Scene()
-{
-    registry
-        .on_destroy<GameObject::NameTag>()
-        .connect<&Scene::removeNamedEntity>(*this);
-}
-
-Scene::~Scene()
-{
-    registry
-        .on_destroy<GameObject::NameTag>()
-        .disconnect<&Scene::removeNamedEntity>(*this);
-}
-
 void Scene::operator()()
 {
     if (pause) return;
@@ -58,6 +44,11 @@ void Scene::destroyEntity(entt::entity id)
         auto& onDestroy = registry.get<CallDestroy>(id);
         onDestroy(*this, id);
     }
+    if (registry.all_of<GameObject::NameTag>(id))
+    {
+        auto& tag = registry.get<GameObject::NameTag>(id);
+        namedEntities.erase(tag.name);
+    }
     registry.destroy(id);
 }
 
@@ -74,12 +65,5 @@ void Scene::runCoroutines()
     {
         return coro.isCompleted(); 
     });
-}
-
-void Scene::removeNamedEntity(entt::registry&, entt::entity e)
-{
-    auto& tag = registry.get<GameObject::NameTag>(e);
-    LOG::INFO("Erased named tag:", tag.name);
-    namedEntities.erase(tag.name);
 }
 

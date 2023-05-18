@@ -14,10 +14,10 @@ namespace Gng2D
 struct Application;
 struct Scene
 {
-    Scene();
+    Scene()             = default;
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
-    virtual ~Scene();
+    virtual ~Scene()    = default;
 
     virtual void onEnter()              = 0;
     virtual void onExit()               = 0;
