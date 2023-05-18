@@ -79,6 +79,7 @@ void Scene::runCoroutines()
 void Scene::removeNamedEntity(entt::registry&, entt::entity e)
 {
     auto& tag = registry.get<GameObject::NameTag>(e);
+    LOG::INFO("Erased named tag:", tag.name);
     namedEntities.erase(tag.name);
 }
 
