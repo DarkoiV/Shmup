@@ -8,7 +8,7 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 FetchContent_Declare(
     Gng2D
     GIT_REPOSITORY  https://github.com/DarkoiV/Gng2D.git
-    GIT_TAG         Experimental_view/group_wrapper
+    GIT_TAG         main
 )
 FetchContent_MakeAvailable(Gng2D)
 
