@@ -5,8 +5,8 @@ include(FetchContent)
 # EnTT
 FetchContent_Declare(
     EnTT
-    GIT_REPOSITORY https://github.com/skypjack/entt.git
-    GIT_TAG        fef921132cae7588213d0f9bcd2fb9c8ffd8b7fc # 3.11.1
+    GIT_REPOSITORY  https://github.com/skypjack/entt.git
+    GIT_TAG         fef921132cae7588213d0f9bcd2fb9c8ffd8b7fc # 3.11.1
 )
 FetchContent_MakeAvailable(Entt)
 
@@ -14,7 +14,7 @@ FetchContent_MakeAvailable(Entt)
 include(GoogleTest)
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  URL               https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
 )
 FetchContent_MakeAvailable(googletest)
 

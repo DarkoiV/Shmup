@@ -16,7 +16,7 @@ void Gng2D::MovementSystem::operator()()
 
 void Gng2D::MovementSystem::updatePosition()
 {
-    for(const auto& [_, velocity, position] : scene.view<Velocity, Position>().each())
+    for(const auto& [_, velocity, position] : scene.view<Velocity, Position>())
     {
         position += velocity;
     }

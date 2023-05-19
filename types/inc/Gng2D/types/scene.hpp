@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 #include <optional>
+#include <iterator>
+#include <tuple>
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <entt/entity/registry.hpp>
@@ -18,6 +20,9 @@ struct Scene
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
     virtual ~Scene()    = default;
+
+    auto operator=(Scene&)  = delete;
+    auto operator=(Scene&&) = delete;
 
     virtual void onEnter()              = 0;
     virtual void onExit()               = 0;
@@ -65,7 +70,7 @@ struct Scene
     template<typename... Components>
     auto view()
     {
-        return View<Components...>(registry);
+        return View<Components...>(*this, registry);
     }
 
     template<typename... OwnedComponents>
@@ -119,29 +124,109 @@ public:
     template<typename... Components>
     struct View 
     {
-        View(entt::registry& r)
-            : enttView(r.view<Components...>()) {}
-
-        auto each()
-        {
-            return enttView.each();
-        }
-    private:
         using EnttView = decltype(registry.view<Components...>());
-        EnttView enttView;
+        using ViewIterator = decltype(registry.view<Components...>().each().begin());
+
+        View(Scene& s, entt::registry& r)
+            : scene(s)
+            , enttView(r.view<Components...>()) {}
+
+        struct Iterator 
+        {
+            using iterator_category = std::input_iterator_tag;
+            using difference_type   = std::ptrdiff_t;
+
+            Iterator(ViewIterator&& ei, Scene& s)
+                : enttIterator(ei)
+                , scene(s) {}
+
+            auto operator*()
+            {
+                return std::apply([&](auto id, auto&&... rest)
+                {
+                    return std::tuple_cat(std::make_tuple(scene.getGameObject(id)), std::tie(rest...));
+                }, *enttIterator);
+            }
+
+            Iterator& operator++() 
+            {
+                enttIterator++;
+                return *this;
+            }
+
+            friend bool operator==(const Iterator& lhs, const Iterator& rhs) 
+            { 
+                return lhs.enttIterator == rhs.enttIterator;
+            }
+
+            friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
+            {
+                return lhs.enttIterator != rhs.enttIterator;
+            }
+
+        private:
+            ViewIterator    enttIterator;
+            Scene&          scene;
+        };
+
+        Iterator begin() { return Iterator(enttView.each().begin(), scene); };
+        Iterator end()   { return Iterator(enttView.each().end(), scene);   };
+
+    private:
+        Scene&      scene;
+        EnttView    enttView;
     };
 
     template<typename... Components>
     struct Group
     {
+        using EnttGroup = decltype(registry.group<Components...>());
+        using GroupIterator = decltype(registry.group<Components...>().each().begin());
+
         Group(Scene& s, entt::registry& r)
             : scene(s)
             , enttGroup(r.group<Components...>()) {}
 
-        auto each()
+        struct Iterator 
         {
-            return enttGroup.each();
-        }
+            using iterator_category = std::input_iterator_tag;
+            using difference_type   = std::ptrdiff_t;
+
+            Iterator(GroupIterator&& ei, Scene& s)
+                : enttIterator(ei)
+                , scene(s) {}
+
+            auto operator*()
+            {
+                return std::apply([&](auto id, auto&&... rest)
+                {
+                    return std::tuple_cat(std::make_tuple(scene.getGameObject(id)), std::tie(rest...));
+                }, *enttIterator);
+            }
+
+            Iterator& operator++() 
+            {
+                enttIterator++;
+                return *this;
+            }
+
+            friend bool operator==(const Iterator& lhs, const Iterator& rhs) 
+            { 
+                return lhs.enttIterator == rhs.enttIterator;
+            }
+
+            friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
+            {
+                return lhs.enttIterator != rhs.enttIterator;
+            }
+
+        private:
+            GroupIterator    enttIterator;
+            Scene&          scene;
+        };
+
+        Iterator begin() { return Iterator(enttGroup.each().begin(), scene); };
+        Iterator end()   { return Iterator(enttGroup.each().end(), scene);   };
         
         void sort(std::function<bool(GameObject, GameObject)> f)
         {
@@ -152,7 +237,6 @@ public:
             return enttGroup.sort(compfunc);
         }
     private:
-        using EnttGroup = decltype(registry.group<Components...>());
         Scene&      scene;
         EnttGroup   enttGroup;
     };

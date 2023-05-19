@@ -15,22 +15,22 @@ struct OverlapSystem
 
     void operator()()
     {
-        for (const auto& [enttityA, posA, colliderA] : scene.view<Position, A>().each())
+        for (const auto& [objA, posA, colliderA] : scene.view<Position, A>())
         {
-            for (const auto& [enttityB, posB, colliderB] : scene.view<Position, B>().each())
+            for (const auto& [objB, posB, colliderB] : scene.view<Position, B>())
             {
                 auto sqrDistance = V2d::sqrDistance(posA, posB);
                 auto sqrRadius = std::pow(colliderA.radius + colliderB.radius, 2);
                 if (sqrDistance < sqrRadius)
                 {
-                    onOverlap(enttityA, enttityB);
-                    if (not scene.entityExists(enttityA)) break;
+                    onOverlap(objA, objB);
+                    if (not objA.isValid()) break;
                 }
             }
         }
     }
 
-    virtual void onOverlap(entt::entity, entt::entity) = 0;
+    virtual void onOverlap(GameObject, GameObject) = 0;
 
 protected:
     Gng2D::Scene&     scene;
