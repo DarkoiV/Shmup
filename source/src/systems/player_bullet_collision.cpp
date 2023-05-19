@@ -2,15 +2,14 @@
 #include "Gng2D/core/log.hpp"
 #include "components/invulnerability.hpp"
 
-void PlayerBulletCollision::onOverlap(entt::entity player, entt::entity bullet)
+void PlayerBulletCollision::onOverlap(Gng2D::GameObject player, Gng2D::GameObject bullet)
 {
-    scene.destroyEntity(bullet);
-    auto playerObject = scene.getGameObject(player);
+    scene.destroyEntity(bullet.getId());
 
-    if (not playerObject.hasComponents<Invulnerability>())
+    if (not player.hasComponents<Invulnerability>())
     {
-        playerObject.addComponent<Invulnerability>(150u);
-        auto& hp = playerObject.getComponent<HitPoints>().value;
+        player.addComponent<Invulnerability>(150u);
+        auto& hp = player.getComponent<HitPoints>().value;
         hp -= 1;
     }
 }

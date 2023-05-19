@@ -3,19 +3,17 @@
 #include "components/destroyed_by_player.hpp"
 #include "entities/red_x.hpp"
 
-void BulletEnemyCollision::onOverlap(entt::entity bullet, entt::entity enemy)
+void BulletEnemyCollision::onOverlap(Gng2D::GameObject bullet, Gng2D::GameObject enemy)
 {
-    scene.destroyEntity(bullet);
-    auto enemyObject = scene.getGameObject(enemy);
-
-    auto& enemyHP = enemyObject.getComponent<HitPoints>().value;
+    scene.destroyEntity(bullet.getId());
+    auto& enemyHP = enemy.getComponent<HitPoints>().value;
     enemyHP--;
 
     if (enemyHP == 0) 
     {
-        enemyObject.addComponent<DestroyedByPlayer>();
-        scene.destroyEntity(enemy);
+        enemy.addComponent<DestroyedByPlayer>();
+        scene.destroyEntity(enemy.getId());
     }
-    else enemyObject.addOrReplaceComponent<EnemyAnimation>(enemyObject, EnemyAnimation::Type::flash);
+    else enemy.addOrReplaceComponent<EnemyAnimation>(enemy, EnemyAnimation::Type::flash);
 }
 
