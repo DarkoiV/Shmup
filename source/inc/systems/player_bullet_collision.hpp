@@ -9,6 +9,6 @@ struct PlayerBulletCollision : Gng2D::OverlapSystem<PlayerShip::Collider, EnemyB
         : OverlapSystem(s)
     {}
 
-    void onOverlap(entt::entity, entt::entity) override;
+    void onOverlap(Gng2D::GameObject, Gng2D::GameObject) override;
 };
 

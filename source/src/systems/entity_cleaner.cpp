@@ -20,21 +20,21 @@ void EntityCleaner::outOfScreenCleaner()
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
 
-    for (const auto& [e, pos] : scene.view<Gng2D::Position>())
+    for (const auto& [obj, pos] : scene.view<Gng2D::Position>().each())
     {
         bool outside 
             =   pos.x < -margin or pos.y < -margin
             or  pos.x > maxX    or pos.y > maxY;
-        if (outside) scene.destroyEntity(e);
+        if (outside) scene.destroyEntity(obj.getId());
     }
 }
 
 void EntityCleaner::timedExistence()
 {
-    for (const auto& [e, te] : scene.view<TimedExistence>())
+    for (const auto& [obj, te] : scene.view<TimedExistence>().each())
     {
         te.remainingTicks--;
-        if (te.remainingTicks == 0) scene.destroyEntity(e);
+        if (te.remainingTicks == 0) scene.destroyEntity(obj.getId());
     }
 }
 

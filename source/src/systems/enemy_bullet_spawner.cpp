@@ -5,13 +5,12 @@
 
 void EnemyBulletSpawner::operator()()
 {
-    for (const auto& [e, bw] : scene.view<EnemyBasicWeapon>())
+    for (auto [enemy, bw] : scene.view<EnemyBasicWeapon>().each())
     {
         if (bw.remainigCooldown == 0)
         {
-            auto enemyObject = scene.getGameObject(e);
-            const auto enemyPos = enemyObject.getComponent<Gng2D::Position>();
-            const auto enemyVel = enemyObject.getComponent<Gng2D::Velocity>();
+            const auto enemyPos = enemy.getComponent<Gng2D::Position>();
+            const auto enemyVel = enemy.getComponent<Gng2D::Velocity>();
             const auto bulletPos  = Gng2D::Position{enemyPos + Gng2D::Position{0, 15.0f}};
             const auto bulletVelo = Gng2D::Velocity{enemyVel + Gng2D::Velocity{0, 1.0f}};
             scene.spawn<EnemyBullet>(bulletPos, bulletVelo);

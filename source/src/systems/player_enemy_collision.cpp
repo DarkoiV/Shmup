@@ -3,17 +3,15 @@
 #include "components/destroyed_by_player.hpp"
 #include "entities/red_x.hpp"
 
-void PlayerEnemyCollision::onOverlap(entt::entity player, entt::entity enemy)
+void PlayerEnemyCollision::onOverlap(Gng2D::GameObject player, Gng2D::GameObject enemy)
 { 
-    auto enemyObject = scene.getGameObject(enemy);
-    enemyObject.addComponent<DestroyedByPlayer>();
-    scene.destroyEntity(enemy);
+    enemy.addComponent<DestroyedByPlayer>();
+    scene.destroyEntity(enemy.getId());
 
-    auto playerObject = scene.getGameObject(player);
-    if (not playerObject.hasComponents<Invulnerability>())
+    if (not player.hasComponents<Invulnerability>())
     {
-        playerObject.addComponent<Invulnerability>(150u);
-        auto& hp = playerObject.getComponent<HitPoints>().value;
+        player.addComponent<Invulnerability>(150u);
+        auto& hp = player.getComponent<HitPoints>().value;
         hp -= 1;
     }
 }

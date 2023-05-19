@@ -3,7 +3,7 @@
 
 void AnimationsSystem::operator()()
 {
-    for (const auto& [_, animation] : scene.view<EnemyAnimation>())
+    for (const auto& [_, animation] : scene.view<EnemyAnimation>().each())
     {
         animation();
     }
