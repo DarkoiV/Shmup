@@ -24,7 +24,7 @@ struct OverlapSystem
                 if (sqrDistance < sqrRadius)
                 {
                     onOverlap(objA, objB);
-                    if (objA.isValid()) break;
+                    if (not objA.isValid()) break;
                 }
             }
         }
