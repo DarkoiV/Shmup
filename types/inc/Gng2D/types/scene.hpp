@@ -21,6 +21,9 @@ struct Scene
     Scene(Scene&&)      = delete;
     virtual ~Scene()    = default;
 
+    auto operator=(Scene&)  = delete;
+    auto operator=(Scene&&) = delete;
+
     virtual void onEnter()              = 0;
     virtual void onExit()               = 0;
     virtual bool isCompleted()          = 0;
