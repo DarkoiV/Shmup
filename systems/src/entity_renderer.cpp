@@ -35,7 +35,7 @@ EntityRenderer::~EntityRenderer()
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
     if (needsSorting) sortRenderables();
-    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>().each())
+    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>())
     {
         SDL_Rect dstRect;
         SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);

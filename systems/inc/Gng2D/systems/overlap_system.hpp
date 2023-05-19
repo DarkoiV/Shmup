@@ -15,9 +15,9 @@ struct OverlapSystem
 
     void operator()()
     {
-        for (const auto& [objA, posA, colliderA] : scene.view<Position, A>().each())
+        for (const auto& [objA, posA, colliderA] : scene.view<Position, A>())
         {
-            for (const auto& [objB, posB, colliderB] : scene.view<Position, B>().each())
+            for (const auto& [objB, posB, colliderB] : scene.view<Position, B>())
             {
                 auto sqrDistance = V2d::sqrDistance(posA, posB);
                 auto sqrRadius = std::pow(colliderA.radius + colliderB.radius, 2);
