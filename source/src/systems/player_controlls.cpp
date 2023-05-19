@@ -44,7 +44,7 @@ void PlayerControlls::primaryFire()
 {
     const bool fire = scene.isKeyPressed(SDL_SCANCODE_Z);
 
-    for (const auto [_, weapon, pos] : scene.view<BasicWeapon, Gng2D::Position>().each())
+    for (const auto [_, weapon, pos] : scene.view<BasicWeapon, Gng2D::Position>())
     {
         if (weapon.remainigCooldown > 0) weapon.remainigCooldown--;
 

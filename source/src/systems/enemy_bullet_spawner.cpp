@@ -5,7 +5,7 @@
 
 void EnemyBulletSpawner::operator()()
 {
-    for (auto [enemy, bw] : scene.view<EnemyBasicWeapon>().each())
+    for (auto [enemy, bw] : scene.view<EnemyBasicWeapon>())
     {
         if (bw.remainigCooldown == 0)
         {

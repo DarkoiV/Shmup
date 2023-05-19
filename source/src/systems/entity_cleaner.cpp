@@ -20,7 +20,7 @@ void EntityCleaner::outOfScreenCleaner()
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
 
-    for (const auto& [obj, pos] : scene.view<Gng2D::Position>().each())
+    for (const auto& [obj, pos] : scene.view<Gng2D::Position>())
     {
         bool outside 
             =   pos.x < -margin or pos.y < -margin
@@ -31,7 +31,7 @@ void EntityCleaner::outOfScreenCleaner()
 
 void EntityCleaner::timedExistence()
 {
-    for (const auto& [obj, te] : scene.view<TimedExistence>().each())
+    for (auto [obj, te] : scene.view<TimedExistence>())
     {
         te.remainingTicks--;
         if (te.remainingTicks == 0) scene.destroyEntity(obj.getId());
