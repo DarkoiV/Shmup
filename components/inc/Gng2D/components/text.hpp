@@ -6,11 +6,9 @@
 namespace Gng2D 
 {
 struct GameObject;
-struct TextSprite 
+struct Text 
 {
-    TextSprite(const std::string& font, const std::string& str, float scale = 1.0f);
-
-    void onAttach(Gng2D::GameObject);
+    Text(const std::string& font, const std::string& str, float scale = 1.0f);
 
     SDL_Texture*    getSprite() const;
     float           getScale() const;

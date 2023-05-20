@@ -1,11 +1,11 @@
-#include "Gng2D/components/text_sprite.hpp"
+#include "Gng2D/components/text.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/components/sprite.hpp"
 
-using Gng2D::TextSprite;
+using Gng2D::Text;
 
-TextSprite::TextSprite(const std::string& font, const std::string& str, float scale)
+Text::Text(const std::string& font, const std::string& str, float scale)
     : font(Gng2D::AssetRegistry().getFont(font))
     , str(str)
     , scale(scale)
@@ -13,40 +13,35 @@ TextSprite::TextSprite(const std::string& font, const std::string& str, float sc
     generateNewTexture();
 }
 
-void TextSprite::onAttach(Gng2D::GameObject owner)
-{
-    owner.addComponent<Sprite>(*this);
-}
-
-SDL_Texture* TextSprite::getSprite() const
+SDL_Texture* Text::getSprite() const
 {
     return textSprite.get();
 }
 
-float TextSprite::getScale() const
+float Text::getScale() const
 {
     return scale;
 }
 
-void TextSprite::changeFont(const std::string& f)
+void Text::changeFont(const std::string& f)
 {
     font = AssetRegistry().getFont(f);
     generateNewTexture();
 }
 
-void TextSprite::changeString(const std::string& s)
+void Text::changeString(const std::string& s)
 {
     str = s;
     generateNewTexture();
 }
 
-void TextSprite::changeScale(float s)
+void Text::changeScale(float s)
 {
     scale = s;
     generateNewTexture();
 }
 
-void TextSprite::changeRGBAMod(uint8_t r, uint8_t g, uint8_t b, uint8_t a) 
+void Text::changeRGBAMod(uint8_t r, uint8_t g, uint8_t b, uint8_t a) 
 {
     red     = r;
     green   = g;
@@ -55,7 +50,7 @@ void TextSprite::changeRGBAMod(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     generateNewTexture();
 }
 
-void TextSprite::generateNewTexture()
+void Text::generateNewTexture()
 {
     int textWidth  = font.width() * str.size();
     int textHeight = font.height();
