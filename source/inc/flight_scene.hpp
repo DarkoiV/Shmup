@@ -4,6 +4,7 @@
 #include "Gng2D/systems/collider_renderer_system.hpp"
 #include "Gng2D/systems/entity_renderer.hpp"
 #include "Gng2D/systems/movement_system.hpp"
+#include "Gng2D/systems/gui_system.hpp"
 #include "Gng2D/types/game_object.hpp"
 #include "Gng2D/types/scene.hpp"
 #include "entities/bullet.hpp"
@@ -41,6 +42,7 @@ private:
         enemyBulletSpawner{*this};
 
     Gng2D::MovementSystem   movement{*this};
+    Gng2D::GuiSystem        guiSystem{*this};
 
     Gng2D::ColliderRendererSystem<PlayerShip::Collider>
         playerColliderRenderer{*this};
