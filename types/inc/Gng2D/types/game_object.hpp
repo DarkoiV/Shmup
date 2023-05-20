@@ -32,16 +32,7 @@ struct GameObject
         requires(not std::is_empty<Component>::value)
     Component& addComponent(Args&&... args)
     {
-        Component& comp = registry.emplace<Component>(id, std::forward<Args>(args)...);
-        constexpr bool attachEffect = requires() 
-        {   
-            comp.onAttach(*this);
-        };
-        if constexpr (attachEffect)
-        {
-            comp.onAttach(*this);
-        }
-        return comp;
+        return registry.emplace<Component>(id, std::forward<Args>(args)...);
     }
 
     template<typename Component, typename... Args>
