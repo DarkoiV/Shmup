@@ -4,18 +4,21 @@
 
 using Gng2D::GuiSystem;
 
-
-GuiSystem::GuiSystem(Scene& s)
-    : scene(s)
+GuiSystem::GuiSystem(entt::registry& r)
+    : reg(r)
 {
-    scene.onConstruct<Text>().connect<&attachTextSprite>();
-    scene.onUpdate<Text>().connect<&updateTextSprite>();
+    reg.on_construct<Text>()
+        .connect<&attachTextSprite>();
+    reg.on_update<Text>()
+        .connect<&updateTextSprite>();
 }
 
 GuiSystem::~GuiSystem()
 {
-    scene.onConstruct<Text>().disconnect<&attachTextSprite>();
-    scene.onUpdate<Text>().disconnect<&updateTextSprite>();
+    reg.on_construct<Text>()
+        .disconnect<&attachTextSprite>();
+    reg.on_update<Text>()
+        .disconnect<&updateTextSprite>();
 }
 
 void GuiSystem::attachTextSprite(entt::registry& r, entt::entity e)

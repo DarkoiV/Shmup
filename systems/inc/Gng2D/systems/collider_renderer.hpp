@@ -1,17 +1,17 @@
 #pragma once
 #include <cmath>
-#include "entt/entity/registry.hpp"
+#include <entt/entity/registry.hpp>
+#include <SDL2/SDL.h>
 #include "Gng2D/components/circle_colider.hpp"
 #include "Gng2D/components/position.hpp"
-#include "Gng2D/types/scene.hpp"
 
 namespace Gng2D
 {
 template <CircleColliderType Collider>
-struct ColliderRendererSystem
+struct ColliderRenderer
 {
-    ColliderRendererSystem(Gng2D::Scene& s)
-        : scene(s)
+    ColliderRenderer(entt::registry& r)
+        : reg(r)
     {
     }
 
@@ -35,7 +35,7 @@ struct ColliderRendererSystem
     {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 175);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        for (const auto& [_, collider, position] : scene.view<Collider, Position>())
+        for (const auto& [_, collider, position] : reg.view<Collider, Position>().each())
         {
             drawCircle(renderer, collider.radius, position.x, position.y);
         }
@@ -43,7 +43,7 @@ struct ColliderRendererSystem
     };
 
 private:
-    Gng2D::Scene& scene;
+    entt::registry& reg;
 };
 }
 

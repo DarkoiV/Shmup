@@ -1,33 +1,35 @@
 #include "Gng2D/systems/entity_renderer.hpp"
-#include "Gng2D/components/position.hpp"
-#include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/text.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/types/scene.hpp"
 
 using namespace Gng2D;
 
-
-EntityRenderer::EntityRenderer(Scene& s)
-    : scene(s)
+EntityRenderer::EntityRenderer(entt::registry& r)
+    : reg(r)
 {
-    scene.group<Sprite, Position>();
-    scene.onConstruct<Sprite>().connect<&EntityRenderer::markForSorting>(this);
-    scene.onConstruct<Layer>().connect<&EntityRenderer::markForSorting>(this);
-    scene.onUpdate<Layer>().connect<&EntityRenderer::markForSorting>(this);
+    reg.on_construct<Sprite>()
+        .connect<&EntityRenderer::markForSorting>(this);
+    reg.on_construct<Layer>()
+        .connect<&EntityRenderer::markForSorting>(this);
+    reg.on_update<Layer>()
+        .connect<&EntityRenderer::markForSorting>(this);
 }
 
 EntityRenderer::~EntityRenderer()
 {
-    scene.onConstruct<Sprite>().disconnect<&EntityRenderer::markForSorting>(this);
-    scene.onConstruct<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
-    scene.onUpdate<Layer>().disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_construct<Sprite>()
+        .disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_construct<Layer>()
+        .disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_update<Layer>()
+        .disconnect<&EntityRenderer::markForSorting>(this);
 }
 
 void EntityRenderer::operator()(SDL_Renderer* r)
 {
     if (needsSorting) sortRenderables();
-    for (const auto& [_, sprite, pos] : scene.group<Sprite, Position>())
+    reg.group<Sprite, Position>().each([r](Sprite& sprite, Position& pos)
     {
         SDL_Rect dstRect;
         SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);
@@ -38,7 +40,7 @@ void EntityRenderer::operator()(SDL_Renderer* r)
         dstRect.y = static_cast<int>(pos.y) - dstRect.h / 2;
             
         SDL_RenderCopy(r, sprite.texture, &sprite.srcRect, &dstRect);
-    }
+    });
 }
 
 void EntityRenderer::markForSorting()
@@ -48,14 +50,13 @@ void EntityRenderer::markForSorting()
 
 void EntityRenderer::sortRenderables()
 {
-    auto renderables = scene.group<Sprite, Position>();
-    renderables.sort([](GameObject lhs, GameObject rhs)
+    renderables.sort([&](entt::entity lhs, entt::entity rhs)
     {
-        bool leftHasLayer  = lhs.hasComponents<Layer>();
-        bool rightHasLayer = rhs.hasComponents<Layer>();
+        bool leftHasLayer  = reg.all_of<Layer>(lhs);
+        bool rightHasLayer = reg.all_of<Layer>(rhs);
         if (not rightHasLayer) return false;
         if (not leftHasLayer)  return true;
-        return lhs.getComponent<Layer>().value < rhs.getComponent<Layer>().value;
+        return reg.get<Layer>(lhs).value < reg.get<Layer>(rhs).value;
     });
 
     needsSorting = false;

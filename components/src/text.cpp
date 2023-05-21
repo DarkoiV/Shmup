@@ -1,6 +1,5 @@
 #include "Gng2D/components/text.hpp"
 #include "Gng2D/core/asset_registry.hpp"
-#include "Gng2D/types/game_object.hpp"
 #include "Gng2D/components/sprite.hpp"
 
 using Gng2D::Text;

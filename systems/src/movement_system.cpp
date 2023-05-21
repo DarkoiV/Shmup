@@ -3,8 +3,8 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
 
-Gng2D::MovementSystem::MovementSystem(Gng2D::Scene& s)
-    : scene(s)
+Gng2D::MovementSystem::MovementSystem(entt::registry& r)
+    : reg(r)
 {
 }
 
@@ -16,8 +16,8 @@ void Gng2D::MovementSystem::operator()()
 
 void Gng2D::MovementSystem::updatePosition()
 {
-    for(const auto& [_, velocity, position] : scene.view<Velocity, Position>())
+    reg.view<Position, Velocity>().each([](Position& pos, Velocity& velo)
     {
-        position += velocity;
-    }
+        pos += velo;
+    });
 }

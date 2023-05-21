@@ -1,12 +1,14 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <entt/entt.hpp>
+#include "Gng2D/components/position.hpp"
+#include "Gng2D/components/sprite.hpp"
 
 namespace Gng2D
 {
-struct Scene;
 struct EntityRenderer
 {
-    EntityRenderer(Scene&);
+    EntityRenderer(entt::registry&);
     EntityRenderer(EntityRenderer&)                 = delete;
     EntityRenderer(EntityRenderer&&)                = delete;
     EntityRenderer& operator= (EntityRenderer&)     = delete;
@@ -19,8 +21,11 @@ struct EntityRenderer
 private:
     void    sortRenderables();
 
-    Scene&  scene;
-    bool    needsSorting{false};
+    entt::registry& reg;
+    bool            needsSorting{false};
+
+    using RenderableGroup = decltype(reg.group<Sprite, Position>());
+    RenderableGroup     renderables{reg.group<Sprite, Position>()};
 };
 }
 
