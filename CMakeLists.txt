@@ -5,12 +5,18 @@ include(FetchContent)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-FetchContent_Declare(
-    Gng2D
-    GIT_REPOSITORY  https://github.com/DarkoiV/Gng2D.git
-    GIT_TAG         main
-)
-FetchContent_MakeAvailable(Gng2D)
+#Gng2D DEV MODE
+if(EXISTS "${CMAKE_SOURCE_DIR}/Gng2D-DEV")
+    message("Using Gng2D-DEV")
+    add_subdirectory(Gng2D-DEV)
+else()
+    FetchContent_Declare(
+        Gng2D
+        GIT_REPOSITORY  https://github.com/DarkoiV/Gng2D.git
+        GIT_TAG         main
+    )
+    FetchContent_MakeAvailable(Gng2D)
+endif()
 
 add_executable(shmup)
 target_link_libraries(shmup
