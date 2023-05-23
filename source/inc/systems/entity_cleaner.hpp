@@ -1,13 +1,13 @@
 #pragma once
-#include "Gng2D/types/scene.hpp"
+#include <entt/entt.hpp>
 
 struct EntityCleaner
 {
-    EntityCleaner(Gng2D::Scene&);
+    EntityCleaner(entt::registry&);
 
     void operator()();
 private:
-    Gng2D::Scene& scene;
+    entt::registry& reg;
 
     void outOfScreenCleaner();
     void timedExistence();

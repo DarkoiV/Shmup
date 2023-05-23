@@ -1,12 +1,12 @@
 #pragma once
+#include <entt/entt.hpp>
 #include "Gng2D/types/scene.hpp"
-#include "entities/player_ship.hpp"
+#include "Gng2D/components/velocity.hpp"
+#include "Gng2D/components/position.hpp"
 
 struct PlayerControlls
 {
-    PlayerControlls(Gng2D::Scene& s, PlayerShip ps)
-        : scene(s)
-        , playerShip(ps) {};
+    PlayerControlls(Gng2D::Scene&, entt::registry&);
 
     bool inFocusMode()  const;
     void operator()();
@@ -16,9 +16,11 @@ private:
     void boundPlayerPosition();
     void primaryFire();
     void invulnerabilityAnimation();
+    void spawnBullet(Gng2D::Position, Gng2D::Velocity);
 
     Gng2D::Scene&   scene;
-    PlayerShip      playerShip;
+    entt::registry& reg;
+    entt::entity    playerShip;
     bool            focusMode;
 };
 

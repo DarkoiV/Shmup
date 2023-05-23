@@ -3,15 +3,13 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
 
-struct EnemyBulletSpawner
+struct EntityFactory
 {
-    EnemyBulletSpawner(entt::registry&);
+    EntityFactory(entt::registry&);
 
-    void operator()();
+    void spawnSparrow(Gng2D::Position, Gng2D::Velocity = {0.0f, 2.0f});
 
 private:
     entt::registry& reg;
-
-    void spawnBullet(Gng2D::Position, Gng2D::Velocity);
 };
 

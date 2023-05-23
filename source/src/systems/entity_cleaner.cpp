@@ -3,8 +3,8 @@
 #include "Gng2D/components/position.hpp"
 #include "components/timed_existence.hpp"
 
-EntityCleaner::EntityCleaner(Gng2D::Scene& s)
-    : scene(s)
+EntityCleaner::EntityCleaner(entt::registry& r)
+    : reg(r)
 {
 }
 
@@ -20,21 +20,21 @@ void EntityCleaner::outOfScreenCleaner()
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
 
-    for (const auto& [obj, pos] : scene.view<Gng2D::Position>())
+    for (auto&& [entity, pos] : reg.view<Gng2D::Position>().each())
     {
         bool outside 
             =   pos.x < -margin or pos.y < -margin
             or  pos.x > maxX    or pos.y > maxY;
-        if (outside) scene.destroyEntity(obj.getId());
+        if (outside) reg.destroy(entity);
     }
 }
 
 void EntityCleaner::timedExistence()
 {
-    for (auto [obj, te] : scene.view<TimedExistence>())
+    for (auto [entity, te] : reg.view<TimedExistence>().each())
     {
         te.remainingTicks--;
-        if (te.remainingTicks == 0) scene.destroyEntity(obj.getId());
+        if (te.remainingTicks == 0) reg.destroy(entity); 
     }
 }
 

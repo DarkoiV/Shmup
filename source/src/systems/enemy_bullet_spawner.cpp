@@ -1,22 +1,39 @@
 #include "systems/enemy_bullet_spawner.hpp"
-#include "Gng2D/components/position.hpp"
 #include "components/enemy_basic_weapon.hpp"
-#include "entities/bullet.hpp"
+#include "components/colliders.hpp"
+#include "Gng2D/components/sprite.hpp"
+#include "Gng2D/components/layer.hpp"
+#include "flight_scene_layers.hpp"
+
+EnemyBulletSpawner::EnemyBulletSpawner(entt::registry& r)
+    : reg(r)
+{
+}
 
 void EnemyBulletSpawner::operator()()
 {
-    for (auto [enemy, bw] : scene.view<EnemyBasicWeapon>())
+    for (auto&& [enemy, weapon] : reg.view<EnemyBasicWeapon>().each())
     {
-        if (bw.remainigCooldown == 0)
+        if (weapon.remainigCooldown == 0)
         {
-            const auto enemyPos = enemy.getComponent<Gng2D::Position>();
-            const auto enemyVel = enemy.getComponent<Gng2D::Velocity>();
-            const auto bulletPos  = Gng2D::Position{enemyPos + Gng2D::Position{0, 15.0f}};
-            const auto bulletVelo = Gng2D::Velocity{enemyVel + Gng2D::Velocity{0, 1.0f}};
-            scene.spawn<EnemyBullet>(bulletPos, bulletVelo);
-            bw.remainigCooldown = bw.cooldownTicks;
+            const auto pos = reg.get<Gng2D::Position>(enemy);
+            const auto vel = reg.get<Gng2D::Velocity>(enemy);
+            const auto bulletPos = Gng2D::Position{pos + Gng2D::Position{0, 15.0f}};
+            const auto bulletVel = Gng2D::Velocity{vel + Gng2D::Velocity{0, 1.0f}};
+            spawnBullet(bulletPos, bulletVel);
+            weapon.remainigCooldown = weapon.cooldownTicks;
         }
-        else --bw.remainigCooldown;
+        else --weapon.remainigCooldown;
     }
+}
+
+void EnemyBulletSpawner::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
+{
+    auto bullet = reg.create();
+    reg.emplace<Gng2D::Sprite>(bullet, "enemy_bullet");
+    reg.emplace<Gng2D::Position>(bullet, pos);
+    reg.emplace<Gng2D::Velocity>(bullet, vel);
+    reg.emplace<EnemyBulletCollider>(bullet, 4.0f);
+    reg.emplace<Gng2D::Layer>(bullet, FlightSceneLayer::Bullets);
 }
 

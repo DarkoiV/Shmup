@@ -1,7 +1,6 @@
 #include "flight_scene.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
-#include "Gng2D/gui/text_object.hpp"
 #include "game_over_scene.hpp"
 #include "levels.hpp"
 
@@ -22,10 +21,10 @@ void FlightScene::onExit()
 
 bool FlightScene::isCompleted()
 {
-    if (const auto& hp = playerShip.getComponent<HitPoints>(); hp.value <= 0)
+    //if (const auto& hp = playerShip.getComponent<HitPoints>(); hp.value <= 0)
     {
-        sceneRegistry.setNextScene<GameOverScene>();
-        return true;
+        // sceneRegistry.setNextScene<GameOverScene>();
+        // return true;
     }
     return false;
 }
@@ -33,16 +32,9 @@ bool FlightScene::isCompleted()
 void FlightScene::update()
 {
     movement();
-
     playerControlls();
     enemyBulletSpawner();
-
-    playerBulletCollision();
-    bulletBulletCollision();
-    bulletEnemyCollision();
-    playerEnemyCollision();
-
-    animationSystem();
+    enemyBulletSpawner();
     entityCleaner();
 }
 
@@ -61,8 +53,9 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
             pause = !pause;
             break;
         case SDLK_LSHIFT:
-            spawn<Gng2D::TextObject>(Gng2D::Position{30, 10}, "charmap-oldschool_white", "FOCUS")
-                .addName("FocusText");
+            guiSystem.createText("charmap-oldschool_white",
+                                 "FOCUS",
+                                 Gng2D::Position{20, 10});
             break;
     }
 }
@@ -72,10 +65,6 @@ void FlightScene::onKeyUp(SDL_KeyboardEvent& e)
     switch (e.keysym.sym)
     {
         case SDLK_LSHIFT:
-            if (auto focusDisplay = getGameObject("FocusText"))
-            {
-                destroyEntity(focusDisplay->getId());
-            }
             break;
     }
 }
