@@ -1,6 +1,7 @@
 #include "Gng2D/systems/gui_system.hpp"
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/text.hpp"
+#include "Gng2D/components/layer.hpp"
 
 using Gng2D::GuiSystem;
 
@@ -19,6 +20,19 @@ GuiSystem::~GuiSystem()
         .disconnect<&attachTextSprite>();
     reg.on_update<Text>()
         .disconnect<&updateTextSprite>();
+}
+
+entt::entity GuiSystem::createText(const std::string& font,
+                                   const std::string& str,
+                                   Gng2D::Position pos,
+                                   float scale,
+                                   uint8_t layer)
+{
+    auto text = reg.create();
+    reg.emplace<Layer>(text, layer);
+    reg.emplace<Gng2D::Position>(text, pos);
+    reg.emplace<Text>(text, font, str, scale);
+    return text;
 }
 
 void GuiSystem::attachTextSprite(entt::registry& r, entt::entity e)
