@@ -26,6 +26,7 @@ struct FlightScene : Gng2D::Scene
 
 private:
     PlayerControlls                             playerControlls{*this, enttRegistry};
+    entt::entity                                player{getEntity("Player")};
     EnemyBulletSpawner                          enemyBulletSpawner{enttRegistry};
     Gng2D::MovementSystem                       movement{enttRegistry};
     Gng2D::GuiSystem                            guiSystem{enttRegistry};

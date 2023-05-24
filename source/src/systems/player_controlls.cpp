@@ -1,6 +1,7 @@
 #include "systems/player_controlls.hpp"
 #include "Gng2D/core/settings.hpp"
 #include "Gng2D/components/sprite.hpp"
+#include "Gng2D/components/name_tag.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "sprite_sheets.hpp"
 #include "flight_scene_layers.hpp"
@@ -22,6 +23,7 @@ PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
     reg.emplace<HitPoints>(playerShip, 5u, 5u);
     reg.emplace<Gng2D::Layer>(playerShip, FlightSceneLayer::Ships);
     reg.emplace<BasicWeapon>(playerShip);
+    reg.emplace<Gng2D::NameTag>(playerShip, "Player");
 }
 
 void PlayerControlls::playerMovement()
