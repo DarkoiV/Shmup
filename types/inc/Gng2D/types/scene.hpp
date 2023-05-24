@@ -14,10 +14,10 @@ namespace Gng2D
 {
 struct Scene
 {
-    Scene()             = default;
+    Scene();
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
-    virtual ~Scene()    = default;
+    virtual ~Scene();
 
     auto operator=(Scene&)  = delete;
     auto operator=(Scene&&) = delete;
@@ -42,6 +42,8 @@ struct Scene
 
     bool        isKeyPressed(SDL_Scancode) const;
 
+    entt::entity getEntity(const std::string&);
+
 protected:
     bool                pause{false};
     SceneRegistry       sceneRegistry;
@@ -54,6 +56,7 @@ private:
 
     std::unordered_map<std::string, entt::entity>
         namedEntities;
+    void addNamedEntity(entt::registry&, entt::entity);
     void removeNamedEntity(entt::registry&, entt::entity);
 };
 }
