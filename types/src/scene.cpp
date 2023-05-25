@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "Gng2D/components/name_tag.hpp"
+#include "Gng2D/components/relationship.hpp"
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/window.hpp"
 #include "Gng2D/types/scene.hpp"
@@ -14,6 +15,16 @@ Scene::Scene()
     enttRegistry
         .on_destroy<Gng2D::NameTag>()
         .connect<&Scene::removeNamedEntity>(this);
+
+    enttRegistry
+        .on_construct<Gng2D::Child>()
+        .connect<&Scene::addChildToParent>();
+    enttRegistry
+        .on_destroy<Gng2D::Child>()
+        .connect<&Scene::removeChildFromParent>();
+    enttRegistry
+        .on_destroy<Gng2D::Parent>()
+        .connect<&Scene::destroyAllChildren>();
 }
 
 Scene::~Scene()
@@ -24,6 +35,16 @@ Scene::~Scene()
     enttRegistry
         .on_destroy<Gng2D::NameTag>()
         .disconnect<&Scene::removeNamedEntity>(this);
+
+    enttRegistry
+        .on_construct<Gng2D::Child>()
+        .disconnect<&Scene::addChildToParent>();
+    enttRegistry
+        .on_destroy<Gng2D::Child>()
+        .disconnect<&Scene::removeChildFromParent>();
+    enttRegistry
+        .on_destroy<Gng2D::Parent>()
+        .disconnect<&Scene::destroyAllChildren>();
 }
 
 void Scene::operator()()
@@ -88,5 +109,30 @@ void Scene::removeNamedEntity(entt::registry& reg, entt::entity entity)
 {
     auto& name = reg.get<NameTag>(entity).value;
     namedEntities.erase(name);
+}
+
+void Scene::addChildToParent(entt::registry& reg, entt::entity child)
+{
+    auto& parentEntity = reg.get<Gng2D::Child>(child).parent;
+    if (not reg.all_of<Parent>(parentEntity)) reg.emplace<Parent>(parentEntity);
+
+    auto& children = reg.get<Gng2D::Parent>(parentEntity).children;
+    children.emplace_back(child);
+}
+
+void Scene::removeChildFromParent(entt::registry& reg, entt::entity child)
+{
+    auto& parentEntity = reg.get<Gng2D::Child>(child).parent;
+    auto& children = reg.get<Gng2D::Parent>(parentEntity).children;
+    std::erase(children, child);
+}
+
+void Scene::destroyAllChildren(entt::registry& reg, entt::entity parent)
+{
+    auto& children = reg.get<Gng2D::Parent>(parent).children;
+    for (const auto child : children)
+    {
+        reg.destroy(child);
+    }
 }
 
