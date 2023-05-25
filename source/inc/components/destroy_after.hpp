@@ -1,6 +1,6 @@
 #pragma once
 
-struct TimedExistence
+struct DestroyAfter
 {
     unsigned remainingTicks;
 };

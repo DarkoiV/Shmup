@@ -1,7 +1,7 @@
 #include "systems/entity_cleaner.hpp"
 #include "Gng2D/core/settings.hpp"
 #include "Gng2D/components/position.hpp"
-#include "components/timed_existence.hpp"
+#include "components/destroy_after.hpp"
 
 EntityCleaner::EntityCleaner(entt::registry& r)
     : reg(r)
@@ -31,7 +31,7 @@ void EntityCleaner::outOfScreenCleaner()
 
 void EntityCleaner::timedExistence()
 {
-    for (auto [entity, te] : reg.view<TimedExistence>().each())
+    for (auto [entity, te] : reg.view<DestroyAfter>().each())
     {
         te.remainingTicks--;
         if (te.remainingTicks == 0) reg.destroy(entity); 
