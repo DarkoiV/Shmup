@@ -7,6 +7,7 @@
 #include "Gng2D/systems/gui_system.hpp"
 #include "Gng2D/types/scene.hpp"
 #include "components/colliders.hpp"
+#include "systems/collision_system.hpp"
 #include "systems/enemy_bullet_spawner.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/entity_factory.hpp"
@@ -32,6 +33,7 @@ private:
     Gng2D::GuiSystem                            guiSystem{enttRegistry};
     EntityCleaner                               entityCleaner{enttRegistry};
     EntityFactory                               entityFactory{*this, enttRegistry};
+    CollisionSystem                             collisionSystem{enttRegistry};
 
     Gng2D::EntityRenderer                       entityRenderer{enttRegistry};
     Gng2D::ColliderRenderer<PlayerCollider>     playerColliderRenderer{enttRegistry};

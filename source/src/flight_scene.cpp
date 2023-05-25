@@ -38,6 +38,7 @@ void FlightScene::update()
     enemyBulletSpawner();
     enemyBulletSpawner();
     entityCleaner();
+    collisionSystem();
 }
 
 void FlightScene::render(SDL_Renderer* r)
