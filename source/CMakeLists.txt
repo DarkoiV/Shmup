@@ -6,6 +6,7 @@ target_sources(shmup PRIVATE
     src/systems/entity_cleaner.cpp
     src/systems/entity_factory.cpp
     src/systems/player_controlls.cpp
+    src/animations.cpp
     src/flight_scene.cpp
     src/game_over_scene.cpp
     src/levels.cpp

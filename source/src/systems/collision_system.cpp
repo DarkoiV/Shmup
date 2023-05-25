@@ -1,6 +1,9 @@
 #include "systems/collision_system.hpp"
 #include "components/hit_points.hpp"
 #include "components/invulnerability.hpp"
+#include "Gng2D/components/animation.hpp"
+#include "animations.hpp"
+
 
 CollisionSystem::CollisionSystem(entt::registry& r)
     : bulletBullet(r)
@@ -43,6 +46,7 @@ void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity e
     HP--;
     
     if(HP == 0) reg.destroy(enemy);
+    else reg.emplace<Gng2D::Animation>(enemy, flashShip, reg, enemy);
 }
 
 void CollisionSystem::BulletPlayer::onOverlap(entt::entity bullet, entt::entity player)

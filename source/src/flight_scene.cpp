@@ -33,12 +33,12 @@ bool FlightScene::isCompleted()
 
 void FlightScene::update()
 {
-    movement();
     playerControlls();
     enemyBulletSpawner();
-    enemyBulletSpawner();
-    entityCleaner();
+    movement();
+    animatonSystem();
     collisionSystem();
+    entityCleaner();
 }
 
 void FlightScene::render(SDL_Renderer* r)
