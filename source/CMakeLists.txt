@@ -1,8 +1,9 @@
 target_include_directories(shmup PUBLIC
     inc/)
 target_sources(shmup PRIVATE
-    src/systems/entity_cleaner.cpp
     src/systems/enemy_bullet_spawner.cpp
+    src/systems/entity_cleaner.cpp
+    src/systems/entity_factory.cpp
     src/systems/player_controlls.cpp
     src/flight_scene.cpp
     src/game_over_scene.cpp

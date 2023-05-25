@@ -9,6 +9,7 @@ struct PlayerControlls
     PlayerControlls(Gng2D::Scene&, entt::registry&);
 
     bool inFocusMode()  const;
+    bool isPlayerAlive() const;
     void operator()();
 
 private:

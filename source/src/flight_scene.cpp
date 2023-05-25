@@ -8,7 +8,7 @@
 
 FlightScene::FlightScene()
 {
-    addCoroutine(levelOne, *this);
+    addCoroutine(levelOne, *this, entityFactory);
 }
 
 void FlightScene::onEnter()
@@ -23,7 +23,7 @@ void FlightScene::onExit()
 
 bool FlightScene::isCompleted()
 {
-    if (const auto& hp = enttRegistry.get<HitPoints>(player); hp.value <= 0)
+    if (playerControlls.isPlayerAlive())
     {
         sceneRegistry.setNextScene<GameOverScene>();
         return true;

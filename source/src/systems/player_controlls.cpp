@@ -14,16 +14,17 @@ PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
     : scene(s)
     , reg(r)
 {
-    playerShip = reg.create();
+    playerShip = scene.newEntity()
+        .with<Gng2D::Position>(320.0f, 200.0f)
+        .with<Gng2D::Velocity>(0.0f, 0.0f)
+        .with<PlayerCollider>(6.0f)
+        .with<HitPoints>(5u, 5u)
+        .with<Gng2D::Layer>(FlightSceneLayer::Ships)
+        .with<BasicWeapon>()
+        .get();
+
     auto& sprite = reg.emplace<Gng2D::Sprite>(playerShip, "player_ship", 1);
     PlayerSpriteSheet::divideSprite(sprite);
-    reg.emplace<Gng2D::Position>(playerShip, 320.0f, 200.0f);
-    reg.emplace<Gng2D::Velocity>(playerShip, 0.0f, 0.0f);
-    reg.emplace<PlayerCollider>(playerShip, 6.0f);
-    reg.emplace<HitPoints>(playerShip, 5u, 5u);
-    reg.emplace<Gng2D::Layer>(playerShip, FlightSceneLayer::Ships);
-    reg.emplace<BasicWeapon>(playerShip);
-    reg.emplace<Gng2D::NameTag>(playerShip, "Player");
 }
 
 void PlayerControlls::playerMovement()
@@ -101,17 +102,22 @@ void PlayerControlls::invulnerabilityAnimation()
 
 void PlayerControlls::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
-    auto bullet = reg.create();
-    reg.emplace<Gng2D::Sprite>(bullet, "ally_bullet");
-    reg.emplace<Gng2D::Position>(bullet, pos);
-    reg.emplace<Gng2D::Velocity>(bullet, vel);
-    reg.emplace<PlayerBulletCollider>(bullet, 4.0f);
-    reg.emplace<Gng2D::Layer>(bullet, FlightSceneLayer::Bullets);
+    scene.newEntity()
+        .with<Gng2D::Sprite>("ally_bullet")
+        .with<Gng2D::Position>(pos)
+        .with<Gng2D::Velocity>(vel)
+        .with<PlayerBulletCollider>(4.0f)
+        .with<Gng2D::Layer>(FlightSceneLayer::Bullets);
 }
 
 bool PlayerControlls::inFocusMode() const
 {
     return focusMode;
+}
+
+bool PlayerControlls::isPlayerAlive() const
+{
+    return reg.get<HitPoints>(playerShip).value <= 0;
 }
 
 void PlayerControlls::operator()()
