@@ -56,10 +56,10 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
             pause = !pause;
             break;
         case SDLK_LSHIFT:
-            auto focus = guiSystem.createText("charmap-oldschool_white",
-                                             "FOCUS",
-                                             Gng2D::Position{20, 10});
-            enttRegistry.emplace<Gng2D::NameTag>(focus, "Focus");
+            guiSystem.createText("charmap-oldschool_white",
+                                 "FOCUS",
+                                 Gng2D::Position{20, 10})
+                .with<Gng2D::NameTag>("Focus");
             break;
     }
 }
