@@ -22,17 +22,16 @@ GuiSystem::~GuiSystem()
         .disconnect<&updateTextSprite>();
 }
 
-entt::entity GuiSystem::createText(const std::string& font,
-                                   const std::string& str,
-                                   Gng2D::Position pos,
-                                   float scale,
-                                   uint8_t layer)
+Gng2D::EntityBuilder GuiSystem::createText(const std::string& font,
+                                           const std::string& str,
+                                           Gng2D::Position pos,
+                                           float scale,
+                                           uint8_t layer)
 {
-    auto text = reg.create();
-    reg.emplace<Layer>(text, layer);
-    reg.emplace<Gng2D::Position>(text, pos);
-    reg.emplace<Text>(text, font, str, scale);
-    return text;
+    return EntityBuilder(reg)
+        .with<Layer>(layer)
+        .with<Gng2D::Position>(pos)
+        .with<Text>(font, str, scale);
 }
 
 void GuiSystem::attachTextSprite(entt::registry& r, entt::entity e)
