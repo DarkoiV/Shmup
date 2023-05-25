@@ -9,7 +9,7 @@
 #include "Gng2D/types/scene.hpp"
 #include "components/colliders.hpp"
 #include "systems/collision_system.hpp"
-#include "systems/enemy_bullet_spawner.hpp"
+#include "systems/enemy_weapons.hpp"
 #include "systems/entity_cleaner.hpp"
 #include "systems/entity_factory.hpp"
 #include "systems/player_controlls.hpp"
@@ -29,7 +29,7 @@ struct FlightScene : Gng2D::Scene
 
 private:
     PlayerControlls                             playerControlls{*this, enttRegistry};
-    EnemyBulletSpawner                          enemyBulletSpawner{enttRegistry};
+    EnemyWeapons                                enemyWeapons{enttRegistry};
     Gng2D::MovementSystem                       movement{enttRegistry};
     Gng2D::AnimationSystem                      animatonSystem{enttRegistry};
     CollisionSystem                             collisionSystem{enttRegistry};

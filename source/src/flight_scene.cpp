@@ -34,7 +34,7 @@ bool FlightScene::isCompleted()
 void FlightScene::update()
 {
     playerControlls();
-    enemyBulletSpawner();
+    enemyWeapons();
     movement();
     animatonSystem();
     collisionSystem();

@@ -1,16 +1,16 @@
-#include "systems/enemy_bullet_spawner.hpp"
+#include "systems/enemy_weapons.hpp"
 #include "components/enemy_basic_weapon.hpp"
 #include "components/colliders.hpp"
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "flight_scene_layers.hpp"
 
-EnemyBulletSpawner::EnemyBulletSpawner(entt::registry& r)
+EnemyWeapons::EnemyWeapons(entt::registry& r)
     : reg(r)
 {
 }
 
-void EnemyBulletSpawner::operator()()
+void EnemyWeapons::operator()()
 {
     for (auto&& [enemy, weapon] : reg.view<EnemyBasicWeapon>().each())
     {
@@ -27,7 +27,7 @@ void EnemyBulletSpawner::operator()()
     }
 }
 
-void EnemyBulletSpawner::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
+void EnemyWeapons::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
     auto bullet = reg.create();
     reg.emplace<Gng2D::Sprite>(bullet, "enemy_bullet");

@@ -3,9 +3,9 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/velocity.hpp"
 
-struct EnemyBulletSpawner
+struct EnemyWeapons
 {
-    EnemyBulletSpawner(entt::registry&);
+    EnemyWeapons(entt::registry&);
 
     void operator()();
 
