@@ -9,6 +9,7 @@
 #include <entt/entity/registry.hpp>
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/types/coroutine.hpp"
+#include "Gng2D/types/entity_builder.hpp"
 
 namespace Gng2D
 {
@@ -42,7 +43,8 @@ struct Scene
 
     bool        isKeyPressed(SDL_Scancode) const;
 
-    entt::entity getEntity(const std::string&);
+    EntityBuilder   newEntity();
+    entt::entity    getEntity(const std::string&);
 
 protected:
     bool                pause{false};

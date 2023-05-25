@@ -45,9 +45,19 @@ bool Scene::isKeyPressed(SDL_Scancode scancode) const
     return keyboardState[scancode];
 }
 
+Gng2D::EntityBuilder Scene::newEntity()
+{
+    return EntityBuilder(enttRegistry);
+}
+
 entt::entity Scene::getEntity(const std::string& name)
 {
-    if (not namedEntities.contains(name)) return entt::null;
+    [[unlikely]]
+    if (not namedEntities.contains(name))
+    {
+        Gng2D::LOG::INFO("No entity with name: \"", name, "\"");
+        return entt::null;
+    }
     return namedEntities[name];
 }
 
@@ -63,6 +73,7 @@ void Scene::runCoroutines()
 void Scene::addNamedEntity(entt::registry& reg, entt::entity entity)
 {
     auto& name = reg.get<NameTag>(entity).value;
+
     [[unlikely]]
     if (namedEntities.contains(name))
     {
