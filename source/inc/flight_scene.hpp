@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include "Gng2D/systems/animaton_system.hpp"
 #include "Gng2D/systems/collider_renderer.hpp"
 #include "Gng2D/systems/entity_renderer.hpp"
-#include "Gng2D/systems/movement_system.hpp"
 #include "Gng2D/systems/gui_system.hpp"
-#include "Gng2D/systems/animaton_system.hpp"
+#include "Gng2D/systems/position_system.hpp"
 #include "Gng2D/types/scene.hpp"
 #include "components/colliders.hpp"
 #include "systems/collision_system.hpp"
@@ -30,7 +30,7 @@ struct FlightScene : Gng2D::Scene
 private:
     PlayerControlls                             playerControlls{*this, enttRegistry};
     EnemyWeapons                                enemyWeapons{enttRegistry};
-    Gng2D::MovementSystem                       movement{enttRegistry};
+    Gng2D::PositionSystem                       positionSystem{enttRegistry};
     Gng2D::AnimationSystem                      animatonSystem{enttRegistry};
     CollisionSystem                             collisionSystem{enttRegistry};
     EntityCleaner                               entityCleaner{enttRegistry};

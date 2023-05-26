@@ -35,7 +35,7 @@ void FlightScene::update()
 {
     playerControlls();
     enemyWeapons();
-    movement();
+    positionSystem();
     animatonSystem();
     collisionSystem();
     entityCleaner();
