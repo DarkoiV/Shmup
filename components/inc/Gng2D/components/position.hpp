@@ -6,5 +6,9 @@ namespace Gng2D
 struct Position : public V2d
 {
 };
+
+struct RelativePosition : public V2d 
+{
+};
 }
 
