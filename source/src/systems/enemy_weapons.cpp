@@ -19,8 +19,9 @@ void EnemyWeapons::operator()()
         {
             const auto pos = reg.get<Gng2D::Position>(enemy);
             const auto vel = reg.get<Gng2D::Velocity>(enemy);
-            const auto bulletPos = Gng2D::Position{pos + Gng2D::Position{0, 15.0f}};
-            const auto bulletVel = Gng2D::Velocity{vel + Gng2D::Velocity{0, 1.0f}};
+            const auto offset       = 10 * Gng2D::V2d::normalize(vel);
+            const auto bulletPos    = Gng2D::Position{pos + offset};
+            const auto bulletVel    = Gng2D::Velocity{vel + vel};
             spawnBullet(bulletPos, bulletVel);
             weapon.remainigCooldown = weapon.cooldownTicks;
         }
