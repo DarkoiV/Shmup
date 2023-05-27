@@ -1,9 +1,19 @@
 #include "systems/collision_system.hpp"
+#include "components/destroy.hpp"
 #include "components/hit_points.hpp"
 #include "components/invulnerability.hpp"
 #include "Gng2D/components/animation.hpp"
 #include "animations.hpp"
 
+static inline void damagePlayer(entt::registry& reg,  entt::entity player)
+{
+    if (not reg.all_of<Invulnerability>(player))
+    {
+        auto& HP = reg.get<HitPoints>(player).value;
+        HP--;
+        reg.emplace<Invulnerability>(player, 150u);
+    }
+}
 
 CollisionSystem::CollisionSystem(entt::registry& r)
     : bulletBullet(r)
@@ -29,14 +39,8 @@ void CollisionSystem::BulletBullet::onOverlap(entt::entity bullet1, entt::entity
 
 void CollisionSystem::PlayerEnemy::onOverlap(entt::entity player, entt::entity enemy)
 {
-    reg.destroy(enemy);
-
-    if (not reg.all_of<Invulnerability>(player))
-    {
-        auto& HP = reg.get<HitPoints>(player).value;
-        HP--;
-        reg.emplace<Invulnerability>(player, 150u);
-    }
+    reg.emplace<Destroy>(enemy, Destroy::Effect::spawnRedX);
+    damagePlayer(reg, player);
 }
 
 void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity enemy)
@@ -45,19 +49,13 @@ void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity e
     auto& HP = reg.get<HitPoints>(enemy).value;
     HP--;
     
-    if(HP == 0) reg.destroy(enemy);
+    if(HP == 0) reg.emplace<Destroy>(enemy, Destroy::Effect::spawnRedX);
     else reg.emplace<Gng2D::Animation>(enemy, flashShip, reg, enemy);
 }
 
 void CollisionSystem::BulletPlayer::onOverlap(entt::entity bullet, entt::entity player)
 {
     reg.destroy(bullet);
-
-    if (not reg.all_of<Invulnerability>(player))
-    {
-        auto& HP = reg.get<HitPoints>(player).value;
-        HP--;
-        reg.emplace<Invulnerability>(player, 150u);
-    }
+    damagePlayer(reg, player);
 }
 

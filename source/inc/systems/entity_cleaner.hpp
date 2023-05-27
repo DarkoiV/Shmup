@@ -10,6 +10,8 @@ private:
     entt::registry& reg;
 
     void outOfScreenCleaner();
-    void timedExistence();
+    void destroyedCleaner();
+
+    void spawnRedX(entt::entity);
 };
 

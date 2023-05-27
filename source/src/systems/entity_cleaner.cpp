@@ -1,7 +1,8 @@
 #include "systems/entity_cleaner.hpp"
 #include "Gng2D/core/settings.hpp"
 #include "Gng2D/components/position.hpp"
-#include "components/destroy_after.hpp"
+#include "Gng2D/components/sprite.hpp"
+#include "components/destroy.hpp"
 
 EntityCleaner::EntityCleaner(entt::registry& r)
     : reg(r)
@@ -11,7 +12,7 @@ EntityCleaner::EntityCleaner(entt::registry& r)
 void EntityCleaner::operator()()
 {
     outOfScreenCleaner();
-    timedExistence();
+    destroyedCleaner();
 }
 
 void EntityCleaner::outOfScreenCleaner()
@@ -29,12 +30,26 @@ void EntityCleaner::outOfScreenCleaner()
     }
 }
 
-void EntityCleaner::timedExistence()
+void EntityCleaner::destroyedCleaner()
 {
-    for (auto [entity, te] : reg.view<DestroyAfter>().each())
+    for (auto [entity, destroy] : reg.view<Destroy>().each())
     {
-        te.remainingTicks--;
-        if (te.remainingTicks == 0) reg.destroy(entity); 
+        if (destroy.remainingTicks == 0) 
+        {
+            if (destroy.effect == Destroy::Effect::spawnRedX) spawnRedX(entity);
+            reg.destroy(entity); 
+        }
+        else destroy.remainingTicks--;
     }
+}
+
+void EntityCleaner::spawnRedX(entt::entity entity)
+{
+    auto& pos = reg.get<Gng2D::Position>(entity);
+    auto redX = reg.create();
+    auto& sprite = reg.emplace<Gng2D::Sprite>(redX, "red_x");
+    sprite.opacity = 200;
+    reg.emplace<Gng2D::Position>(redX, pos);
+    reg.emplace<Destroy>(redX, Destroy::Effect::noEffect, 20u);
 }
 
