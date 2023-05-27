@@ -6,7 +6,7 @@
 #include <tuple>
 #include <unordered_map>
 #include <SDL2/SDL.h>
-#include <entt/entity/registry.hpp>
+#include <entt/entt.hpp>
 #include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/types/coroutine.hpp"
 #include "Gng2D/types/entity_builder.hpp"
@@ -56,8 +56,9 @@ private:
 
     std::vector<Coroutine>          coroutines;
 
-    std::unordered_map<std::string, entt::entity>
-        namedEntities;
+    using NamedEntities = std::unordered_map<std::string, entt::entity>;
+    NamedEntities namedEntities;
+
     void addNamedEntity(entt::registry&, entt::entity);
     void removeNamedEntity(entt::registry&, entt::entity);
 
