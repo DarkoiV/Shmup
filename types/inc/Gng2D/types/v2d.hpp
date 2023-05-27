@@ -28,6 +28,12 @@ struct V2d
         return V2d{x, y};
     }
 
+    constexpr static V2d normalize(V2d vec)
+    {
+        float len = std::sqrt((vec.x * vec.x) + (vec.y * vec.y));
+        return {vec.x / len, vec.y / len};
+    }
+
     constexpr V2d& operator+=(const V2d& lhs)
     {
         x += lhs.x;
@@ -35,6 +41,11 @@ struct V2d
         return *this;
     }
 };
+
+constexpr V2d operator*(const float rhs, const V2d& lhs)
+{
+    return {rhs * lhs.x, rhs * lhs.y};
+}
 
 constexpr V2d operator+(const V2d& rhs, const V2d& lhs)
 {
