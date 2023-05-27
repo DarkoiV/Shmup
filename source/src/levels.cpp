@@ -9,6 +9,11 @@ using namespace Gng2D;
 
 Coroutine levelOne(entt::registry& reg)
 {
+    constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
+    constexpr auto L_DIR    = Velocity{2.0f, 0.0f};
+    constexpr auto R_DIR    = Velocity{-2.0f, 0.0f};
+    constexpr auto DR_DIR   = Velocity{1.41f, 1.41f};
+    constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
     co_yield Coroutine::Wait{5_seconds};
 
     // Sparrows going down
@@ -24,9 +29,6 @@ Coroutine levelOne(entt::registry& reg)
     // Bullets
     for (int i = 0; i < 10; ++i)
     {
-        constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
-        constexpr auto DR_DIR   = Velocity{1.41f, 1.41f};
-        constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
         EntityFactory(reg).spawnEnemyBullet({320.0f, 0.0f}, D_DIR);
         EntityFactory(reg).spawnEnemyBullet({120.0f, 0.0f}, DR_DIR);
         co_yield Coroutine::Wait{20};
@@ -38,37 +40,38 @@ Coroutine levelOne(entt::registry& reg)
         EntityFactory(reg).spawnEnemyBullet({520.0f, 0.0f}, DL_DIR);
         co_yield Coroutine::Wait{20};
     }
+    co_yield Coroutine::Wait{10};
 
     // -> RIGHT
     EntityFactory(reg)
-        .spawnSparrow({0.0f, 100.0f}, {2.0f, 0.0f})
+        .spawnSparrow({0.0f, 100.0f}, L_DIR)
         .with<Gng2D::Rotation>(270.0);
-    co_yield Coroutine::Wait{2_seconds};
+    co_yield Coroutine::Wait{3_seconds};
 
     EntityFactory(reg)
-        .spawnSparrow({0.0f, 200.0f}, {2.0f, 0.0f})
+        .spawnSparrow({0.0f, 200.0f}, L_DIR)
         .with<Gng2D::Rotation>(270.0);
-    co_yield Coroutine::Wait{2_seconds};
+    co_yield Coroutine::Wait{3_seconds};
 
     EntityFactory(reg)
-        .spawnSparrow({0.0f, 300.0f}, {2.0f, 0.0f})
+        .spawnSparrow({0.0f, 300.0f}, L_DIR)
         .with<Gng2D::Rotation>(270.0);
     co_yield Coroutine::Wait{5_seconds};
 
     // <- LEFT
     EntityFactory(reg)
-        .spawnSparrow({640.0f, 130.0f}, {-2.0f, 0.0f})
+        .spawnSparrow({640.0f, 130.0f}, R_DIR)
         .with<Gng2D::Rotation>(90.0);
-    co_yield Coroutine::Wait{2_seconds};
+    co_yield Coroutine::Wait{3_seconds};
 
     EntityFactory(reg)
-        .spawnSparrow({640.0f, 230.0f}, {-2.0f, 0.0f})
+        .spawnSparrow({640.0f, 230.0f}, R_DIR)
         .with<Gng2D::Rotation>(90.0);
-    co_yield Coroutine::Wait{2_seconds};
+    co_yield Coroutine::Wait{3_seconds};
 
     EntityFactory(reg)
-        .spawnSparrow({640.0f, 330.0f}, {-2.0f, 0.0f})
+        .spawnSparrow({640.0f, 330.0f}, R_DIR)
         .with<Gng2D::Rotation>(90.0);
-    co_yield Coroutine::Wait{2_seconds};
+    co_yield Coroutine::Wait{5_seconds};
 }
 
