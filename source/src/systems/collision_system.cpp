@@ -50,7 +50,7 @@ void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity e
     HP--;
     
     if(HP == 0) reg.emplace<Destroy>(enemy, Destroy::Effect::spawnRedX);
-    else reg.emplace<Gng2D::Animation>(enemy, flashShip, reg, enemy);
+    else emplaceAnimation(flashShip, reg, enemy);
 }
 
 void CollisionSystem::BulletPlayer::onOverlap(entt::entity bullet, entt::entity player)
