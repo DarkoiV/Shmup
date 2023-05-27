@@ -10,8 +10,6 @@ using namespace Gng2D;
 Coroutine levelOne(entt::registry& reg)
 {
     constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
-    constexpr auto L_DIR    = Velocity{2.0f, 0.0f};
-    constexpr auto R_DIR    = Velocity{-2.0f, 0.0f};
     constexpr auto DR_DIR   = Velocity{1.41f, 1.41f};
     constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
     co_yield Coroutine::Wait{5_seconds};
@@ -43,35 +41,23 @@ Coroutine levelOne(entt::registry& reg)
     co_yield Coroutine::Wait{10};
 
     // -> RIGHT
-    EntityFactory(reg)
-        .spawnSparrow({0.0f, 100.0f}, L_DIR)
-        .with<Gng2D::Rotation>(270.0);
+    EntityFactory(reg).spawnSparrow({0.0f, 100.0f}, 0);
     co_yield Coroutine::Wait{3_seconds};
 
-    EntityFactory(reg)
-        .spawnSparrow({0.0f, 200.0f}, L_DIR)
-        .with<Gng2D::Rotation>(270.0);
+    EntityFactory(reg).spawnSparrow({0.0f, 200.0f}, 0);
     co_yield Coroutine::Wait{3_seconds};
 
-    EntityFactory(reg)
-        .spawnSparrow({0.0f, 300.0f}, L_DIR)
-        .with<Gng2D::Rotation>(270.0);
+    EntityFactory(reg).spawnSparrow({0.0f, 300.0f}, 0);
     co_yield Coroutine::Wait{5_seconds};
 
     // <- LEFT
-    EntityFactory(reg)
-        .spawnSparrow({640.0f, 130.0f}, R_DIR)
-        .with<Gng2D::Rotation>(90.0);
+    EntityFactory(reg).spawnSparrow({640.0f, 130.0f}, 180);
     co_yield Coroutine::Wait{3_seconds};
 
-    EntityFactory(reg)
-        .spawnSparrow({640.0f, 230.0f}, R_DIR)
-        .with<Gng2D::Rotation>(90.0);
+    EntityFactory(reg).spawnSparrow({640.0f, 230.0f}, 180);
     co_yield Coroutine::Wait{3_seconds};
 
-    EntityFactory(reg)
-        .spawnSparrow({640.0f, 330.0f}, R_DIR)
-        .with<Gng2D::Rotation>(90.0);
+    EntityFactory(reg).spawnSparrow({640.0f, 330.0f}, 180);
     co_yield Coroutine::Wait{5_seconds};
 }
 
