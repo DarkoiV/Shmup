@@ -1,5 +1,6 @@
 #include "Gng2D/systems/entity_renderer.hpp"
 #include "Gng2D/components/text.hpp"
+#include "Gng2D/components/roation.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/types/scene.hpp"
 
@@ -26,10 +27,10 @@ EntityRenderer::~EntityRenderer()
         .disconnect<&EntityRenderer::markForSorting>(this);
 }
 
-void EntityRenderer::operator()(SDL_Renderer* r)
+void EntityRenderer::operator()(SDL_Renderer* renderer)
 {
     if (needsSorting) sortRenderables();
-    reg.group<Sprite, Position>().each([r](Sprite& sprite, Position& pos)
+    reg.group<Sprite, Position>().each([renderer, this](entt::entity entity, Sprite& sprite, Position& pos)
     {
         SDL_Rect dstRect;
         SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);
@@ -38,8 +39,15 @@ void EntityRenderer::operator()(SDL_Renderer* r)
         dstRect.h = sprite.srcRect.h * sprite.scale;
         dstRect.x = static_cast<int>(pos.x) - dstRect.w / 2;
         dstRect.y = static_cast<int>(pos.y) - dstRect.h / 2;
+
+        double angle = 0;
+        if (auto* rotation = reg.try_get<Rotation>(entity))
+        {
+            angle = rotation->angle;
+        }
             
-        SDL_RenderCopy(r, sprite.texture, &sprite.srcRect, &dstRect);
+        SDL_RenderCopyEx(renderer, sprite.texture, &sprite.srcRect, 
+                         &dstRect, angle, nullptr, SDL_FLIP_NONE);
     });
 }
 
@@ -58,6 +66,7 @@ void EntityRenderer::sortRenderables()
         if (not leftHasLayer)  return true;
         return reg.get<Layer>(lhs).value < reg.get<Layer>(rhs).value;
     });
+    reg.sort<Rotation, Sprite>();
 
     needsSorting = false;
 }
