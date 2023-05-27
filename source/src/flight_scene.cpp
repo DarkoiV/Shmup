@@ -8,7 +8,7 @@
 
 FlightScene::FlightScene()
 {
-    addCoroutine(levelOne, *this, entityFactory);
+    addCoroutine(levelOne, enttRegistry);
 }
 
 void FlightScene::onEnter()

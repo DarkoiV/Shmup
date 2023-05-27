@@ -1,21 +1,21 @@
 #include "systems/entity_factory.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/components/velocity.hpp"
+#include "Gng2D/types/entity_builder.hpp"
 #include "components/colliders.hpp"
 #include "components/enemy_basic_weapon.hpp"
 #include "components/hit_points.hpp"
 #include "flight_scene_layers.hpp"
 #include "sprite_sheets.hpp"
 
-EntityFactory::EntityFactory(Gng2D::Scene& s, entt::registry& r)
+EntityFactory::EntityFactory(entt::registry& r)
     : reg(r)
-    , scene(s)
 {
 }
 
 void EntityFactory::spawnSparrow(Gng2D::Position pos, Gng2D::Velocity vel)
 {
-    auto sparrow = scene.newEntity()
+    auto sparrow = Gng2D::EntityBuilder(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(vel)
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
@@ -31,7 +31,7 @@ void EntityFactory::spawnSparrow(Gng2D::Position pos, Gng2D::Velocity vel)
 
 void EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
-    scene.newEntity()
+    Gng2D::EntityBuilder(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(vel)
         .with<Gng2D::Sprite>("enemy_bullet")

@@ -35,7 +35,6 @@ private:
     CollisionSystem                             collisionSystem{enttRegistry};
     EntityCleaner                               entityCleaner{enttRegistry};
 
-    EntityFactory                               entityFactory{*this, enttRegistry};
     Gng2D::GuiSystem                            guiSystem{enttRegistry};
 
     Gng2D::EntityRenderer                       entityRenderer{enttRegistry};
