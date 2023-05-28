@@ -16,21 +16,20 @@ EntityFactory::EntityFactory(entt::registry& r)
 
 Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rotation)
 {
-    auto builder = Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityBuilder(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 2.0f))
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<EnemyCollider>(5.0f)
         .with<HitPoints>(3u, 3u)
         .with<EnemyBasicWeapon>(75u)
-        .with<Gng2D::Rotation>(rotation);
-
-        auto sparrow = builder.get();
-        auto& sprite = reg.emplace<Gng2D::Sprite>(sparrow, "sparrow", 1);
-        EnemySpriteSheet::divideSprite(sprite);
-        EnemySpriteSheet::setHFrame(EnemySpriteSheet::HFrame::Forward, sprite);
-
-        return builder;
+        .with<Gng2D::Rotation>(rotation)
+        .with<Gng2D::Sprite>("sparrow")
+        .modify<Gng2D::Sprite>([](auto& sprite)
+        {
+            EnemySpriteSheet::divideSprite(sprite);
+            EnemySpriteSheet::setHFrame(EnemySpriteSheet::HFrame::Forward, sprite);
+        });
 }
 
 Gng2D::EntityBuilder EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D::Velocity vel)

@@ -14,17 +14,18 @@ PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
     : scene(s)
     , reg(r)
 {
-    playerShip = scene.newEntity()
+    scene.newEntity()
         .with<Gng2D::Position>(320.0f, 200.0f)
         .with<Gng2D::Velocity>(0.0f, 0.0f)
         .with<PlayerCollider>(6.0f)
         .with<HitPoints>(5u, 5u)
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<BasicWeapon>()
-        .get();
-
-    auto& sprite = reg.emplace<Gng2D::Sprite>(playerShip, "player_ship", 1);
-    PlayerSpriteSheet::divideSprite(sprite);
+        .with<Gng2D::Sprite>("playerShip", 1)
+        .modify<Gng2D::Sprite>([](auto& sprite)
+        {
+            PlayerSpriteSheet::divideSprite(sprite);
+        });
 }
 
 void PlayerControlls::playerMovement()
