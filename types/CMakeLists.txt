@@ -2,6 +2,7 @@ target_include_directories(Gng2D PUBLIC
     inc/)
 target_sources(Gng2D PRIVATE
     src/coroutine.cpp
+    src/entity_builder.cpp
     src/font.cpp
     src/scene.cpp)
 
