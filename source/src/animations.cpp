@@ -2,7 +2,7 @@
 
 void emplaceAnimation(AnimationFunction af, entt::registry& reg, entt::entity e)
 {
-    reg.emplace<Gng2D::Animation>(e, af, reg, e);
+    reg.emplace_or_replace<Gng2D::Animation>(e, af, reg, e);
 }
 
 Gng2D::Coroutine flashShip(entt::registry& reg, entt::entity ship)
