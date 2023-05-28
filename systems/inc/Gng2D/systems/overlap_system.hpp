@@ -36,3 +36,11 @@ protected:
     entt::registry& reg;
 };
 }
+
+#define GNG2D_OVERLAP(NAME, ColliderA, ColliderB) \
+    struct NAME : Gng2D::OverlapSystem<ColliderA, ColliderB> \
+{ \
+    NAME(entt::registry& r) : Gng2D::OverlapSystem<ColliderA, ColliderB>(r) {} \
+    void onOverlap(entt::entity, entt::entity) override; \
+} 
+
