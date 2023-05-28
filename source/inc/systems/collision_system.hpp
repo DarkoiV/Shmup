@@ -8,49 +8,10 @@ struct CollisionSystem
     void operator()();
 
 private:
-    struct BulletBullet 
-        : Gng2D::OverlapSystem<PlayerBulletCollider, EnemyBulletCollider>
-    {
-        BulletBullet(entt::registry& r)
-            : Gng2D::OverlapSystem<PlayerBulletCollider, EnemyBulletCollider>(r) 
-        {}
-        void onOverlap(entt::entity, entt::entity) override;
-    } bulletBullet;
-
-    struct PlayerEnemy 
-        : Gng2D::OverlapSystem<PlayerCollider, EnemyCollider>
-    {
-        PlayerEnemy(entt::registry& r)
-            : Gng2D::OverlapSystem<PlayerCollider, EnemyCollider>(r) 
-        {}
-        void onOverlap(entt::entity, entt::entity) override;
-    } playerEnemy;
-
-    struct PlayerPickup
-        : Gng2D::OverlapSystem<PlayerCollider, PickupCollider>
-    {
-        PlayerPickup(entt::registry& r)
-            : Gng2D::OverlapSystem<PlayerCollider, PickupCollider>(r)
-        {}
-        void onOverlap(entt::entity, entt::entity) override;
-    } playerPickup;
-
-    struct BulletEnemy
-        : Gng2D::OverlapSystem<PlayerBulletCollider, EnemyCollider>
-    {
-        BulletEnemy(entt::registry& r)
-            : Gng2D::OverlapSystem<PlayerBulletCollider, EnemyCollider>(r) 
-        {}
-        void onOverlap(entt::entity, entt::entity) override;
-    } bulletEnemy;
-
-    struct BulletPlayer
-        : Gng2D::OverlapSystem<EnemyBulletCollider, PlayerCollider>
-    {
-        BulletPlayer(entt::registry& r)
-            : Gng2D::OverlapSystem<EnemyBulletCollider, PlayerCollider>(r) 
-        {}
-        void onOverlap(entt::entity, entt::entity) override;
-    } bulletPlayer;
+    GNG2D_OVERLAP(BulletBullet, PlayerBulletCollider, EnemyBulletCollider)  bulletBullet;
+    GNG2D_OVERLAP(PlayerEnemy, PlayerCollider, EnemyCollider)               playerEnemy;
+    GNG2D_OVERLAP(PlayerPickup, PlayerCollider, PickupCollider)             playerPickup;
+    GNG2D_OVERLAP(BulletEnemy, PlayerBulletCollider, EnemyCollider)         bulletEnemy;
+    GNG2D_OVERLAP(BulletPlayer, EnemyBulletCollider, PlayerCollider)        bulletPlayer;
 };
 
