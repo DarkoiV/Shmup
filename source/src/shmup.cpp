@@ -12,6 +12,8 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("hitpoints");
     assetRegistry.loadSprite("sparrow");
     assetRegistry.loadSprite("red_x");
+    assetRegistry.loadSprite("pickup");
+    assetRegistry.loadSprite("drone");
     assetRegistry.loadSprite("box");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);

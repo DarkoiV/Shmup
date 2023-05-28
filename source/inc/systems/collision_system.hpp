@@ -26,6 +26,15 @@ private:
         void onOverlap(entt::entity, entt::entity) override;
     } playerEnemy;
 
+    struct PlayerPickup
+        : Gng2D::OverlapSystem<PlayerCollider, PickupCollider>
+    {
+        PlayerPickup(entt::registry& r)
+            : Gng2D::OverlapSystem<PlayerCollider, PickupCollider>(r)
+        {}
+        void onOverlap(entt::entity, entt::entity) override;
+    } playerPickup;
+
     struct BulletEnemy
         : Gng2D::OverlapSystem<PlayerBulletCollider, EnemyCollider>
     {

@@ -1,11 +1,13 @@
 #include "systems/collision_system.hpp"
+#include "systems/entity_factory.hpp"
 #include "components/destroy.hpp"
 #include "components/hit_points.hpp"
 #include "components/invulnerability.hpp"
+#include "components/pickup.hpp"
 #include "Gng2D/components/animation.hpp"
 #include "animations.hpp"
 
-static inline void damagePlayer(entt::registry& reg,  entt::entity player)
+static inline void damagePlayer(entt::registry& reg, entt::entity player)
 {
     if (not reg.all_of<Invulnerability>(player))
     {
@@ -18,6 +20,7 @@ static inline void damagePlayer(entt::registry& reg,  entt::entity player)
 CollisionSystem::CollisionSystem(entt::registry& r)
     : bulletBullet(r)
     , playerEnemy(r)
+    , playerPickup(r)
     , bulletEnemy(r)
     , bulletPlayer(r)
 {
@@ -27,6 +30,7 @@ void CollisionSystem::operator()()
 {
     bulletBullet();
     playerEnemy();
+    playerPickup();
     bulletEnemy();
     bulletPlayer();
 }
@@ -41,6 +45,19 @@ void CollisionSystem::PlayerEnemy::onOverlap(entt::entity player, entt::entity e
 {
     reg.emplace<Destroy>(enemy, Destroy::Effect::spawnRedX);
     damagePlayer(reg, player);
+}
+
+void CollisionSystem::PlayerPickup::onOverlap(entt::entity player, entt::entity pickup)
+{
+    auto type = reg.get<Pickup>(pickup).type;
+    switch (type)
+    {
+        case Pickup::Type::drones:
+            EntityFactory(reg).spawnDrone(player, {-22, 5});
+            EntityFactory(reg).spawnDrone(player, {22, 5});
+            break;
+    }
+    reg.destroy(pickup);
 }
 
 void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity enemy)

@@ -24,6 +24,10 @@ Coroutine levelOne(entt::registry& reg)
     EntityFactory(reg).spawnSparrow({520.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
 
+    //Pick Up Drones
+    EntityFactory(reg).spawnPickup({320.0f, 0.0f}, Pickup::Type::drones);
+    co_yield Coroutine::Wait{10_seconds};
+
     // Bullets
     for (int i = 0; i < 10; ++i)
     {

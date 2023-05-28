@@ -17,7 +17,7 @@ void EntityCleaner::operator()()
 
 void EntityCleaner::outOfScreenCleaner()
 {
-    constexpr int margin = 10;
+    constexpr int margin = 20;
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
 
