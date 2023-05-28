@@ -21,7 +21,7 @@ void EntityCleaner::outOfScreenCleaner()
     const auto maxX = Gng2D::SCREEN_WIDTH   + margin;
     const auto maxY = Gng2D::SCREEN_HEIGHT  + margin;
 
-    for (auto&& [entity, pos] : reg.view<Gng2D::Position>().each())
+    for (auto&& [entity, pos] : reg.view<Gng2D::Position>(entt::exclude<Gng2D::RelativePosition>).each())
     {
         bool outside 
             =   pos.x < -margin or pos.y < -margin
