@@ -22,7 +22,7 @@ Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rota
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 2.0f))
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
-        .with<EnemyCollider>(5.0f)
+        .with<EnemyCollider>(6.0f)
         .with<HitPoints>(3u, 3u)
         .with<EnemyBasicWeapon>(75u)
         .with<Gng2D::Rotation>(rotation)
