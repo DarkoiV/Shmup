@@ -8,13 +8,12 @@
 #include "components/colliders.hpp"
 #include "components/basic_weapon.hpp"
 #include "components/invulnerability.hpp"
-#include "components/hit_points.hpp"
 
 PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
     : scene(s)
     , reg(r)
 {
-    scene.newEntity()
+    playerShip = scene.newEntity()
         .with<Gng2D::Position>(320.0f, 200.0f)
         .with<Gng2D::Velocity>(0.0f, 0.0f)
         .with<PlayerCollider>(6.0f)
@@ -25,7 +24,8 @@ PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
         .modify<Gng2D::Sprite>([](auto& sprite)
         {
             PlayerSpriteSheet::divideSprite(sprite);
-        });
+        })
+        .get();
 }
 
 void PlayerControlls::playerMovement()
@@ -111,6 +111,36 @@ void PlayerControlls::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
         .with<Gng2D::Layer>(FlightSceneLayer::Bullets);
 }
 
+void PlayerControlls::hpControl()
+{
+    auto& playerHP = reg.get<HitPoints>(playerShip);
+    if (playerHP.max == cachedHP.max 
+    and playerHP.value == cachedHP.value) return;
+    cachedHP = playerHP;
+
+    if (hpDisplay != entt::null) reg.destroy(hpDisplay);
+
+    hpDisplay = scene.newEntity()
+        .with<Gng2D::Position>(620.0f, 15.0f)
+        .get();
+
+    for(unsigned i = 1; i <= playerHP.max; i++)
+    {
+        scene.newEntity()
+            .withParent(hpDisplay)
+            .with<Gng2D::Layer>(static_cast<uint8_t>(100))
+            .with<Gng2D::RelativePosition>(-16.0f * i, 0.0f)
+            .with<Gng2D::Sprite>("hitpoints")
+            .modify<Gng2D::Sprite>([i, &playerHP](auto& sprite)
+            {
+                sprite.srcRect.w /= 2;
+                if (i > playerHP.value) 
+                    sprite.srcRect.x += sprite.srcRect.w;
+                sprite.opacity = 155;
+            });
+    }
+}
+
 bool PlayerControlls::inFocusMode() const
 {
     return focusMode;
@@ -129,5 +159,6 @@ void PlayerControlls::operator()()
     boundPlayerPosition();
     primaryFire();
     invulnerabilityAnimation();
+    hpControl();
 }
 
