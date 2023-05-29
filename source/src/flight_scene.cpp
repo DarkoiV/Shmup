@@ -2,6 +2,7 @@
 #include "Gng2D/components/name_tag.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
+#include "Gng2D/systems/gui_factory.hpp"
 #include "components/hit_points.hpp"
 #include "game_over_scene.hpp"
 #include "levels.hpp"
@@ -54,11 +55,25 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
     {
         case SDLK_p:
             pause = !pause;
+            if (pause)
+            {
+                Gng2D::GuiFactory(enttRegistry)
+                    .createText("charmap-oldschool_white",
+                                "PAUSE",
+                                Gng2D::Position{320, 200},
+                                4)
+                    .with<Gng2D::NameTag>("Pause");
+            }
+            else
+            {
+                enttRegistry.destroy(getEntity("Pause"));
+            }
             break;
         case SDLK_LSHIFT:
-            guiSystem.createText("charmap-oldschool_white",
-                                 "FOCUS",
-                                 Gng2D::Position{20, 10})
+            Gng2D::GuiFactory(enttRegistry)
+                .createText("charmap-oldschool_white",
+                            "FOCUS",
+                            Gng2D::Position{20, 10})
                 .with<Gng2D::NameTag>("Focus");
             break;
     }
