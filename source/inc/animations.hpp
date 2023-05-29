@@ -7,5 +7,6 @@
 using AnimationFunction = Gng2D::Coroutine(*)(entt::registry&, entt::entity);
 void emplaceAnimation(AnimationFunction, entt::registry& reg, entt::entity);
 
-Gng2D::Coroutine flashShip(entt::registry& reg, entt::entity ship);
+Gng2D::Coroutine flashShip(entt::registry&, entt::entity ship);
+Gng2D::Coroutine rotatePickup(entt::registry&, entt::entity pickup);
 

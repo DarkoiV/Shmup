@@ -10,6 +10,7 @@
 #include "components/hit_points.hpp"
 #include "flight_scene_layers.hpp"
 #include "sprite_sheets.hpp"
+#include "animations.hpp"
 
 EntityFactory::EntityFactory(entt::registry& r)
     : reg(r)
@@ -50,6 +51,11 @@ Gng2D::EntityBuilder EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Typ
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(0.0f, 2.5f)
         .with<Gng2D::Sprite>("pickup")
+        .modify<Gng2D::Sprite>([](auto& sprite, auto& reg, auto pickup)
+        {
+            sprite.srcRect.w /= 4;
+            emplaceAnimation(rotatePickup, reg, pickup);
+        })
         .with<Gng2D::Layer>(FlightSceneLayer::Bullets)
         .with<PickupCollider>(7.0f)
         .with<Pickup>(type);
