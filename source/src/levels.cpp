@@ -63,5 +63,10 @@ Coroutine levelOne(entt::registry& reg)
 
     EntityFactory(reg).spawnSparrow({640.0f, 330.0f}, 180);
     co_yield Coroutine::Wait{5_seconds};
+
+    // Cross
+    EntityFactory(reg).spawnSparrow({0.0f, 0.0f}, 45);
+    co_yield Coroutine::Wait{1_seconds};
+    EntityFactory(reg).spawnSparrow({640.0f, 0.0f}, 135);
 }
 
