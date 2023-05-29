@@ -33,7 +33,7 @@ struct EntityBuilder
         return *this;
     }
 
-    EntityBuilder& withChild(entt::entity child);
+    EntityBuilder& withParent(entt::entity parent);
 
     entt::entity get()
     {

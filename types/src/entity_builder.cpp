@@ -3,8 +3,8 @@
 
 using Gng2D::EntityBuilder;
 
-EntityBuilder& EntityBuilder::withChild(entt::entity child)
+EntityBuilder& EntityBuilder::withParent(entt::entity parent)
 {
-    reg.emplace<Child>(child, entity);
+    reg.emplace<Child>(entity, parent);
     return *this;
 }
