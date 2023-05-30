@@ -6,7 +6,6 @@
 #include "Gng2D/types/scene.hpp"
 
 using Gng2D::Scene;
-using entt::operator""_hs;
 
 Scene::Scene()
 {
@@ -27,8 +26,6 @@ Scene::Scene()
         .on_destroy<Gng2D::Parent>()
         .connect<&Scene::destroyAllChildren>();
 
-    enttRegistry.ctx()
-        .emplace_as<const NamedEntities&>("namedEntities"_hs, namedEntities);
     enttRegistry.ctx()
         .emplace<Scene&>(*this);
 }
