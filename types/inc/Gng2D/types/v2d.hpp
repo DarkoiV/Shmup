@@ -34,6 +34,22 @@ struct V2d
         return {vec.x / len, vec.y / len};
     }
 
+    constexpr static float dot(V2d lhs, V2d rhs)
+    {
+        return (lhs.x * rhs.x) + (lhs.y * rhs.y);
+    }
+    
+    constexpr static float det(V2d lhs, V2d rhs)
+    {
+        return (lhs.x * rhs.y) - (lhs.y * rhs.x);
+    }
+
+    constexpr static float angle(V2d lhs, V2d rhs)
+    {
+        return std::atan2(det(lhs, rhs), dot(lhs, rhs))
+            * 180 / std::numbers::pi;
+    }
+
     constexpr V2d& operator+=(const V2d& lhs)
     {
         x += lhs.x;
