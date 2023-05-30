@@ -5,8 +5,7 @@
 #include "Gng2D/components/relationship.hpp"
 #include "Gng2D/types/entity_builder.hpp"
 #include "components/colliders.hpp"
-#include "components/enemy_basic_weapon.hpp"
-#include "components/enemy_targeting_turret.hpp"
+#include "components/enemy_weapon_types.hpp"
 #include "components/basic_weapon.hpp"
 #include "components/hit_points.hpp"
 #include "flight_scene_layers.hpp"
@@ -26,7 +25,7 @@ Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rota
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<EnemyCollider>(6.0f)
         .with<HitPoints>(3u, 3u)
-        .with<EnemyBasicWeapon>(75u)
+        .with<EnemyVulcan>(75u)
         .with<Gng2D::Rotation>(rotation)
         .with<Gng2D::Sprite>("sparrow")
         .modify<Gng2D::Sprite>([](auto& sprite)
@@ -78,8 +77,9 @@ Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::Rela
         .withParent(parent)
         .with<Gng2D::RelativePosition>(rpos)
         .with<Gng2D::Layer>(FlightSceneLayer::ShipTurrets)
-        .with<Gng2D::Sprite>("turret", 1)
+        .with<Gng2D::Sprite>("turret")
         .with<Gng2D::Rotation>(90.0)
-        .with<EnemyTargetingTurret>(100u);
+        .with<EnemyTargeting>(12u)
+        .with<EnemyVulcan>(125u);
 }
 

@@ -1,6 +1,5 @@
 #include "systems/enemy_weapons.hpp"
-#include "components/enemy_basic_weapon.hpp"
-#include "components/enemy_targeting_turret.hpp"
+#include "components/enemy_weapon_types.hpp"
 #include "components/colliders.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/components/sprite.hpp"
@@ -18,50 +17,14 @@ EnemyWeapons::EnemyWeapons(entt::registry& r)
 
 void EnemyWeapons::operator()()
 {
-    basicWeapons();
-    targetingTurret();
+    targeting();
+    vulcan();
 }
 
-void EnemyWeapons::basicWeapons()
+void EnemyWeapons::vulcan()
 {
-    for (auto&& [enemy, weapon] : reg.view<EnemyBasicWeapon>().each())
+    for (auto&& [enemy, weapon, rotation] : reg.view<EnemyVulcan, Gng2D::Rotation>().each())
     {
-        if (weapon.remainigCooldown == 0)
-        {
-            const auto pos = reg.get<Gng2D::Position>(enemy);
-            const auto vel = reg.get<Gng2D::Velocity>(enemy);
-            const auto offset       = 10 * Gng2D::V2d::normalize(vel);
-            const auto bulletPos    = Gng2D::Position{pos + offset};
-            const auto bulletVel    = Gng2D::Velocity{4 * Gng2D::V2d::normalize(vel)};
-            spawnBullet(bulletPos, bulletVel);
-            weapon.remainigCooldown = weapon.cooldownTicks;
-        }
-        else --weapon.remainigCooldown;
-    }
-}
-
-void EnemyWeapons::targetingTurret()
-{
-    auto player = reg.ctx()
-        .get<Gng2D::Scene&>()
-        .getEntity("Player");
-    auto playerPos = reg.get<Gng2D::Position>(player);
-
-    for (auto&& [enemy, weapon, rotation] : reg.view<EnemyTargetingTurret, Gng2D::Rotation>().each())
-    {
-        if (weapon.remainingRotationCooldown == 0)
-        {
-            const auto pos              = reg.get<Gng2D::Position>(enemy);
-            const auto targetingVector  = playerPos - pos;
-            auto& turretAngle           = reg.get<Gng2D::Rotation>(enemy).angle;
-            const auto turretVector     = Gng2D::V2d::rot(turretAngle, 1);
-            const auto angleDiff        = std::trunc(Gng2D::V2d::angle(targetingVector, turretVector));
-            if (angleDiff > 4.0f)   turretAngle -= 5.0f;
-            if (angleDiff < -4.0f)  turretAngle += 5.0f;
-            weapon.remainingRotationCooldown = weapon.rotationCooldown;
-        }
-        else -- weapon.remainingRotationCooldown;
-
         if (weapon.remainigCooldown == 0)
         {
             const auto pos = reg.get<Gng2D::Position>(enemy);
@@ -72,6 +35,30 @@ void EnemyWeapons::targetingTurret()
             weapon.remainigCooldown = weapon.cooldownTicks;
         }
         else --weapon.remainigCooldown;
+    }
+}
+
+void EnemyWeapons::targeting()
+{
+    auto player = reg.ctx()
+        .get<Gng2D::Scene&>()
+        .getEntity("Player");
+    auto playerPos = reg.get<Gng2D::Position>(player);
+
+    for (auto&& [enemy, weapon, rotation] : reg.view<EnemyTargeting, Gng2D::Rotation>().each())
+    {
+        if (weapon.remainingRotationCooldown == 0)
+        {
+            const auto pos              = reg.get<Gng2D::Position>(enemy);
+            const auto targetingVector  = playerPos - pos;
+            auto& turretAngle           = reg.get<Gng2D::Rotation>(enemy).angle;
+            const auto turretVector     = Gng2D::V2d::rot(turretAngle, 1);
+            const auto angleDiff        = Gng2D::V2d::angle(targetingVector, turretVector);
+            if (angleDiff > 3.0f)   turretAngle -= 5.0f;
+            if (angleDiff < -3.0f)  turretAngle += 5.0f;
+            weapon.remainingRotationCooldown = weapon.rotationCooldown;
+        }
+        else -- weapon.remainingRotationCooldown;
     }
 }
 
