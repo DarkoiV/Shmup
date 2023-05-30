@@ -6,6 +6,7 @@
 #include "Gng2D/types/entity_builder.hpp"
 #include "components/colliders.hpp"
 #include "components/enemy_basic_weapon.hpp"
+#include "components/enemy_targeting_turret.hpp"
 #include "components/basic_weapon.hpp"
 #include "components/hit_points.hpp"
 #include "flight_scene_layers.hpp"
@@ -69,5 +70,16 @@ Gng2D::EntityBuilder EntityFactory::spawnDrone(entt::entity parent, Gng2D::Relat
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<BasicWeapon>()
         .with<Gng2D::Sprite>("drone", 1);
+}
+
+Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::RelativePosition rpos)
+{
+    return Gng2D::EntityBuilder(reg)
+        .withParent(parent)
+        .with<Gng2D::RelativePosition>(rpos)
+        .with<Gng2D::Layer>(FlightSceneLayer::ShipTurrets)
+        .with<Gng2D::Sprite>("turret", 1)
+        .with<Gng2D::Rotation>(90.0)
+        .with<EnemyTargetingTurret>(100u);
 }
 

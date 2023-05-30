@@ -13,6 +13,7 @@ struct EntityFactory
     Gng2D::EntityBuilder spawnEnemyBullet(Gng2D::Position, Gng2D::Velocity);
     Gng2D::EntityBuilder spawnPickup(Gng2D::Position, Pickup::Type);
     Gng2D::EntityBuilder spawnDrone(entt::entity parent, Gng2D::RelativePosition);
+    Gng2D::EntityBuilder spawnTurret(entt::entity parent, Gng2D::RelativePosition);
 
 private:
     entt::registry& reg;

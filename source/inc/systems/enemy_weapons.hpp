@@ -12,6 +12,9 @@ struct EnemyWeapons
 private:
     entt::registry& reg;
 
+    void basicWeapons();
+    void targetingTurret();
+
     void spawnBullet(Gng2D::Position, Gng2D::Velocity);
 };
 

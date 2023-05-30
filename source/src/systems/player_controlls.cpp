@@ -21,6 +21,7 @@ PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<BasicWeapon>()
         .with<Gng2D::Sprite>("player_ship", 1)
+        .with<Gng2D::NameTag>("Player")
         .modify<Gng2D::Sprite>([](auto& sprite)
         {
             PlayerSpriteSheet::divideSprite(sprite);

@@ -15,6 +15,7 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("pickup");
     assetRegistry.loadSprite("drone");
     assetRegistry.loadSprite("box");
+    assetRegistry.loadSprite("turret");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();
@@ -26,3 +27,4 @@ void Shmup::onQuit()
     auto& scene = sceneRegistry.getCurrentScene();
     scene.onExit();
 }
+

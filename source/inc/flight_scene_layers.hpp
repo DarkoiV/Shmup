@@ -5,6 +5,7 @@ enum FlightSceneLayer : uint8_t
 {
     BackgroundEffects,
     Ships,
-    Bullets
+    Bullets,
+    ShipTurrets
 };
 

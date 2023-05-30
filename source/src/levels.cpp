@@ -14,6 +14,16 @@ Coroutine levelOne(entt::registry& reg)
     constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
     co_yield Coroutine::Wait{5_seconds};
 
+    auto dummy = EntityBuilder(reg) 
+        .with<Gng2D::Position>(40.0f, 200.0f)
+        .get();
+    EntityFactory(reg).spawnTurret(dummy, {0.0f,0.0f});
+
+    dummy = EntityBuilder(reg) 
+        .with<Gng2D::Position>(580.0f, 200.0f)
+        .get();
+    EntityFactory(reg).spawnTurret(dummy, {0.0f,0.0f});
+
     // Sparrows going down
     EntityFactory(reg).spawnSparrow({320.0f, 0.0f});
     co_yield Coroutine::Wait{5_seconds};
