@@ -15,6 +15,8 @@ namespace Gng2D
 {
 struct Scene
 {
+    using NamedEntities = std::unordered_map<std::string, entt::entity>;
+
     Scene();
     Scene(const Scene&) = delete;
     Scene(Scene&&)      = delete;
@@ -52,15 +54,12 @@ protected:
     entt::registry      enttRegistry;
 
 private:
-    void        runCoroutines();
+    void                    runCoroutines();
+    std::vector<Coroutine>  coroutines;
 
-    std::vector<Coroutine>          coroutines;
-
-    using NamedEntities = std::unordered_map<std::string, entt::entity>;
-    NamedEntities namedEntities;
-
-    void addNamedEntity(entt::registry&, entt::entity);
-    void removeNamedEntity(entt::registry&, entt::entity);
+    NamedEntities   namedEntities;
+    void            addNamedEntity(entt::registry&, entt::entity);
+    void            removeNamedEntity(entt::registry&, entt::entity);
 
     static void addChildToParent(entt::registry&, entt::entity);
     static void removeChildFromParent(entt::registry&, entt::entity);
