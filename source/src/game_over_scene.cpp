@@ -1,4 +1,5 @@
 #include "game_over_scene.hpp"
+#include "Gng2D/core/log.hpp"
 
 void GameOverScene::onEnter()
 {

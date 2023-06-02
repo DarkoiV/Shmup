@@ -1,7 +1,6 @@
 #include "shmup.hpp"
 #include "flight_scene.hpp"
 #include "Gng2D/core/asset_registry.hpp"
-#include "Gng2D/core/scene_registry.hpp"
 
 void Shmup::onCreate()
 {
@@ -19,13 +18,13 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("turret_boat");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
-    sceneRegistry.setNextScene<FlightScene>();
+    setNextScene<FlightScene>();
 }
 
 void Shmup::onQuit()
 {
     stopRunning();
-    auto& scene = sceneRegistry.getCurrentScene();
-    scene.onExit();
+    if (currentScene)
+        currentScene->onExit();
 }
 

@@ -1,5 +1,6 @@
 #include "flight_scene.hpp"
 #include "Gng2D/components/name_tag.hpp"
+#include "Gng2D/core/application.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/systems/gui_factory.hpp"
@@ -9,7 +10,7 @@
 
 FlightScene::FlightScene()
 {
-    addCoroutine(levelOne, enttRegistry);
+    addCoroutine(levelOne, reg);
 }
 
 void FlightScene::onEnter()
@@ -26,7 +27,7 @@ bool FlightScene::isCompleted()
 {
     if (playerControlls.isPlayerAlive())
     {
-        sceneRegistry.setNextScene<GameOverScene>();
+        Gng2D::Application::setNextScene<GameOverScene>();
         return true;
     }
     return false;
@@ -57,7 +58,7 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
             pause = !pause;
             if (pause)
             {
-                Gng2D::GuiFactory(enttRegistry)
+                Gng2D::GuiFactory(reg)
                     .createText("charmap-oldschool_white",
                                 "PAUSE",
                                 Gng2D::Position{320, 200},
@@ -66,11 +67,11 @@ void FlightScene::onKeyDown(SDL_KeyboardEvent& e)
             }
             else
             {
-                enttRegistry.destroy(getEntity("Pause"));
+                reg.destroy(getEntity("Pause"));
             }
             break;
         case SDLK_LSHIFT:
-            Gng2D::GuiFactory(enttRegistry)
+            Gng2D::GuiFactory(reg)
                 .createText("charmap-oldschool_white",
                             "FOCUS",
                             Gng2D::Position{20, 10})
@@ -85,7 +86,7 @@ void FlightScene::onKeyUp(SDL_KeyboardEvent& e)
     {
         case SDLK_LSHIFT:
             auto focus = getEntity("Focus");
-            enttRegistry.destroy(focus);
+            reg.destroy(focus);
             break;
     }
 }

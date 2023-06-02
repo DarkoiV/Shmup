@@ -28,16 +28,16 @@ struct FlightScene : Gng2D::Scene
     void onKeyUp(SDL_KeyboardEvent&) override;
 
 private:
-    PlayerControlls                             playerControlls{*this, enttRegistry};
-    EnemyWeapons                                enemyWeapons{enttRegistry};
-    Gng2D::PositionSystem                       positionSystem{enttRegistry};
-    Gng2D::AnimationSystem                      animatonSystem{enttRegistry};
-    CollisionSystem                             collisionSystem{enttRegistry};
-    EntityCleaner                               entityCleaner{enttRegistry};
+    PlayerControlls                             playerControlls{*this, reg};
+    EnemyWeapons                                enemyWeapons{reg};
+    Gng2D::PositionSystem                       positionSystem{reg};
+    Gng2D::AnimationSystem                      animatonSystem{reg};
+    CollisionSystem                             collisionSystem{reg};
+    EntityCleaner                               entityCleaner{reg};
 
-    Gng2D::GuiSystem                            guiSystem{enttRegistry};
+    Gng2D::GuiSystem                            guiSystem{reg};
 
-    Gng2D::EntityRenderer                       entityRenderer{enttRegistry};
-    Gng2D::ColliderRenderer<PlayerCollider>     playerColliderRenderer{enttRegistry};
+    Gng2D::EntityRenderer                       entityRenderer{reg};
+    Gng2D::ColliderRenderer<PlayerCollider>     playerColliderRenderer{reg};
 };
 
