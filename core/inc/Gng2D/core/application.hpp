@@ -1,7 +1,6 @@
 #pragma once
 #include "Gng2D/types/scene.hpp"
 #include "Gng2D/core/window.hpp"
-#include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 
 namespace Gng2D
@@ -17,9 +16,19 @@ struct Application
     void run();
     static void stopRunning();
 
+    template<typename S, typename... Args>
+        requires(std::is_base_of<Scene, S>::value)
+    static void setNextScene(Args&&... args)
+    {
+        instance->nextScene = std::make_unique<S>(std::forward<Args>(args)...);
+    }
+
 protected:
     AssetRegistry   assetRegistry;
-    SceneRegistry   sceneRegistry;
+
+    using ScenePtr          = std::unique_ptr<Scene>;
+    inline static ScenePtr  currentScene;
+    inline static ScenePtr  nextScene;
 
 private:
     void mainLoop();

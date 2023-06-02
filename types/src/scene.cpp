@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include "Gng2D/components/name_tag.hpp"
 #include "Gng2D/components/relationship.hpp"
-#include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/core/log.hpp"
 #include "Gng2D/core/window.hpp"
 #include "Gng2D/types/scene.hpp"
 
@@ -9,43 +9,43 @@ using Gng2D::Scene;
 
 Scene::Scene()
 {
-    enttRegistry
+    reg
         .on_construct<Gng2D::NameTag>()
         .connect<&Scene::addNamedEntity>(this);
-    enttRegistry
+    reg
         .on_destroy<Gng2D::NameTag>()
         .connect<&Scene::removeNamedEntity>(this);
 
-    enttRegistry
+    reg
         .on_construct<Gng2D::Child>()
         .connect<&Scene::addChildToParent>();
-    enttRegistry
+    reg
         .on_destroy<Gng2D::Child>()
         .connect<&Scene::removeChildFromParent>();
-    enttRegistry
+    reg
         .on_destroy<Gng2D::Parent>()
         .connect<&Scene::destroyAllChildren>();
 
-    enttRegistry.ctx()
+    reg.ctx()
         .emplace<Scene&>(*this);
 }
 
 Scene::~Scene()
 {
-    enttRegistry
+    reg
         .on_construct<Gng2D::NameTag>()
         .disconnect<&Scene::addNamedEntity>(this);
-    enttRegistry
+    reg
         .on_destroy<Gng2D::NameTag>()
         .disconnect<&Scene::removeNamedEntity>(this);
 
-    enttRegistry
+    reg
         .on_construct<Gng2D::Child>()
         .disconnect<&Scene::addChildToParent>();
-    enttRegistry
+    reg
         .on_destroy<Gng2D::Child>()
         .disconnect<&Scene::removeChildFromParent>();
-    enttRegistry
+    reg
         .on_destroy<Gng2D::Parent>()
         .disconnect<&Scene::destroyAllChildren>();
 }
@@ -71,7 +71,7 @@ bool Scene::isKeyPressed(SDL_Scancode scancode) const
 
 Gng2D::EntityBuilder Scene::newEntity()
 {
-    return EntityBuilder(enttRegistry);
+    return EntityBuilder(reg);
 }
 
 entt::entity Scene::getEntity(const std::string& name)

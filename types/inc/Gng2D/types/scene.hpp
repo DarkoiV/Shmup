@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <entt/entt.hpp>
-#include "Gng2D/core/scene_registry.hpp"
 #include "Gng2D/types/coroutine.hpp"
 #include "Gng2D/types/entity_builder.hpp"
 
@@ -48,8 +47,7 @@ struct Scene
 
 protected:
     bool                pause{false};
-    SceneRegistry       sceneRegistry;
-    entt::registry      enttRegistry;
+    entt::registry      reg;
 
 private:
     void                    runCoroutines();

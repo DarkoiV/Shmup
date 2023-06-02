@@ -31,7 +31,7 @@ void Gng2D::Application::stopRunning()
 
 void Gng2D::Application::mainLoop()
 {
-    auto& scene = sceneRegistry.getCurrentScene();
+    auto& scene = *currentScene;
     uint64_t currentTS  = SDL_GetTicks64();
     uint32_t elapsed    = currentTS - previousTS;
     previousTS          = currentTS;
@@ -73,7 +73,19 @@ void Gng2D::Application::eventLoop(Scene& scene)
 
 void Gng2D::Application::switchScene()
 {
-    sceneRegistry.switchScene();
+    if (not nextScene) 
+    {
+        LOG::ERROR("No next scene set, cannot switch");
+        Application::stopRunning();
+    }
+    else
+    {
+        if (currentScene) currentScene->onExit();
+        currentScene = std::move(nextScene);
+        currentScene->onEnter();
+    }
+
+    if (not currentScene) LOG::FATAL("No new scene after switching!");
     previousTS  = SDL_GetTicks();
     logicLag    = LOGIC_TICK;
 }
