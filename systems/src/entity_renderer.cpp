@@ -13,9 +13,14 @@ EntityRenderer::EntityRenderer(entt::registry& r)
         .connect<&EntityRenderer::markForSorting>(this);
     reg.on_update<Sprite>()
         .connect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Sprite>()
+        .connect<&EntityRenderer::markForSorting>(this);
+
     reg.on_construct<Layer>()
         .connect<&EntityRenderer::markForSorting>(this);
     reg.on_update<Layer>()
+        .connect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Layer>()
         .connect<&EntityRenderer::markForSorting>(this);
 }
 
@@ -25,9 +30,14 @@ EntityRenderer::~EntityRenderer()
         .disconnect<&EntityRenderer::markForSorting>(this);
     reg.on_update<Sprite>()
         .disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Sprite>()
+        .disconnect<&EntityRenderer::markForSorting>(this);
+
     reg.on_construct<Layer>()
         .disconnect<&EntityRenderer::markForSorting>(this);
     reg.on_update<Layer>()
+        .disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Layer>()
         .disconnect<&EntityRenderer::markForSorting>(this);
 }
 
