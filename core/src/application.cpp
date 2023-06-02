@@ -4,6 +4,8 @@
 
 Gng2D::Application::Application()
 {
+    instance = this;
+
     AssetRegistry::renderer     = window.renderer();
     LOG::OK("Created Gng2D application");
 }
@@ -24,7 +26,7 @@ void Gng2D::Application::run()
 void Gng2D::Application::stopRunning()
 {
     LOG::INFO("Application requested to stop running");
-    isRunning = false;
+    instance->isRunning = false;
 }
 
 void Gng2D::Application::mainLoop()

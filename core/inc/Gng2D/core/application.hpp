@@ -15,7 +15,7 @@ struct Application
     virtual void onQuit()   = 0;
 
     void run();
-    void stopRunning();
+    static void stopRunning();
 
 protected:
     AssetRegistry   assetRegistry;
@@ -30,6 +30,8 @@ private:
     Window      window;
     uint64_t    previousTS{0};
     uint32_t    logicLag{0};
+
+    static inline Application* instance;
 };
 }
 

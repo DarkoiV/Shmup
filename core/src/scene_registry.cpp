@@ -1,7 +1,7 @@
-#include "Gng2D/types/scene.hpp"
-#include "Gng2D/core/functions.hpp"
-#include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/core/application.hpp"
 #include "Gng2D/core/log.hpp"
+#include "Gng2D/core/scene_registry.hpp"
+#include "Gng2D/types/scene.hpp"
 
 Gng2D::Scene& Gng2D::SceneRegistry::getCurrentScene() const
 {
@@ -13,7 +13,7 @@ void Gng2D::SceneRegistry::switchScene()
     if (not nextScene) 
     {
         LOG::ERROR("No next scene set, cannot switch");
-        Gng2D::requestQuit();
+        Application::stopRunning();
     }
     else
     {
