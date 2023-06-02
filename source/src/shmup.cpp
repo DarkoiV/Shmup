@@ -16,6 +16,7 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("drone");
     assetRegistry.loadSprite("box");
     assetRegistry.loadSprite("turret");
+    assetRegistry.loadSprite("turret_boat");
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
     sceneRegistry.setNextScene<FlightScene>();

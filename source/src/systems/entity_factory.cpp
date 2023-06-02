@@ -35,6 +35,27 @@ Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rota
         });
 }
 
+Gng2D::EntityBuilder EntityFactory::spawnTurretBoat(Gng2D::Position pos, float rotation)
+{
+    auto builder = Gng2D::EntityBuilder(reg)
+        .with<Gng2D::Position>(pos)
+        .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 1.5f))
+        .with<Gng2D::Rotation>(rotation)
+        .with<Gng2D::Layer>(FlightSceneLayer::Ships)
+        .with<Gng2D::Sprite>("turret_boat")
+        .with<EnemyCollider>(6.0f)
+        .with<HitPoints>(3u, 3u)
+        .modify<Gng2D::Sprite>([](auto& sprite)
+        {
+            EnemySpriteSheet::divideSprite(sprite);
+            EnemySpriteSheet::setHFrame(EnemySpriteSheet::HFrame::Forward, sprite);
+        });
+
+    spawnTurret(builder.get(), Gng2D::RelativePosition{Gng2D::V2d::rot(rotation, -3.0f)});
+
+    return builder;
+}
+
 Gng2D::EntityBuilder EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
     return Gng2D::EntityBuilder(reg)
@@ -56,7 +77,7 @@ Gng2D::EntityBuilder EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Typ
             sprite.srcRect.w /= 4;
             emplaceAnimation(rotatePickup, reg, pickup);
         })
-        .with<Gng2D::Layer>(FlightSceneLayer::Bullets)
+        .with<Gng2D::Layer>(FlightSceneLayer::PickUps)
         .with<PickupCollider>(7.0f)
         .with<Pickup>(type);
 }
@@ -82,4 +103,5 @@ Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::Rela
         .with<EnemyTargeting>(12u)
         .with<EnemyVulcan>(125u);
 }
+
 
