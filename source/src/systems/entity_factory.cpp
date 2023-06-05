@@ -100,7 +100,7 @@ Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::Rela
         .with<Gng2D::Layer>(FlightSceneLayer::ShipTurrets)
         .with<Gng2D::Sprite>("turret")
         .with<Gng2D::Rotation>(90.0)
-        .with<EnemyTargeting>(12u)
+        .with<EnemyTargeting>(8u)
         .with<EnemyVulcan>(125u);
 }
 
