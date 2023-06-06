@@ -78,7 +78,7 @@ void EntityRenderer::sortRenderables()
         bool rightHasLayer = reg.all_of<Layer>(rhs);
         if (not rightHasLayer) return false;
         if (not leftHasLayer)  return true;
-        return reg.get<Layer>(lhs).value < reg.get<Layer>(rhs).value;
+        return reg.get<Layer>(lhs) < reg.get<Layer>(rhs);
     });
     reg.sort<Rotation, Sprite>();
 
