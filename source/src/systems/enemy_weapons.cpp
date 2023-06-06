@@ -5,7 +5,7 @@
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/roation.hpp"
 #include "Gng2D/types/scene.hpp"
-#include "Gng2D/types/entity_builder.hpp"
+#include "Gng2D/types/entity_compositor.hpp"
 #include "flight_scene_layers.hpp"
 
 using namespace entt::literals;
@@ -64,7 +64,7 @@ void EnemyWeapons::targeting()
 
 void EnemyWeapons::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
-    Gng2D::EntityBuilder(reg)
+    Gng2D::EntityCompositor(reg)
         .with<Gng2D::Sprite>("enemy_bullet")
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(vel)

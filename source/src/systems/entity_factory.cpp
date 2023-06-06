@@ -3,7 +3,7 @@
 #include "Gng2D/components/roation.hpp"
 #include "Gng2D/components/velocity.hpp"
 #include "Gng2D/components/relationship.hpp"
-#include "Gng2D/types/entity_builder.hpp"
+#include "Gng2D/types/entity_compositor.hpp"
 #include "components/colliders.hpp"
 #include "components/enemy_weapon_types.hpp"
 #include "components/basic_weapon.hpp"
@@ -17,9 +17,9 @@ EntityFactory::EntityFactory(entt::registry& r)
 {
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rotation)
+Gng2D::EntityCompositor EntityFactory::spawnSparrow(Gng2D::Position pos, float rotation)
 {
-    return Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityCompositor(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 2.0f))
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
@@ -35,9 +35,9 @@ Gng2D::EntityBuilder EntityFactory::spawnSparrow(Gng2D::Position pos, float rota
         });
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnTurretBoat(Gng2D::Position pos, float rotation)
+Gng2D::EntityCompositor EntityFactory::spawnTurretBoat(Gng2D::Position pos, float rotation)
 {
-    auto builder = Gng2D::EntityBuilder(reg)
+    auto builder = Gng2D::EntityCompositor(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 1.5f))
         .with<Gng2D::Rotation>(rotation)
@@ -56,9 +56,9 @@ Gng2D::EntityBuilder EntityFactory::spawnTurretBoat(Gng2D::Position pos, float r
     return builder;
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D::Velocity vel)
+Gng2D::EntityCompositor EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D::Velocity vel)
 {
-    return Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityCompositor(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(vel)
         .with<Gng2D::Sprite>("enemy_bullet")
@@ -66,9 +66,9 @@ Gng2D::EntityBuilder EntityFactory::spawnEnemyBullet(Gng2D::Position pos, Gng2D:
         .with<Gng2D::Layer>(FlightSceneLayer::Bullets);
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Type type)
+Gng2D::EntityCompositor EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Type type)
 {
-    return Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityCompositor(reg)
         .with<Gng2D::Position>(pos)
         .with<Gng2D::Velocity>(0.0f, 2.5f)
         .with<Gng2D::Sprite>("pickup")
@@ -82,18 +82,18 @@ Gng2D::EntityBuilder EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Typ
         .with<Pickup>(type);
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnDrone(entt::entity parent, Gng2D::RelativePosition rpos)
+Gng2D::EntityCompositor EntityFactory::spawnDrone(entt::entity parent, Gng2D::RelativePosition rpos)
 {
-    return Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityCompositor(reg)
         .with<Gng2D::Parent>(parent)
         .with<Gng2D::RelativePosition>(rpos)
         .with<BasicWeapon>()
         .with<Gng2D::Sprite>("drone", 1);
 }
 
-Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::RelativePosition rpos)
+Gng2D::EntityCompositor EntityFactory::spawnTurret(entt::entity parent, Gng2D::RelativePosition rpos)
 {
-    return Gng2D::EntityBuilder(reg)
+    return Gng2D::EntityCompositor(reg)
         .withParent(parent)
         .with<Gng2D::RelativePosition>(rpos)
         .with<Gng2D::Sprite>("turret")
