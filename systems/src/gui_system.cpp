@@ -1,36 +1,17 @@
 #include "Gng2D/systems/gui_system.hpp"
-#include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/text.hpp"
+#include "Gng2D/components/sprite.hpp"
 
 using Gng2D::GuiSystem;
 
 GuiSystem::GuiSystem(entt::registry& r)
     : reg(r)
 {
-    reg.on_construct<Text>()
-        .connect<&attachTextSprite>();
-    reg.on_update<Text>()
-        .connect<&updateTextSprite>();
+    connectGuiComponent<Text>(reg);
 }
 
 GuiSystem::~GuiSystem()
 {
-    reg.on_construct<Text>()
-        .disconnect<&attachTextSprite>();
-    reg.on_update<Text>()
-        .disconnect<&updateTextSprite>();
-}
-
-void GuiSystem::attachTextSprite(entt::registry& r, entt::entity e)
-{
-    auto& text = r.get<Gng2D::Text>(e);
-    r.emplace_or_replace<Gng2D::Sprite>(e, text.getSprite());
-}
-
-void GuiSystem::updateTextSprite(entt::registry& r, entt::entity e)
-{
-    auto& text = r.get<Gng2D::Text>(e);
-    auto scale = r.get<Gng2D::Sprite>(e).scale;
-    r.replace<Gng2D::Sprite>(e, text.getSprite(), scale);
+    disconnectGuiComponent<Text>(reg);
 }
 
