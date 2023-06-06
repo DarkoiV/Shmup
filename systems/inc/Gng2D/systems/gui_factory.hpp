@@ -11,7 +11,7 @@ struct GuiFactory
     EntityBuilder createText(const std::string& font, 
                              const std::string& str,
                              Gng2D::Position,
-                             float scale = 1,
+                             float scale = 1.0f,
                              uint8_t layer = 100);
 private:
     entt::registry& reg;

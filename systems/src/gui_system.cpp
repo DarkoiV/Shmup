@@ -23,11 +23,14 @@ GuiSystem::~GuiSystem()
 
 void GuiSystem::attachTextSprite(entt::registry& r, entt::entity e)
 {
-    r.emplace_or_replace<Gng2D::Sprite>(e, r.get<Gng2D::Text>(e));
+    auto& text = r.get<Gng2D::Text>(e);
+    r.emplace_or_replace<Gng2D::Sprite>(e, text.getSprite());
 }
 
 void GuiSystem::updateTextSprite(entt::registry& r, entt::entity e)
 {
-    r.replace<Gng2D::Sprite>(e, r.get<Gng2D::Text>(e));
+    auto& text = r.get<Gng2D::Text>(e);
+    auto scale = r.get<Gng2D::Sprite>(e).scale;
+    r.replace<Gng2D::Sprite>(e, text.getSprite(), scale);
 }
 

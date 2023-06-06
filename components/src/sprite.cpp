@@ -16,10 +16,10 @@ Gng2D::Sprite::Sprite(const std::string& name, float scale)
     srcRect.y = 0;
     SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
 }
-
-Gng2D::Sprite::Sprite(const Text& text)
-    : texture(text.getSprite())
-    , scale(text.getScale())
+    
+Gng2D::Sprite::Sprite(SDL_Texture* texture, float scale)
+    : texture(texture)
+    , scale(scale)
 {
     srcRect.x = 0;
     srcRect.y = 0;

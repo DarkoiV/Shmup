@@ -5,17 +5,14 @@
 
 namespace Gng2D 
 {
-struct GameObject;
 struct Text 
 {
-    Text(const std::string& font, const std::string& str, float scale = 1.0f);
+    Text(const std::string& font, const std::string& str);
 
     SDL_Texture*    getSprite() const;
-    float           getScale() const;
     void            changeFont(const std::string& font);
     void            changeString(const std::string& str);
-    void            changeScale(float);
-    void            changeRGBAMod(uint8_t, uint8_t, uint8_t, uint8_t);
+    void            changeRGBMod(uint8_t, uint8_t, uint8_t);
 
 private:
     using OwnedTexture = std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>;
@@ -23,13 +20,11 @@ private:
 
     Font            font;
     std::string     str;
-    float           scale;
     OwnedTexture    textSprite{nullptr, &SDL_DestroyTexture};
 
     uint8_t         red{255};
     uint8_t         green{255};
     uint8_t         blue{255};
-    uint8_t         alpha{255};
 };
 }
 
