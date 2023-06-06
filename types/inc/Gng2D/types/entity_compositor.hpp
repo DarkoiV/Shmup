@@ -4,21 +4,21 @@
 
 namespace Gng2D
 {
-struct EntityBuilder
+struct EntityCompositor
 {
-    EntityBuilder(entt::registry& r)
+    EntityCompositor(entt::registry& r)
         : reg(r)
         , entity(r.create()) {}
 
     template<typename Component, typename... Args>
-    EntityBuilder& with(Args&&... args)
+    EntityCompositor& with(Args&&... args)
     {
         reg.emplace<Component>(entity, std::forward<Args>(args)...);
         return *this;
     }
 
     template<typename Component>
-    EntityBuilder& modify(std::function<void(Component&, entt::registry&, entt::entity)> func)
+    EntityCompositor& modify(std::function<void(Component&, entt::registry&, entt::entity)> func)
     {
         auto& comp = reg.get<Component>(entity);
         func(comp, reg, entity);
@@ -26,14 +26,14 @@ struct EntityBuilder
     }
 
     template<typename Component>
-    EntityBuilder& modify(std::function<void(Component&)> func)
+    EntityCompositor& modify(std::function<void(Component&)> func)
     {
         auto& comp = reg.get<Component>(entity);
         func(comp);
         return *this;
     }
 
-    EntityBuilder& withParent(entt::entity parent);
+    EntityCompositor& withParent(entt::entity parent);
 
     entt::entity get()
     {

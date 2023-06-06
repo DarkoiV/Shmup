@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #include <entt/entt.hpp>
 #include "Gng2D/types/coroutine.hpp"
-#include "Gng2D/types/entity_builder.hpp"
+#include "Gng2D/types/entity_compositor.hpp"
 
 namespace Gng2D
 {
@@ -42,7 +42,7 @@ struct Scene
 
     bool        isKeyPressed(SDL_Scancode) const;
 
-    EntityBuilder   newEntity();
+    EntityCompositor   newEntity();
     entt::entity    getEntity(const std::string&);
 
 protected:

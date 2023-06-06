@@ -66,9 +66,9 @@ bool Scene::isKeyPressed(SDL_Scancode scancode) const
     return keyboardState[scancode];
 }
 
-Gng2D::EntityBuilder Scene::newEntity()
+Gng2D::EntityCompositor Scene::newEntity()
 {
-    return EntityBuilder(reg);
+    return EntityCompositor(reg);
 }
 
 entt::entity Scene::getEntity(const std::string& name)

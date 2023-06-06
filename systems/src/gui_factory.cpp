@@ -11,13 +11,13 @@ GuiFactory::GuiFactory(entt::registry& r)
 {
 }
 
-Gng2D::EntityBuilder GuiFactory::createText(const std::string& font,
+Gng2D::EntityCompositor GuiFactory::createText(const std::string& font,
                                             const std::string& str,
                                             Gng2D::Position pos,
                                             float scale,
                                             uint8_t layer)
 {
-    return EntityBuilder(reg)
+    return EntityCompositor(reg)
         .with<Layer>(layer)
         .with<Position>(pos)
         .with<Text>(font, str)
@@ -27,7 +27,7 @@ Gng2D::EntityBuilder GuiFactory::createText(const std::string& font,
         });
 }
 
-Gng2D::EntityBuilder GuiFactory::createBox(const std::string& sprite,
+Gng2D::EntityCompositor GuiFactory::createBox(const std::string& sprite,
                                            Gng2D::Position pos,
                                            unsigned capWidth,
                                            unsigned capHeight,
@@ -35,7 +35,7 @@ Gng2D::EntityBuilder GuiFactory::createBox(const std::string& sprite,
                                            float scale,
                                            uint8_t layer)
 {
-    return EntityBuilder(reg)
+    return EntityCompositor(reg)
         .with<Layer>(layer)
         .with<Position>(pos)
         .with<Box>(sprite, capWidth, capHeight, capMargin)
