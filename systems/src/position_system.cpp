@@ -6,7 +6,7 @@ using Gng2D::PositionSystem;
 
 PositionSystem::PositionSystem(entt::registry& r)
     : reg(r)
-    , parentPosObserver(reg, entt::collector.update<Position>().where<Parent>())
+    , parentPosObserver(reg, entt::collector.update<Position>().where<Children>())
 {
     reg
         .on_construct<RelativePosition>()
