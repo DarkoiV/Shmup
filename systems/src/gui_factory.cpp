@@ -1,7 +1,8 @@
 #include "Gng2D/systems/gui_factory.hpp"
+#include "Gng2D/components/box.hpp"
 #include "Gng2D/components/layer.hpp"
-#include "Gng2D/components/text.hpp"
 #include "Gng2D/components/sprite.hpp"
+#include "Gng2D/components/text.hpp"
 
 using Gng2D::GuiFactory;
 
@@ -20,6 +21,24 @@ Gng2D::EntityBuilder GuiFactory::createText(const std::string& font,
         .with<Layer>(layer)
         .with<Position>(pos)
         .with<Text>(font, str)
+        .modify<Sprite>([scale](auto& sprite)
+        {
+            sprite.scale = scale;
+        });
+}
+
+Gng2D::EntityBuilder GuiFactory::createBox(const std::string& sprite,
+                                           Gng2D::Position pos,
+                                           unsigned capWidth,
+                                           unsigned capHeight,
+                                           unsigned capMargin,
+                                           float scale,
+                                           uint8_t layer)
+{
+    return EntityBuilder(reg)
+        .with<Layer>(layer)
+        .with<Position>(pos)
+        .with<Box>(sprite, capWidth, capHeight, capMargin)
         .modify<Sprite>([scale](auto& sprite)
         {
             sprite.scale = scale;
