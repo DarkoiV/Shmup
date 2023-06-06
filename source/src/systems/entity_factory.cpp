@@ -85,9 +85,8 @@ Gng2D::EntityBuilder EntityFactory::spawnPickup(Gng2D::Position pos, Pickup::Typ
 Gng2D::EntityBuilder EntityFactory::spawnDrone(entt::entity parent, Gng2D::RelativePosition rpos)
 {
     return Gng2D::EntityBuilder(reg)
-        .with<Gng2D::Child>(parent)
+        .with<Gng2D::Parent>(parent)
         .with<Gng2D::RelativePosition>(rpos)
-        .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<BasicWeapon>()
         .with<Gng2D::Sprite>("drone", 1);
 }
@@ -97,7 +96,6 @@ Gng2D::EntityBuilder EntityFactory::spawnTurret(entt::entity parent, Gng2D::Rela
     return Gng2D::EntityBuilder(reg)
         .withParent(parent)
         .with<Gng2D::RelativePosition>(rpos)
-        .with<Gng2D::Layer>(FlightSceneLayer::ShipTurrets)
         .with<Gng2D::Sprite>("turret")
         .with<Gng2D::Rotation>(90.0)
         .with<EnemyTargeting>(8u)
