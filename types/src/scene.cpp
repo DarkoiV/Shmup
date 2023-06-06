@@ -17,13 +17,13 @@ Scene::Scene()
         .connect<&Scene::removeNamedEntity>(this);
 
     reg
-        .on_construct<Gng2D::Child>()
+        .on_construct<Gng2D::Parent>()
         .connect<&Scene::addChildToParent>();
     reg
-        .on_destroy<Gng2D::Child>()
+        .on_destroy<Gng2D::Parent>()
         .connect<&Scene::removeChildFromParent>();
     reg
-        .on_destroy<Gng2D::Parent>()
+        .on_destroy<Gng2D::Children>()
         .connect<&Scene::destroyAllChildren>();
 
     reg.ctx()
@@ -40,13 +40,13 @@ Scene::~Scene()
         .disconnect<&Scene::removeNamedEntity>(this);
 
     reg
-        .on_construct<Gng2D::Child>()
+        .on_construct<Gng2D::Parent>()
         .disconnect<&Scene::addChildToParent>();
     reg
-        .on_destroy<Gng2D::Child>()
+        .on_destroy<Gng2D::Parent>()
         .disconnect<&Scene::removeChildFromParent>();
     reg
-        .on_destroy<Gng2D::Parent>()
+        .on_destroy<Gng2D::Children>()
         .disconnect<&Scene::destroyAllChildren>();
 }
 
@@ -116,24 +116,24 @@ void Scene::removeNamedEntity(entt::registry& reg, entt::entity entity)
 
 void Scene::addChildToParent(entt::registry& reg, entt::entity child)
 {
-    auto& parentEntity = reg.get<Gng2D::Child>(child).parent;
-    if (not reg.all_of<Parent>(parentEntity)) reg.emplace<Parent>(parentEntity);
+    auto& parentEntity = reg.get<Gng2D::Parent>(child).id;
+    if (not reg.all_of<Children>(parentEntity)) reg.emplace<Children>(parentEntity);
 
-    auto& children = reg.get<Gng2D::Parent>(parentEntity).children;
+    auto& children = reg.get<Gng2D::Children>(parentEntity).list;
     children.emplace_back(child);
 }
 
 void Scene::removeChildFromParent(entt::registry& reg, entt::entity child)
 {
-    auto& parentEntity = reg.get<Gng2D::Child>(child).parent;
-    auto& children = reg.get<Gng2D::Parent>(parentEntity).children;
+    auto& parentEntity = reg.get<Gng2D::Parent>(child).id;
+    auto& children = reg.get<Gng2D::Children>(parentEntity).list;
     std::erase(children, child);
 }
 
 void Scene::destroyAllChildren(entt::registry& reg, entt::entity parent)
 {
     // Copy so removeChildFromParent won't invalidate iterator
-    auto children = reg.get<Gng2D::Parent>(parent).children;
+    auto children = reg.get<Gng2D::Children>(parent).list;
     for (const auto child : children)
     {
         reg.destroy(child);

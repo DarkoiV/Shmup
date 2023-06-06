@@ -5,6 +5,6 @@ using Gng2D::EntityBuilder;
 
 EntityBuilder& EntityBuilder::withParent(entt::entity parent)
 {
-    reg.emplace<Child>(entity, parent);
+    reg.emplace<Parent>(entity, parent);
     return *this;
 }

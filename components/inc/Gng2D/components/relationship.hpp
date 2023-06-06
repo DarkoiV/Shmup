@@ -4,16 +4,16 @@
 
 namespace Gng2D
 {
-struct Child 
-{
-    Child(entt::entity p)
-        : parent(p) {}
-    entt::entity parent;
-};
-
 struct Parent 
 {
-    std::vector<entt::entity> children;
+    Parent(entt::entity p)
+        : id(p) {}
+    entt::entity id;
+};
+
+struct Children
+{
+    std::vector<entt::entity> list;
 };
 }
 

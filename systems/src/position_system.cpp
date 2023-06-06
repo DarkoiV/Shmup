@@ -44,7 +44,7 @@ void PositionSystem::updateRelativePosition()
 {
     parentPosObserver.each([&](auto entity)
     {
-        auto& children  = reg.get<Parent>(entity).children;
+        auto& children  = reg.get<Children>(entity).list;
         auto& parentPos = reg.get<Position>(entity);
         for (const auto child : children)
         {
@@ -62,7 +62,7 @@ void PositionSystem::updateRelativePosition()
 
 void PositionSystem::attachPositionToRelativePosition(entt::registry& reg, entt::entity entity)
 {
-    auto parent     = reg.get<Child>(entity).parent;
+    auto parent     = reg.get<Parent>(entity).id;
     auto& parentPos = reg.get<Position>(parent);
     auto& relPos    = reg.get<RelativePosition>(entity);
     reg.emplace<Position>(entity, parentPos.x + relPos.x, parentPos.y + relPos.y);
