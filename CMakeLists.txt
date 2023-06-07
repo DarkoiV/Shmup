@@ -40,8 +40,5 @@ set_property(TARGET Gng2D_TESTS PROPERTY CXX_STANDARD 20)
 add_custom_target(Gng2D_run_test
     COMMAND Gng2D_TESTS)
 
-add_subdirectory(components)
-add_subdirectory(core)
-add_subdirectory(systems)
-add_subdirectory(types)
+add_subdirectory(source)
 
