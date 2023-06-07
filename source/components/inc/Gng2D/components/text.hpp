@@ -8,6 +8,7 @@ namespace Gng2D
 struct Text 
 {
     Text(const std::string& font, const std::string& str);
+    Text(Font font, const std::string& str);
 
     SDL_Texture*    getSprite() const;
     void            changeFont(const std::string& font);

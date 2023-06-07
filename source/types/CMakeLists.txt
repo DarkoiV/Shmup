@@ -4,6 +4,7 @@ target_sources(Gng2D PRIVATE
     src/coroutine.cpp
     src/entity_compositor.cpp
     src/font.cpp
+    src/menu_builder.cpp
     src/scene.cpp)
 
 # Testing

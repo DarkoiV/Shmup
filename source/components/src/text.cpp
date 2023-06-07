@@ -11,6 +11,13 @@ Text::Text(const std::string& font, const std::string& str)
     generateNewTexture();
 }
 
+Text::Text(Font font, const std::string& str)
+    : font(font)
+    , str(str)
+{
+    generateNewTexture();
+}
+
 SDL_Texture* Text::getSprite() const
 {
     return textSprite.get();
