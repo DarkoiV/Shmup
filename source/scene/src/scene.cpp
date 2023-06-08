@@ -4,7 +4,7 @@
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/window.hpp"
-#include "Gng2D/types/scene.hpp"
+#include "Gng2D/scene/scene.hpp"
 
 using Gng2D::Scene;
 

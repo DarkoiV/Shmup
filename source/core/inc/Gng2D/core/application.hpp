@@ -1,5 +1,5 @@
 #pragma once
-#include "Gng2D/types/scene.hpp"
+#include "Gng2D/scene/scene.hpp"
 #include "Gng2D/core/window.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 

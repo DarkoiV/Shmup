@@ -1,8 +1,7 @@
-#include "Gng2D/systems/entity_renderer.hpp"
+#include "Gng2D/scene/entity_renderer.hpp"
 #include "Gng2D/components/text.hpp"
 #include "Gng2D/components/roation.hpp"
 #include "Gng2D/components/layer.hpp"
-#include "Gng2D/types/scene.hpp"
 
 using namespace Gng2D;
 

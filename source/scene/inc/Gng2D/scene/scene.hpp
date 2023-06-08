@@ -8,10 +8,10 @@
 #include <entt/entt.hpp>
 #include "Gng2D/types/coroutine.hpp"
 #include "Gng2D/types/entity_compositor.hpp"
-#include "Gng2D/systems/animaton_system.hpp"
-#include "Gng2D/systems/entity_renderer.hpp"
-#include "Gng2D/systems/gui_system.hpp"
-#include "Gng2D/systems/position_system.hpp"
+#include "animaton_system.hpp"
+#include "entity_renderer.hpp"
+#include "gui_system.hpp"
+#include "position_system.hpp"
 
 namespace Gng2D
 {

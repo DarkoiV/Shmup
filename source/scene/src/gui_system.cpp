@@ -1,4 +1,4 @@
-#include "Gng2D/systems/gui_system.hpp"
+#include "Gng2D/scene/gui_system.hpp"
 #include "Gng2D/components/text.hpp"
 #include "Gng2D/components/box.hpp"
 

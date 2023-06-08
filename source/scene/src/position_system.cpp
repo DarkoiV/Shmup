@@ -1,4 +1,4 @@
-#include "Gng2D/systems/position_system.hpp"
+#include "Gng2D/scene/position_system.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/components/velocity.hpp"
 
