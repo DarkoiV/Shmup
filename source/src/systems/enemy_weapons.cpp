@@ -4,7 +4,7 @@
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/roation.hpp"
-#include "Gng2D/types/scene.hpp"
+#include "Gng2D/scene/scene.hpp"
 #include "Gng2D/types/entity_compositor.hpp"
 #include "flight_scene_layers.hpp"
 

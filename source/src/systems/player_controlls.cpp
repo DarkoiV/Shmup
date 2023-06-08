@@ -3,15 +3,16 @@
 #include "Gng2D/components/sprite.hpp"
 #include "Gng2D/components/name_tag.hpp"
 #include "Gng2D/components/layer.hpp"
+#include "Gng2D/scene/scene.hpp"
 #include "sprite_sheets.hpp"
 #include "flight_scene_layers.hpp"
 #include "components/colliders.hpp"
 #include "components/basic_weapon.hpp"
 #include "components/invulnerability.hpp"
 
-PlayerControlls::PlayerControlls(Gng2D::Scene& s, entt::registry& r)
-    : scene(s)
-    , reg(r)
+PlayerControlls::PlayerControlls(entt::registry& r)
+    : reg(r)
+    , scene(reg.ctx().get<Gng2D::Scene&>())
 {
     playerShip = scene.newEntity()
         .with<Gng2D::Position>(320.0f, 200.0f)
