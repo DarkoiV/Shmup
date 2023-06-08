@@ -11,6 +11,8 @@ PositionSystem::PositionSystem(entt::registry& r)
     reg
         .on_construct<RelativePosition>()
         .connect<&PositionSystem::attachPositionToRelativePosition>();
+
+    reg.ctx().emplace<PositionSystem&>(*this);
 }
 
 PositionSystem::~PositionSystem()

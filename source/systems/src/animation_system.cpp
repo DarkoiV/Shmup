@@ -7,6 +7,7 @@ using Gng2D::AnimationSystem;
 AnimationSystem::AnimationSystem(entt::registry& r)
     : reg(r)
 {
+    reg.ctx().emplace<AnimationSystem&>(*this);
 }
 
 void AnimationSystem::operator()()

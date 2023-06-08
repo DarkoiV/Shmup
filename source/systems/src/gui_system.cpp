@@ -9,6 +9,8 @@ GuiSystem::GuiSystem(entt::registry& r)
 {
     connectGuiComponent<Text>(reg);
     connectGuiComponent<Box>(reg);
+
+    reg.ctx().emplace<GuiSystem&>(*this);
 }
 
 GuiSystem::~GuiSystem()
