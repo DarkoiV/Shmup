@@ -9,6 +9,7 @@ target_sources(shmup PRIVATE
     src/animations.cpp
     src/flight_scene.cpp
     src/game_over_scene.cpp
+    src/main_menu_scene.cpp
     src/levels.cpp
     src/main.cpp
     src/shmup.cpp)

@@ -1,6 +1,5 @@
 #pragma once
 #include "Gng2D/types/scene.hpp"
-#include "Gng2D/types/coroutine.hpp"
 
 struct GameOverScene : Gng2D::Scene
 {
@@ -10,3 +9,4 @@ struct GameOverScene : Gng2D::Scene
     void update()               override;
     void render(SDL_Renderer*)  override;
 };
+
