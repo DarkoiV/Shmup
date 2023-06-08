@@ -30,14 +30,9 @@ struct FlightScene : Gng2D::Scene
 private:
     PlayerControlls                             playerControlls{*this, reg};
     EnemyWeapons                                enemyWeapons{reg};
-    Gng2D::PositionSystem                       positionSystem{reg};
-    Gng2D::AnimationSystem                      animatonSystem{reg};
     CollisionSystem                             collisionSystem{reg};
     EntityCleaner                               entityCleaner{reg};
 
-    Gng2D::GuiSystem                            guiSystem{reg};
-
-    Gng2D::EntityRenderer                       entityRenderer{reg};
     Gng2D::ColliderRenderer<PlayerCollider>     playerColliderRenderer{reg};
 };
 
