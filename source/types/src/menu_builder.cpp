@@ -10,15 +10,19 @@ using Gng2D::MenuBuilder;
 MenuBuilder::MenuBuilder(entt::registry& reg)
     : reg(reg)
 {
+    if (defaultFont)                        font                = *defaultFont;
+    if (not defaultBoxSpirteName.empty())   boxSpriteName       = defaultBoxSpirteName;
+    if (defaultOnHighlightFunc)             onHighlightFunc     = defaultOnHighlightFunc;
+    if (defaultOnStopHighlightFunc)         onStopHighlightFunc = defaultOnStopHighlightFunc;
 }
 
-MenuBuilder& MenuBuilder::withOnHighlightFunc(SelectionList::OnHighlight func)
+MenuBuilder& MenuBuilder::withOnHighlightFunc(SelectionList::SelectionModFunc func)
 {
     onHighlightFunc = func;
     return *this;
 }
 
-MenuBuilder& MenuBuilder::withOnStopHighlightFunc(SelectionList::OnStopHighlight func)
+MenuBuilder& MenuBuilder::withOnStopHighlightFunc(SelectionList::SelectionModFunc func)
 {
     onStopHighlightFunc = func;
     return *this;
@@ -36,6 +40,12 @@ MenuBuilder& MenuBuilder::withElement(const std::string& str, SelectionList::Sel
 MenuBuilder& MenuBuilder::withPosition(Position p)
 {
     pos = p;
+    return *this;
+}
+
+MenuBuilder& MenuBuilder::withVerticalSpace(unsigned vs)
+{
+    verticalSpace = vs;
     return *this;
 }
 
@@ -82,16 +92,10 @@ entt::entity MenuBuilder::build()
         return entt::null;
     }
 
-
     auto baseEntityCompositor = EntityCompositor(reg)
         .with<Gng2D::SelectionList>()
         .with<Gng2D::Position>(*pos)
         .with<Gng2D::Layer>(layer);
-
-    auto& selectionList = reg.get<SelectionList>(baseEntityCompositor.get());
-    selectionList.onHighlight           = onHighlightFunc;
-    selectionList.onStopHiglight        = onStopHighlightFunc;
-    selectionList.highlightedSelection  = 0;
 
     unsigned vSpacesCount = elementsToCreate.size() > 1 
                           ? elementsToCreate.size() - 1 
@@ -99,17 +103,52 @@ entt::entity MenuBuilder::build()
     unsigned width  = longestTextChars * font->width();
     unsigned height = vSpacesCount * verticalSpace 
                     + elementsToCreate.size() * font->height();
-
     LOG::INFO("Menu dimensions", width, "x", height);
+
+    float firstElementPos = 0.0f 
+                          - (static_cast<float>(height) / 2) 
+                          + (static_cast<float>(font->height()) / 2);
+    createSelectionList(baseEntityCompositor, firstElementPos);
 
     if (not boxSpriteName.empty())
     {
+        LOG::INFO("Menu with box:", boxSpriteName);
         baseEntityCompositor
             .with<Gng2D::Box>(boxSpriteName, width, height, boxMargin);
     }
-    
-    float elementVerticalPos = 0;
-    elementVerticalPos -= static_cast<float>(height) / 2;
+
+    LOG::INFO("Menu built");
+    return baseEntityCompositor.get();
+}
+
+void MenuBuilder::setDefaultFont(const std::string& font)
+{
+    defaultFont = AssetRegistry().getFont(font);
+}
+
+void MenuBuilder::setDefaultBox(const std::string& sprite, unsigned margin)
+{
+    defaultBoxSpirteName = sprite;
+    defaultBoxMargin     = margin;
+}
+
+void MenuBuilder::setDefaultOnHighlightFunc(SelectionList::SelectionModFunc func)
+{
+    defaultOnHighlightFunc = func;
+}
+
+void MenuBuilder::setDefaultOnStopHighlightFunc(SelectionList::SelectionModFunc func)
+{
+    defaultOnStopHighlightFunc = func;
+}
+
+void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, float elementVerticalPos)
+{
+    auto& selectionList = reg.get<SelectionList>(baseEntityCompositor.get());
+    selectionList.onHighlight           = onHighlightFunc;
+    selectionList.onStopHiglight        = onStopHighlightFunc;
+    selectionList.highlightedSelection  = 0;
+
     for (auto& el : elementsToCreate)
     {
         LOG::INFO("Adding to menu:", 
@@ -126,16 +165,12 @@ entt::entity MenuBuilder::build()
         elementVerticalPos += (font->height() + verticalSpace);
     }
 
-    baseEntityCompositor
-        .modify<SelectionList>([&](auto& slist)
-        {
-            if (slist.elements.size() == 0) return;
+    baseEntityCompositor.modify<SelectionList>([&](auto& slist)
+    {
+        if (slist.elements.size() == 0) return;
 
-            auto entity = slist.elements[0].first;
-            reg.patch<Text>(entity, slist.onHighlight);
-        });
-
-    LOG::INFO("Menu built");
-    return baseEntityCompositor.get();
+        auto entity = slist.elements[0].first;
+        reg.patch<Text>(entity, slist.onHighlight);
+    });
 }
 
