@@ -25,8 +25,7 @@ Scene::Scene()
     reg.on_update<Gng2D::Layer>()
         .connect<&Scene::updateChildrenLayer>();
 
-    reg.ctx()
-        .emplace<Scene&>(*this);
+    reg.ctx().emplace<Scene&>(*this);
 }
 
 Scene::~Scene()
@@ -52,6 +51,9 @@ void Scene::operator()()
     if (pause) return;
 
     runCoroutines();
+    animationSystem();
+    positionSystem();
+
     update();
 }
 

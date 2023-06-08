@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <optional>
 #include <iterator>
 #include <tuple>
 #include <unordered_map>
@@ -9,6 +8,10 @@
 #include <entt/entt.hpp>
 #include "Gng2D/types/coroutine.hpp"
 #include "Gng2D/types/entity_compositor.hpp"
+#include "Gng2D/systems/animaton_system.hpp"
+#include "Gng2D/systems/entity_renderer.hpp"
+#include "Gng2D/systems/gui_system.hpp"
+#include "Gng2D/systems/position_system.hpp"
 
 namespace Gng2D
 {
@@ -48,6 +51,11 @@ struct Scene
 protected:
     bool                pause{false};
     entt::registry      reg;
+
+    AnimationSystem     animationSystem{reg};
+    EntityRenderer      entityRenderer{reg};
+    GuiSystem           guiSystem{reg};
+    PositionSystem      positionSystem{reg};
 
 private:
     void                    runCoroutines();
