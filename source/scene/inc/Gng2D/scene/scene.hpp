@@ -27,7 +27,6 @@ struct Scene
 
     virtual void onEnter()              = 0;
     virtual void onExit()               = 0;
-    virtual bool isCompleted()          = 0;
     virtual void update()               = 0;
     virtual void render(SDL_Renderer*)  = 0;
 
@@ -36,6 +35,7 @@ struct Scene
 
     void operator()();
     bool isPaused()     const;
+    bool isCompleted()  const;
 
     template<typename Coro, typename... Args>
     void addCoroutine(Coro coro, Args&&... args)
@@ -50,6 +50,7 @@ struct Scene
 
 protected:
     bool                pause{false};
+    bool                completed{false};
     entt::registry      reg;
 
     AnimationSystem     animationSystem{reg};

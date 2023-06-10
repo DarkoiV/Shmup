@@ -62,6 +62,11 @@ bool Scene::isPaused() const
     return pause;
 }
 
+bool Scene::isCompleted() const 
+{
+    return completed;
+}
+
 bool Scene::isKeyPressed(SDL_Scancode scancode) const
 {
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
