@@ -23,22 +23,14 @@ void FlightScene::onExit()
     Gng2D::LOG::INFO("Exiting flight scene");
 }
 
-bool FlightScene::isCompleted()
-{
-    if (playerControlls.isPlayerAlive())
-    {
-        Gng2D::Application::setNextScene<GameOverScene>();
-        return true;
-    }
-    return false;
-}
-
 void FlightScene::update()
 {
     playerControlls();
     enemyWeapons();
     collisionSystem();
     entityCleaner();
+
+    if (not playerControlls.isPlayerAlive()) gotoGameOver();
 }
 
 void FlightScene::render(SDL_Renderer* r)
@@ -87,5 +79,11 @@ void FlightScene::onKeyUp(SDL_KeyboardEvent& e)
             reg.destroy(focus);
             break;
     }
+}
+
+void FlightScene::gotoGameOver()
+{
+    Gng2D::Application::setNextScene<GameOverScene>();
+    completed = true;
 }
 

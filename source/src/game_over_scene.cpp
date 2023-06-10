@@ -11,11 +11,6 @@ void GameOverScene::onExit()
     Gng2D::LOG::INFO("Exiting game over scene");
 }
 
-bool GameOverScene::isCompleted()
-{
-    return false;
-}
-
 void GameOverScene::update()
 {
 }

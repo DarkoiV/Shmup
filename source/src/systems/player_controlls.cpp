@@ -150,7 +150,7 @@ bool PlayerControlls::inFocusMode() const
 
 bool PlayerControlls::isPlayerAlive() const
 {
-    return reg.get<HitPoints>(playerShip).value <= 0;
+    return reg.get<HitPoints>(playerShip).value > 0;
 }
 
 void PlayerControlls::operator()()

@@ -16,7 +16,6 @@ struct FlightScene : Gng2D::Scene
 
     void onEnter()              override;
     void onExit()               override;
-    bool isCompleted()          override;
     void update()               override;
     void render(SDL_Renderer*)  override;
 
@@ -30,5 +29,7 @@ private:
     EntityCleaner                               entityCleaner{reg};
 
     Gng2D::ColliderRenderer<PlayerCollider>     playerColliderRenderer{reg};
+
+    void gotoGameOver();
 };
 
