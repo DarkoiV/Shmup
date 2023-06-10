@@ -1,6 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include "Gng2D/components/sprite.hpp"
+#include "Gng2D/types/menu_builder.hpp"
 
 namespace Gng2D
 {

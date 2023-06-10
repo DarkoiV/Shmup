@@ -91,6 +91,11 @@ entt::entity MenuBuilder::build()
         LOG::ERROR("Menu requires font");
         return entt::null;
     }
+    if (elementsToCreate.size() == 0)
+    {
+        LOG::ERROR("Menu needs at least one element");
+        return entt::null;
+    }
 
     auto baseEntityCompositor = EntityCompositor(reg)
         .with<Gng2D::SelectionList>()
@@ -167,10 +172,12 @@ void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, fl
 
     baseEntityCompositor.modify<SelectionList>([&](auto& slist)
     {
-        if (slist.elements.size() == 0) return;
-
-        auto entity = slist.elements[0].first;
-        reg.patch<Text>(entity, slist.onHighlight);
+        auto element = slist.elements.begin();
+        reg.patch<Text>(element->first, slist.onHighlight);
+        while(++element != slist.elements.end())
+        {    
+            reg.patch<Text>(element->first, slist.onStopHiglight);
+        }
     });
 }
 

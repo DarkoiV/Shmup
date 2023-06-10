@@ -47,13 +47,13 @@ void Box::generateNewTexture()
 
         // TOP MIDDLE
         dstRect.x += tileWidth;
-        dstRect.w  = capacityMargin + capacityWidth;
+        dstRect.w  = 2*capacityMargin + capacityWidth;
         srcRect.x  = tileWidth;
 
         SDL_RenderCopy(r, tilesSprite, &srcRect, &dstRect);
 
         // TOP RIGHT
-        dstRect.x += capacityMargin + capacityWidth;
+        dstRect.x += 2*capacityMargin + capacityWidth;
         dstRect.w  = tileWidth;
         srcRect.x  = 2*tileWidth;
 
@@ -62,7 +62,7 @@ void Box::generateNewTexture()
         // CENTER LEFT
         dstRect.x  = 0;
         dstRect.y += tileHeight;
-        dstRect.h  = capacityMargin + capacityHeight;
+        dstRect.h  = 2*capacityMargin + capacityHeight;
         srcRect.x  = 0;
         srcRect.y  = tileHeight;
 
@@ -70,13 +70,13 @@ void Box::generateNewTexture()
 
         // CENTER MIDDLE
         dstRect.x += tileWidth;
-        dstRect.w  = capacityMargin + capacityWidth;
+        dstRect.w  = 2*capacityMargin + capacityWidth;
         srcRect.x  = tileWidth;
 
         SDL_RenderCopy(r, tilesSprite, &srcRect, &dstRect);
 
         // CENTER RIGHT
-        dstRect.x += capacityMargin + capacityWidth;
+        dstRect.x += 2*capacityMargin + capacityWidth;
         dstRect.w  = tileWidth;
         srcRect.x  = 2*tileWidth;
 
@@ -84,7 +84,7 @@ void Box::generateNewTexture()
 
         // BOTTOM LEFT
         dstRect.x  = 0;
-        dstRect.y += capacityMargin + capacityHeight;
+        dstRect.y += 2*capacityMargin + capacityHeight;
         dstRect.h  = tileHeight;
         srcRect.x  = 0;
         srcRect.y  = 2*tileHeight;
@@ -93,13 +93,13 @@ void Box::generateNewTexture()
 
         // BOTOM MIDDLE
         dstRect.x += tileWidth;
-        dstRect.w  = capacityMargin + capacityWidth;
+        dstRect.w  = 2*capacityMargin + capacityWidth;
         srcRect.x  = tileWidth;
 
         SDL_RenderCopy(r, tilesSprite, &srcRect, &dstRect);
 
         // BOTTOM RIGHT
-        dstRect.x += capacityMargin + capacityWidth;
+        dstRect.x += 2*capacityMargin + capacityWidth;
         dstRect.w  = tileWidth;
         srcRect.x  = 2*tileWidth;
 
