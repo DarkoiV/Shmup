@@ -11,6 +11,11 @@ struct GuiSystem
     GuiSystem(GuiSystem&&)      = delete;
     ~GuiSystem();
 
+    void activeMenuUp();
+    void activeMenuDown();
+    void activeMenuSelect();
+    void makeActiveMenu(entt::entity);
+
     template <typename GuiComponent>
     void connectGuiComponent(entt::registry& reg)
     {
@@ -52,6 +57,8 @@ protected:
 
 private:
     entt::registry& reg;
+
+    entt::entity activeMenu{entt::null};
 };
 }
 
