@@ -12,24 +12,13 @@ void MainMenuScene::onEnter()
         Gng2D::Application::setNextScene<FlightScene>();
         this->completed = true;
     };
-    menu = Gng2D::MenuBuilder(reg)
-        .withPosition({320.0f, 200.0f})
-        .withFont("charmap-oldschool_white")
-        .withOnHighlightFunc([&](auto& text)
-        {
-            text.changeRGBMod(120, 255, 155);
-        })
-        .withOnStopHighlightFunc([](auto& text)
-        {
-            text.changeRGBMod(255, 255, 255);
-        })
-        .withBox("box", 1)
-        .withElement("NEW GAME", gotoNewGame)
-        .withElement("SETTINGS", [](){})
-        .withElement("QUIT", Gng2D::Application::stopRunning)
-        .build();
-
-    guiSystem.makeActiveMenu(menu);
+    guiSystem.makeActiveMenu(
+        Gng2D::MenuBuilder(reg)
+            .withPosition({320.0f, 200.0f})
+            .withElement("NEW GAME", gotoNewGame)
+            .withElement("SETTINGS", [](){})
+            .withElement("QUIT", Gng2D::Application::stopRunning)
+            .build());
 }
 
 void MainMenuScene::onExit()

@@ -10,8 +10,5 @@ struct MainMenuScene : Gng2D::Scene
     void render(SDL_Renderer*)  override;
 
     void onKeyDown(SDL_KeyboardEvent&) override;
-
-private:
-    entt::entity menu;
 };
 
