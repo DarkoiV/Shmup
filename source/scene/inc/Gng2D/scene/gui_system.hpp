@@ -16,6 +16,7 @@ struct GuiSystem
     void activeMenuDown();
     void activeMenuSelect();
     void makeActiveMenu(entt::entity);
+    void deactivateMenu();
 
     template <typename GuiComponent>
     void connectGuiComponent(entt::registry& reg)

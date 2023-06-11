@@ -70,3 +70,8 @@ void GuiSystem::makeActiveMenu(entt::entity menu)
     activeMenu = menu;
 }
 
+void GuiSystem::deactivateMenu()
+{
+    activeMenu = entt::null;
+}
+
