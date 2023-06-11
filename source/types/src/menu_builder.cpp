@@ -11,8 +11,8 @@ using Gng2D::MenuBuilder;
 MenuBuilder::MenuBuilder(entt::registry& reg)
     : reg(reg)
 {
-    font                = GuiSystem::defaultFont;
-    boxTilesName        = GuiSystem::defaultBoxTilesName;
+    font                = AssetRegistry().getFont(GuiSystem::defaultFont);
+    boxTiles            = GuiSystem::defaultBoxTiles;
     onHighlightFunc     = GuiSystem::defaultOnHighlightFunc;
     onStopHighlightFunc = GuiSystem::defaultOnStopHighlightFunc;
 }
@@ -64,38 +64,38 @@ MenuBuilder& MenuBuilder::withFont(const std::string& fontName)
 
 MenuBuilder& MenuBuilder::withBox(const std::string& sprite, unsigned margin)
 {
-    boxTilesName = sprite;
+    boxTiles = sprite;
     boxMargin = margin;
     return *this;
 }
 
-entt::entity MenuBuilder::build()
+Gng2D::MenuHandle MenuBuilder::build()
 {
     LOG::INFO("Building menu");
     if (not onHighlightFunc)
     {
         LOG::ERROR("Menu requires on highlight function");
-        return entt::null;
+        return {reg, entt::null};
     }
     if (not onStopHighlightFunc) 
     {
         LOG::ERROR("Menu requires on stop highlight function");
-        return entt::null;
+        return {reg, entt::null};
     }
     if (not pos)
     {
         LOG::ERROR("Menu requires positon");
-        return entt::null;
+        return {reg, entt::null};
     }
     if (not font)
     {
         LOG::ERROR("Menu requires font");
-        return entt::null;
+        return {reg, entt::null};
     }
     if (elementsToCreate.size() == 0)
     {
         LOG::ERROR("Menu needs at least one element");
-        return entt::null;
+        return {reg, entt::null};
     }
 
     auto baseEntityCompositor = EntityCompositor(reg)
@@ -116,15 +116,15 @@ entt::entity MenuBuilder::build()
                           + (static_cast<float>(font->height()) / 2);
     createSelectionList(baseEntityCompositor, firstElementPos);
 
-    if (not boxTilesName.empty())
+    if (not boxTiles.empty())
     {
-        LOG::INFO("Menu with box:", boxTilesName);
+        LOG::INFO("Menu with box:", boxTiles);
         baseEntityCompositor
-            .with<Gng2D::Box>(boxTilesName, width, height, boxMargin);
+            .with<Gng2D::Box>(boxTiles, width, height, boxMargin);
     }
 
     LOG::INFO("Menu built");
-    return baseEntityCompositor.get();
+    return {reg, baseEntityCompositor.get()};
 }
 
 void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, float elementVerticalPos)

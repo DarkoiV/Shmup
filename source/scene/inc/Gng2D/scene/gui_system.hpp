@@ -12,12 +12,6 @@ struct GuiSystem
     GuiSystem(GuiSystem&&)      = delete;
     ~GuiSystem();
 
-    void activeMenuUp();
-    void activeMenuDown();
-    void activeMenuSelect();
-    void makeActiveMenu(entt::entity);
-    void deactivateMenu();
-
     template <typename GuiComponent>
     void connectGuiComponent(entt::registry& reg)
     {
@@ -42,8 +36,8 @@ struct GuiSystem
     }
 
 ///// ///// DEFAULTS ///// /////
-inline static std::optional<Font>               defaultFont{std::nullopt};
-inline static std::string                       defaultBoxTilesName;
+inline static std::string                       defaultFont;
+inline static std::string                       defaultBoxTiles;
 inline static unsigned                          defaultBoxMargin    = 0;
 inline static SelectionList::SelectionModFunc   defaultOnHighlightFunc;
 inline static SelectionList::SelectionModFunc   defaultOnStopHighlightFunc;
@@ -66,8 +60,6 @@ protected:
 
 private:
     entt::registry& reg;
-
-    entt::entity activeMenu{entt::null};
 };
 }
 

@@ -6,6 +6,7 @@
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/layer.hpp"
 #include "Gng2D/types/font.hpp"
+#include "Gng2D/types/menu_handle.hpp"
 
 namespace Gng2D
 {
@@ -22,7 +23,7 @@ struct MenuBuilder
     MenuBuilder&    withLayer(uint8_t);
     MenuBuilder&    withFont(const std::string& font);
     MenuBuilder&    withBox(const std::string& sprite, unsigned margin = 0);
-    entt::entity    build();
+    MenuHandle      build();
 
 private:
     entt::registry& reg;
@@ -30,7 +31,7 @@ private:
     std::vector<ElementToCreate> elementsToCreate;
   
     std::optional<Font>                 font;
-    std::string                         boxTilesName;
+    std::string                         boxTiles;
     unsigned                            boxMargin           = 0;
     unsigned                            verticalSpace       = 2;
     unsigned                            longestTextChars    = 0;
