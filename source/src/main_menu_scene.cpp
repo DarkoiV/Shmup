@@ -5,20 +5,23 @@
 #include "Gng2D/core/log.hpp"
 #include "flight_scene.hpp"
 
-void MainMenuScene::onEnter()
-{
-    auto gotoNewGame = [this]()
-    {
-        Gng2D::Application::setNextScene<FlightScene>();
-        this->completed = true;
-    };
-    guiSystem.makeActiveMenu(
-        Gng2D::MenuBuilder(reg)
+MainMenuScene::MainMenuScene()
+    : menuHandle(Gng2D::MenuBuilder(reg)
             .withPosition({320.0f, 200.0f})
-            .withElement("NEW GAME", gotoNewGame)
+            .withElement("NEW GAME", [this]()
+            {
+                Gng2D::Application::setNextScene<FlightScene>();
+                this->completed = true;
+            })
             .withElement("SETTINGS", [](){})
             .withElement("QUIT", Gng2D::Application::stopRunning)
-            .build());
+            .withBox("box", 4)
+            .build())
+{
+}
+
+void MainMenuScene::onEnter()
+{
 }
 
 void MainMenuScene::onExit()
@@ -40,13 +43,14 @@ void MainMenuScene::onKeyDown(SDL_KeyboardEvent& e)
     switch (e.keysym.sym)
     {
         case SDLK_UP:
-            guiSystem.activeMenuUp();
+            menuHandle.up();
             break;
         case SDLK_DOWN:
-            guiSystem.activeMenuDown();
+            menuHandle.down();
             break;
+        case SDLK_z:
         case SDLK_RETURN:
-            guiSystem.activeMenuSelect();
+            menuHandle.select();
             break;
     }
 }
