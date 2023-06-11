@@ -24,30 +24,20 @@ struct MenuBuilder
     MenuBuilder&    withBox(const std::string& sprite, unsigned margin = 0);
     entt::entity    build();
 
-    static void     setDefaultFont(const std::string& font);
-    static void     setDefaultBox(const std::string& sprite, unsigned margin = 0);
-    static void     setDefaultOnHighlightFunc(SelectionList::SelectionModFunc);
-    static void     setDefaultOnStopHighlightFunc(SelectionList::SelectionModFunc);
-
 private:
     entt::registry& reg;
     using ElementToCreate = std::pair<std::string, SelectionList::SelectCallback>;
     std::vector<ElementToCreate> elementsToCreate;
   
-    inline static std::optional<Font>   defaultFont;
     std::optional<Font>                 font;
-    inline static std::string           defaultBoxSpirteName;
-    std::string                         boxSpriteName;
-    inline static unsigned              defaultBoxMargin    = 0;
-    unsigned                            boxMargin           = defaultBoxMargin;
-    unsigned                            verticalSpace       = 4;
+    std::string                         boxTilesName;
+    unsigned                            boxMargin           = 0;
+    unsigned                            verticalSpace       = 2;
     unsigned                            longestTextChars    = 0;
     std::optional<Position>             pos;
     uint8_t                             layer               = 100;
 
-    inline static SelectionList::SelectionModFunc   defaultOnHighlightFunc;
     SelectionList::SelectionModFunc                 onHighlightFunc;
-    inline static SelectionList::SelectionModFunc   defaultOnStopHighlightFunc;
     SelectionList::SelectionModFunc                 onStopHighlightFunc;
 
     void createSelectionList(EntityCompositor&, float elementVericalPos);

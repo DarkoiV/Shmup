@@ -41,6 +41,13 @@ struct GuiSystem
             .template disconnect<&updateGuiComponentSprite<GuiComponent>>();
     }
 
+///// ///// DEFAULTS ///// /////
+inline static std::optional<Font>               defaultFont{std::nullopt};
+inline static std::string                       defaultBoxTilesName;
+inline static unsigned                          defaultBoxMargin    = 0;
+inline static SelectionList::SelectionModFunc   defaultOnHighlightFunc;
+inline static SelectionList::SelectionModFunc   defaultOnStopHighlightFunc;
+
 protected:
     template <typename GuiComponent>
     static void attachGuiComponentSprite(entt::registry& reg, entt::entity e)

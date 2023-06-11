@@ -4,16 +4,17 @@
 #include "Gng2D/components/box.hpp"
 #include "Gng2D/core/log.hpp"
 #include "Gng2D/core/asset_registry.hpp"
+#include "Gng2D/scene/gui_system.hpp"
 
 using Gng2D::MenuBuilder;
 
 MenuBuilder::MenuBuilder(entt::registry& reg)
     : reg(reg)
 {
-    if (defaultFont)                        font                = *defaultFont;
-    if (not defaultBoxSpirteName.empty())   boxSpriteName       = defaultBoxSpirteName;
-    if (defaultOnHighlightFunc)             onHighlightFunc     = defaultOnHighlightFunc;
-    if (defaultOnStopHighlightFunc)         onStopHighlightFunc = defaultOnStopHighlightFunc;
+    font                = GuiSystem::defaultFont;
+    boxTilesName        = GuiSystem::defaultBoxTilesName;
+    onHighlightFunc     = GuiSystem::defaultOnHighlightFunc;
+    onStopHighlightFunc = GuiSystem::defaultOnStopHighlightFunc;
 }
 
 MenuBuilder& MenuBuilder::withOnHighlightFunc(SelectionList::SelectionModFunc func)
@@ -63,7 +64,7 @@ MenuBuilder& MenuBuilder::withFont(const std::string& fontName)
 
 MenuBuilder& MenuBuilder::withBox(const std::string& sprite, unsigned margin)
 {
-    boxSpriteName = sprite;
+    boxTilesName = sprite;
     boxMargin = margin;
     return *this;
 }
@@ -115,36 +116,15 @@ entt::entity MenuBuilder::build()
                           + (static_cast<float>(font->height()) / 2);
     createSelectionList(baseEntityCompositor, firstElementPos);
 
-    if (not boxSpriteName.empty())
+    if (not boxTilesName.empty())
     {
-        LOG::INFO("Menu with box:", boxSpriteName);
+        LOG::INFO("Menu with box:", boxTilesName);
         baseEntityCompositor
-            .with<Gng2D::Box>(boxSpriteName, width, height, boxMargin);
+            .with<Gng2D::Box>(boxTilesName, width, height, boxMargin);
     }
 
     LOG::INFO("Menu built");
     return baseEntityCompositor.get();
-}
-
-void MenuBuilder::setDefaultFont(const std::string& font)
-{
-    defaultFont = AssetRegistry().getFont(font);
-}
-
-void MenuBuilder::setDefaultBox(const std::string& sprite, unsigned margin)
-{
-    defaultBoxSpirteName = sprite;
-    defaultBoxMargin     = margin;
-}
-
-void MenuBuilder::setDefaultOnHighlightFunc(SelectionList::SelectionModFunc func)
-{
-    defaultOnHighlightFunc = func;
-}
-
-void MenuBuilder::setDefaultOnStopHighlightFunc(SelectionList::SelectionModFunc func)
-{
-    defaultOnStopHighlightFunc = func;
 }
 
 void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, float elementVerticalPos)
