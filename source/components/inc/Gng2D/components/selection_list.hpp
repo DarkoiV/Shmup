@@ -12,7 +12,11 @@ struct SelectionList
 {
     using SelectCallback    = std::function<void()>;
     using SelectionModFunc  = std::function<void(Text&)>;
-    using Element           = std::pair<entt::entity, SelectCallback>;
+    struct Element 
+    {
+        entt::entity    entity;
+        SelectCallback  callback;
+    };
 
     SelectionModFunc        onHighlight;
     SelectionModFunc        onStopHiglight;

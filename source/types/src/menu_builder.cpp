@@ -165,7 +165,7 @@ void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, fl
             .withParent(baseEntityCompositor.get())
             .with<Gng2D::RelativePosition>(0.0f, elementVerticalPos);
 
-        selectionList.elements.emplace_back(selectionCompositor.get(), el.second);
+        selectionList.elements.push_back({selectionCompositor.get(), el.second});
 
         elementVerticalPos += (font->height() + verticalSpace);
     }
@@ -173,10 +173,10 @@ void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, fl
     baseEntityCompositor.modify<SelectionList>([&](auto& slist)
     {
         auto element = slist.elements.begin();
-        reg.patch<Text>(element->first, slist.onHighlight);
+        reg.patch<Text>(element->entity, slist.onHighlight);
         while(++element != slist.elements.end())
         {    
-            reg.patch<Text>(element->first, slist.onStopHiglight);
+            reg.patch<Text>(element->entity, slist.onStopHiglight);
         }
     });
 }

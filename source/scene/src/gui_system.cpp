@@ -28,8 +28,8 @@ void GuiSystem::activeMenuUp()
     auto& current   = slist.highlightedSelection;
     if (current == 0) return;
 
-    auto oldSelection = slist.elements[current].first;
-    auto newSelection = slist.elements[current-1].first;
+    auto oldSelection = slist.elements[current].entity;
+    auto newSelection = slist.elements[current-1].entity;
 
     reg.patch<Text>(oldSelection, slist.onStopHiglight);
     reg.patch<Text>(newSelection, slist.onHighlight);
@@ -43,8 +43,8 @@ void GuiSystem::activeMenuDown()
     auto& current   = slist.highlightedSelection;
     if (current + 1 >= slist.elements.size()) return;
 
-    auto oldSelection = slist.elements[current].first;
-    auto newSelection = slist.elements[current+1].first;
+    auto oldSelection = slist.elements[current].entity;
+    auto newSelection = slist.elements[current+1].entity;
 
     reg.patch<Text>(oldSelection, slist.onStopHiglight);
     reg.patch<Text>(newSelection, slist.onHighlight);
@@ -57,7 +57,7 @@ void GuiSystem::activeMenuSelect()
     auto& slist = reg.get<SelectionList>(activeMenu);
     auto current = slist.highlightedSelection;
 
-    auto callback = slist.elements[current].second;
+    auto callback = slist.elements[current].callback;
     callback();
 }
 
