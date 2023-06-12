@@ -50,26 +50,36 @@ struct V2d
             * 180 / std::numbers::pi;
     }
 
-    constexpr V2d& operator+=(const V2d& lhs)
+    constexpr V2d& operator+=(const V2d& rhs)
     {
-        x += lhs.x;
-        y += lhs.y;
+        x += rhs.x;
+        y += rhs.y;
         return *this;
     }
 };
 
-constexpr V2d operator*(const float rhs, const V2d& lhs)
+constexpr V2d operator*(const float lhs, const V2d& rhs)
+{
+    return {lhs * rhs.x, lhs * rhs.y};
+}
+
+constexpr V2d operator*(const V2d& lhs, const float rhs)
 {
     return {rhs * lhs.x, rhs * lhs.y};
 }
 
-constexpr V2d operator+(const V2d& rhs, const V2d& lhs)
+constexpr V2d operator/(const V2d& lhs, const float rhs)
 {
-    return {rhs.x + lhs.x, rhs.y + lhs.y};
+    return {lhs.x/rhs, lhs.y/rhs};
 }
 
-constexpr V2d operator-(const V2d& rhs, const V2d& lhs)
+constexpr V2d operator+(const V2d& lhs, const V2d& rhs)
 {
-    return {rhs.x - lhs.x, rhs.y - lhs.y};
+    return {lhs.x + rhs.x, lhs.y + rhs.y};
+}
+
+constexpr V2d operator-(const V2d& lhs, const V2d& rhs)
+{
+    return {lhs.x - rhs.x, lhs.y - rhs.y};
 }
 }
