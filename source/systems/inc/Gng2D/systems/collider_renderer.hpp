@@ -2,7 +2,7 @@
 #include <cmath>
 #include <entt/entity/registry.hpp>
 #include <SDL2/SDL.h>
-#include "Gng2D/components/circle_colider.hpp"
+#include "Gng2D/components/colider.hpp"
 #include "Gng2D/components/position.hpp"
 
 namespace Gng2D
