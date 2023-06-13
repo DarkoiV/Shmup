@@ -72,3 +72,12 @@ void EnemyWeapons::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
         .with<Gng2D::Layer>(FlightSceneLayer::Bullets);
 }
 
+void EnemyWeapons::spawnLaser(entt::entity parent, Gng2D::RelativePosition rpos)
+{
+    Gng2D::EntityCompositor(reg)
+        .with<Gng2D::Sprite>("enemy_laser")
+        .withParent(parent)
+        .with<Gng2D::RelativePosition>(rpos)
+        .with<EnemyLaserCollider>(3.0f, 640.0f);
+}
+

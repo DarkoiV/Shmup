@@ -21,7 +21,7 @@ PlayerControlls::PlayerControlls(entt::registry& r)
         .with<HitPoints>(5u, 5u)
         .with<Gng2D::Layer>(FlightSceneLayer::Ships)
         .with<BasicWeapon>()
-        .with<Gng2D::Sprite>("player_ship", 1)
+        .with<Gng2D::Sprite>("player_ship")
         .with<Gng2D::NameTag>("Player")
         .modify<Gng2D::Sprite>([](auto& sprite)
         {
@@ -85,20 +85,20 @@ void PlayerControlls::primaryFire()
 
 void PlayerControlls::invulnerabilityAnimation()
 {
-    auto& sprite = reg.get<Gng2D::Sprite>(playerShip);
     if (reg.any_of<Invulnerability>(playerShip))
     {
         auto& inv = reg.get<Invulnerability>(playerShip);
         if (inv.ticksRemaining == 0) 
         {
             reg.remove<Invulnerability>(playerShip);
-            sprite.opacity = 255;
+            reg.remove<Gng2D::SpriteOpacity>(playerShip);
         }
         else
         {
             inv.ticksRemaining--;
-            bool blinking = inv.ticksRemaining % 20 > 10;
-            sprite.opacity = 200 - (100 * blinking);
+            const bool blinking     = inv.ticksRemaining % 20 > 10;
+            const uint8_t opacity   = 200 - (100 * blinking);
+            reg.emplace_or_replace<Gng2D::SpriteOpacity>(playerShip, opacity);
         }
     }
 }
@@ -123,7 +123,7 @@ void PlayerControlls::hpControl()
     if (hpDisplay != entt::null) reg.destroy(hpDisplay);
 
     hpDisplay = scene.newEntity()
-        .with<Gng2D::Position>(620.0f, 15.0f)
+        .with<Gng2D::Position>(635.0f, 15.0f)
         .get();
 
     for(unsigned i = 1; i <= playerHP.max; i++)
@@ -133,12 +133,12 @@ void PlayerControlls::hpControl()
             .with<Gng2D::Layer>(static_cast<uint8_t>(100))
             .with<Gng2D::RelativePosition>(-16.0f * i, 0.0f)
             .with<Gng2D::Sprite>("hitpoints")
+            .with<Gng2D::SpriteOpacity>((uint8_t)175)
             .modify<Gng2D::Sprite>([i, &playerHP](auto& sprite)
             {
                 sprite.srcRect.w /= 2;
                 if (i > playerHP.value) 
                     sprite.srcRect.x += sprite.srcRect.w;
-                sprite.opacity = 155;
             });
     }
 }

@@ -2,6 +2,7 @@
 #include "Gng2D/core/settings.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
+#include "Gng2D/types/entity_compositor.hpp"
 #include "components/destroy.hpp"
 
 EntityCleaner::EntityCleaner(entt::registry& r)
@@ -46,10 +47,10 @@ void EntityCleaner::destroyedCleaner()
 void EntityCleaner::spawnRedX(entt::entity entity)
 {
     auto& pos = reg.get<Gng2D::Position>(entity);
-    auto redX = reg.create();
-    auto& sprite = reg.emplace<Gng2D::Sprite>(redX, "red_x");
-    sprite.opacity = 200;
-    reg.emplace<Gng2D::Position>(redX, pos);
-    reg.emplace<Destroy>(redX, Destroy::Effect::noEffect, 20u);
+    Gng2D::EntityCompositor(reg)
+        .with<Gng2D::Sprite>("red_x")
+        .with<Gng2D::SpriteOpacity>((uint8_t)185)
+        .with<Gng2D::Position>(pos)
+        .with<Destroy>(Destroy::Effect::noEffect, 20u);
 }
 

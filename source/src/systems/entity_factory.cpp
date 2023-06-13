@@ -88,7 +88,7 @@ Gng2D::EntityCompositor EntityFactory::spawnDrone(entt::entity parent, Gng2D::Re
         .with<Gng2D::Parent>(parent)
         .with<Gng2D::RelativePosition>(rpos)
         .with<BasicWeapon>()
-        .with<Gng2D::Sprite>("drone", 1);
+        .with<Gng2D::Sprite>("drone");
 }
 
 Gng2D::EntityCompositor EntityFactory::spawnTurret(entt::entity parent, Gng2D::RelativePosition rpos)

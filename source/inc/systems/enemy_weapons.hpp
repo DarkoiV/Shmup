@@ -16,5 +16,6 @@ private:
     void vulcan();
 
     void spawnBullet(Gng2D::Position, Gng2D::Velocity);
+    void spawnLaser(entt::entity parent, Gng2D::RelativePosition);
 };
 

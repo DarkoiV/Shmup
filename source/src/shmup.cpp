@@ -1,6 +1,7 @@
 #include "shmup.hpp"
 #include "flight_scene.hpp"
 #include "main_menu_scene.hpp"
+#include "Gng2D/components/text.hpp"
 #include "Gng2D/core/asset_registry.hpp"
 #include "Gng2D/scene/gui_system.hpp"
 
