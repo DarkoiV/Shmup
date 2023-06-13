@@ -1,19 +1,27 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <string>
-#include "Gng2D/components/text.hpp"
+#include "Gng2D/types/v2d.hpp"
 
 namespace Gng2D
 {
 struct Sprite
 {
-    Sprite(const std::string& spriteName, SDL_Rect src, float scale = 1.0f);
-    Sprite(const std::string& spriteName, float scale = 1.0f);
-    Sprite(SDL_Texture*, float scale = 1.0f);
+    Sprite(const std::string& spriteName, SDL_Rect src);
+    Sprite(const std::string& spriteName);
+    Sprite(SDL_Texture*);
 
     SDL_Texture*    texture;
     SDL_Rect        srcRect;
-    float           scale;
-    uint8_t         opacity{255};
 };
+
+struct SpriteStretch : V2d
+{
+};
+
+struct SpriteOpacity 
+{
+    uint8_t value;
+};
+
 }

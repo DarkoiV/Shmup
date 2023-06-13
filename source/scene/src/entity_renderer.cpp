@@ -46,10 +46,23 @@ void EntityRenderer::operator()(SDL_Renderer* renderer)
     reg.group<Sprite, Position>().each([renderer, this](entt::entity entity, Sprite& sprite, Position& pos)
     {
         SDL_Rect dstRect;
-        SDL_SetTextureAlphaMod(sprite.texture, sprite.opacity);
+        uint8_t opacity = 255;
+        if (auto* spriteOpacity = reg.try_get<SpriteOpacity>(entity))
+        {
+            opacity = spriteOpacity->value;
+        }
+        SDL_SetTextureAlphaMod(sprite.texture, opacity);
 
-        dstRect.w = sprite.srcRect.w * sprite.scale;
-        dstRect.h = sprite.srcRect.h * sprite.scale;
+        float spriteStretchX = 1.0f;
+        float spriteStretchY = 1.0f;
+        if (auto* stretch = reg.try_get<SpriteStretch>(entity))
+        {
+            spriteStretchX = stretch->x;
+            spriteStretchY = stretch->y;
+        }
+
+        dstRect.w = sprite.srcRect.w * spriteStretchX;
+        dstRect.h = sprite.srcRect.h * spriteStretchY;
         dstRect.x = static_cast<int>(pos.x) - dstRect.w / 2;
         dstRect.y = static_cast<int>(pos.y) - dstRect.h / 2;
 
@@ -80,6 +93,8 @@ void EntityRenderer::sortRenderables()
         return reg.get<Layer>(lhs) < reg.get<Layer>(rhs);
     });
     reg.sort<Rotation, Sprite>();
+    reg.sort<SpriteStretch, Sprite>();
+    reg.sort<SpriteOpacity, Sprite>();
 
     needsSorting = false;
 }

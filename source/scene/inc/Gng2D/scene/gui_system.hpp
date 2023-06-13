@@ -54,8 +54,7 @@ protected:
     static void updateGuiComponentSprite(entt::registry& reg, entt::entity e)
     {
         auto& comp = reg.get<GuiComponent>(e);
-        auto scale = reg.get<Gng2D::Sprite>(e).scale;
-        reg.replace<Gng2D::Sprite>(e, comp.getSprite(), scale);
+        reg.replace<Gng2D::Sprite>(e, comp.getSprite());
     }
 
 private:
