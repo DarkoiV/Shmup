@@ -1,5 +1,5 @@
 #pragma once
-#include "Gng2D/components/circle_colider.hpp"
+#include "Gng2D/components/colider.hpp"
 
 struct PlayerCollider : Gng2D::CircleCollider {};
 struct PlayerBulletCollider : Gng2D::CircleCollider {};
