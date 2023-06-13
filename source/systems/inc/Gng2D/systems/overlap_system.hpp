@@ -7,12 +7,14 @@
 
 namespace Gng2D
 {
-template<CircleColliderType A, ColliderType B>
+template<ColliderType A, ColliderType B>
 struct OverlapSystem
 {
     OverlapSystem(entt::registry& r)
         : reg(r)
     {};
+
+    struct Reverse{};
 
     void operator()()
     {
@@ -20,9 +22,18 @@ struct OverlapSystem
         {
             CircleOnCircle();
         }
-        if constexpr (CircleColliderType<A> and CapsuleColliderType<B>)
+        else if constexpr (CircleColliderType<A> and CapsuleColliderType<B>)
         {
             CircleOnCapsule();
+        }
+        else if constexpr (CapsuleColliderType<A> and CircleColliderType<B>)
+        {
+            CircleOnCapsule<Reverse>();
+        }
+        else 
+        {
+            []<bool flag = false>()
+                {static_assert(flag, "Collision not yet supported");}();
         }
     }
 
@@ -48,6 +59,8 @@ protected:
         }
     }
 
+    template<typename R = void>
+        requires std::is_same_v<R, Reverse> or std::is_same_v<R, void>
     void CircleOnCapsule()
     {
         for (const auto& [entityA, posA, colliderA] : reg.view<Position, A>().each())
@@ -77,7 +90,8 @@ protected:
 
                 if (sqrDistance < sqrRadius)
                 {
-                    onOverlap(entityA, entityB);
+                    if constexpr (std::is_same_v<R, Reverse>) onOverlap(entityB, entityA);
+                    else onOverlap(entityA, entityB);
                     if (not reg.valid(entityA)) break;
                 }
             }
