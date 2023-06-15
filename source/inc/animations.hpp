@@ -9,4 +9,6 @@ void emplaceAnimation(AnimationFunction, entt::registry& reg, entt::entity);
 
 Gng2D::Coroutine flashShip(entt::registry&, entt::entity ship);
 Gng2D::Coroutine rotatePickup(entt::registry&, entt::entity pickup);
+Gng2D::Coroutine laserShoot(entt::registry&, entt::entity);
+Gng2D::Coroutine rotateChargeMarker(entt::registry&, entt::entity);
 

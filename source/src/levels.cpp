@@ -12,7 +12,8 @@ Coroutine levelOne(entt::registry& reg)
     constexpr auto D_DIR    = Velocity{0.0f, 2.0f};
     constexpr auto DR_DIR   = Velocity{1.41f, 1.41f};
     constexpr auto DL_DIR   = Velocity{-1.41f, 1.41f};
-    co_yield Coroutine::Wait{5_seconds};
+
+    co_yield Coroutine::Wait{10_seconds};
 
     // Sparrows going down
     EntityFactory(reg).spawnSparrow({320.0f, 0.0f});
@@ -29,11 +30,18 @@ Coroutine levelOne(entt::registry& reg)
     co_yield Coroutine::Wait{1_seconds};
     
     // Turret Boat
-    EntityFactory(reg).spawnTurretBoat({200.0f, 0.0f}, 90);
+    EntityFactory(reg).spawnTurretBoat({170.0f, 0.0f}, 90);
     co_yield Coroutine::Wait{1_seconds};
 
-    EntityFactory(reg).spawnTurretBoat({440.0f, 0.0f}, 90);
-    co_yield Coroutine::Wait{10_seconds};
+    EntityFactory(reg).spawnTurretBoat({470.0f, 0.0f}, 90);
+    co_yield Coroutine::Wait{4_seconds};
+
+    // LASER SPARROW
+    EntityFactory(reg).spawnLaserSparrow({570.0f, 0.0f}, 155);
+    co_yield Coroutine::Wait{1_seconds};
+    
+    EntityFactory(reg).spawnLaserSparrow({30.0f, 0.0f}, 35);
+    co_yield Coroutine::Wait{13_seconds};
 
     // Bullets
     for (int i = 0; i < 10; ++i)

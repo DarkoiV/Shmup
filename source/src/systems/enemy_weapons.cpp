@@ -6,6 +6,7 @@
 #include "Gng2D/components/roation.hpp"
 #include "Gng2D/scene/scene.hpp"
 #include "Gng2D/types/entity_compositor.hpp"
+#include "animations.hpp"
 #include "flight_scene_layers.hpp"
 
 using namespace entt::literals;
@@ -19,6 +20,7 @@ void EnemyWeapons::operator()()
 {
     targeting();
     vulcan();
+    laser();
 }
 
 void EnemyWeapons::vulcan()
@@ -35,6 +37,39 @@ void EnemyWeapons::vulcan()
             weapon.remainigCooldown = weapon.cooldownTicks;
         }
         else --weapon.remainigCooldown;
+    }
+}
+
+void EnemyWeapons::laser()
+{
+    for (auto&& [enemy, weapon] : reg.view<EnemyLaser>().each())
+    {
+        if (weapon.phase == EnemyLaser::charging)
+        {
+            if (weapon.remainigPhaseTicks == (weapon.cooldownTicks / 3)) 
+            {
+                weapon.chargeMarker = spawnLaserChargeMarker(enemy, 14.0f);
+            }
+
+            if (weapon.remainigPhaseTicks == 0)
+            {
+                weapon.laser                = spawnLaser(enemy, 14.0f);
+                weapon.phase                = EnemyLaser::shooting;
+                weapon.remainigPhaseTicks   = weapon.shootingDuration;
+                reg.destroy(weapon.chargeMarker);
+            }
+            else --weapon.remainigPhaseTicks;
+        }
+        else if (weapon.phase == EnemyLaser::shooting)
+        {
+            if (weapon.remainigPhaseTicks == 0)
+            {
+                reg.destroy(weapon.laser);
+                weapon.phase                = EnemyLaser::charging;
+                weapon.remainigPhaseTicks   = weapon.cooldownTicks;
+            }
+            else --weapon.remainigPhaseTicks;
+        }
     }
 }
 
@@ -72,12 +107,50 @@ void EnemyWeapons::spawnBullet(Gng2D::Position pos, Gng2D::Velocity vel)
         .with<Gng2D::Layer>(FlightSceneLayer::Bullets);
 }
 
-void EnemyWeapons::spawnLaser(entt::entity parent, Gng2D::RelativePosition rpos)
+entt::entity EnemyWeapons::spawnLaser(entt::entity parent, float distanceFromParent)
 {
-    Gng2D::EntityCompositor(reg)
+    double angle = 0.0;
+    if (auto* rotation = reg.try_get<Gng2D::Rotation>(parent))
+    {
+        angle = rotation->angle;
+    }
+
+    constexpr float LASER_LEN = 1200.0f;
+    constexpr float SPRITE_WIDTH = 320.0f;
+    constexpr float X_STRECH_FACTOR = LASER_LEN / SPRITE_WIDTH;
+
+    return Gng2D::EntityCompositor(reg)
         .with<Gng2D::Sprite>("enemy_laser")
+        .with<Gng2D::SpriteStretch>(X_STRECH_FACTOR, 1.0f)
+        .with<Gng2D::Rotation>(angle)
+        .modify<Gng2D::Sprite>([](auto& sprite, auto& reg, auto e)
+        {
+            sprite.srcRect.h /= 4;
+            emplaceAnimation(laserShoot, reg, e);
+        })
         .withParent(parent)
-        .with<Gng2D::RelativePosition>(rpos)
-        .with<EnemyLaserCollider>(3.0f, 640.0f);
+        .with<Gng2D::RelativePosition>(Gng2D::V2d::rot(angle, distanceFromParent + (LASER_LEN/2)))
+        .with<EnemyLaserCollider>(5.0f, LASER_LEN).get();
+}
+
+entt::entity EnemyWeapons::spawnLaserChargeMarker(entt::entity parent, float distanceFromParent)
+{
+    double angle = 0.0;
+    if (auto* rotation = reg.try_get<Gng2D::Rotation>(parent))
+    {
+        angle = rotation->angle;
+    }
+
+    auto marker = Gng2D::EntityCompositor(reg)
+        .with<Gng2D::Sprite>("enemy_charge_marker")
+        .with<Gng2D::SpriteStretch>(1.0f, 1.0f)
+        .with<Gng2D::Rotation>(0.0)
+        .withParent(parent)
+        .with<Gng2D::RelativePosition>(Gng2D::V2d::rot(angle, distanceFromParent + 5.0f))
+        .get();
+
+    emplaceAnimation(rotateChargeMarker, reg, marker);
+
+    return marker;
 }
 

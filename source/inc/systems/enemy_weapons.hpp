@@ -14,8 +14,10 @@ private:
 
     void targeting();
     void vulcan();
+    void laser();
 
-    void spawnBullet(Gng2D::Position, Gng2D::Velocity);
-    void spawnLaser(entt::entity parent, Gng2D::RelativePosition);
+    void            spawnBullet(Gng2D::Position, Gng2D::Velocity);
+    entt::entity    spawnLaser(entt::entity parent, float distanceFromParent);
+    entt::entity    spawnLaserChargeMarker(entt::entity parent, float distanceFromParent);
 };
 

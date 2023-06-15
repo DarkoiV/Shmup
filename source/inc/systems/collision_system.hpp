@@ -13,5 +13,6 @@ private:
     GNG2D_OVERLAP(PlayerPickup,     PlayerCollider,         PickupCollider)         playerPickup;
     GNG2D_OVERLAP(BulletEnemy,      PlayerBulletCollider,   EnemyCollider)          bulletEnemy;
     GNG2D_OVERLAP(BulletPlayer,     EnemyBulletCollider,    PlayerCollider)         bulletPlayer;
+    GNG2D_OVERLAP(LaserPlayer,      EnemyLaserCollider,     PlayerCollider)         laserPlayer;
 };
 

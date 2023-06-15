@@ -6,4 +6,5 @@ struct PlayerBulletCollider : Gng2D::CircleCollider {};
 struct PickupCollider : Gng2D::CircleCollider {};
 struct EnemyCollider : Gng2D::CircleCollider {};
 struct EnemyBulletCollider : Gng2D::CircleCollider {};
+struct EnemyLaserCollider : Gng2D::CapsuleCollider {};
 

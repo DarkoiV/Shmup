@@ -11,6 +11,8 @@ void Shmup::onCreate()
     assetRegistry.loadSprite("player_ship");
     assetRegistry.loadSprite("ally_bullet");
     assetRegistry.loadSprite("enemy_bullet");
+    assetRegistry.loadSprite("enemy_laser");
+    assetRegistry.loadSprite("enemy_charge_marker");
     assetRegistry.loadSprite("hitpoints");
     assetRegistry.loadSprite("sparrow");
     assetRegistry.loadSprite("red_x");

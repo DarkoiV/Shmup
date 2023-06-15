@@ -35,6 +35,24 @@ Gng2D::EntityCompositor EntityFactory::spawnSparrow(Gng2D::Position pos, float r
         });
 }
 
+Gng2D::EntityCompositor EntityFactory::spawnLaserSparrow(Gng2D::Position pos, float rotation)
+{
+    return Gng2D::EntityCompositor(reg)
+        .with<Gng2D::Position>(pos)
+        .with<Gng2D::Velocity>(Gng2D::V2d::rot(rotation, 2.0f))
+        .with<Gng2D::Layer>(FlightSceneLayer::Ships)
+        .with<EnemyCollider>(6.0f)
+        .with<HitPoints>(3u, 3u)
+        .with<EnemyLaser>(100u, 20u)
+        .with<Gng2D::Rotation>(rotation)
+        .with<Gng2D::Sprite>("sparrow")
+        .modify<Gng2D::Sprite>([](auto& sprite)
+        {
+            EnemySpriteSheet::divideSprite(sprite);
+            EnemySpriteSheet::setHFrame(EnemySpriteSheet::HFrame::Forward, sprite);
+        });
+}
+
 Gng2D::EntityCompositor EntityFactory::spawnTurretBoat(Gng2D::Position pos, float rotation)
 {
     auto builder = Gng2D::EntityCompositor(reg)

@@ -10,6 +10,7 @@ struct EntityFactory
     EntityFactory(entt::registry&);
 
     Gng2D::EntityCompositor spawnSparrow(Gng2D::Position, float rotation = 90);
+    Gng2D::EntityCompositor spawnLaserSparrow(Gng2D::Position, float rotation = 90);
     Gng2D::EntityCompositor spawnTurretBoat(Gng2D::Position, float rotation = 90);
     Gng2D::EntityCompositor spawnEnemyBullet(Gng2D::Position, Gng2D::Velocity);
     Gng2D::EntityCompositor spawnPickup(Gng2D::Position, Pickup::Type);

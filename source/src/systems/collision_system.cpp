@@ -5,6 +5,7 @@
 #include "components/invulnerability.hpp"
 #include "components/pickup.hpp"
 #include "Gng2D/components/animation.hpp"
+#include "Gng2D/core/log.hpp"
 #include "animations.hpp"
 
 static inline void damagePlayer(entt::registry& reg, entt::entity player)
@@ -23,6 +24,7 @@ CollisionSystem::CollisionSystem(entt::registry& r)
     , playerPickup(r)
     , bulletEnemy(r)
     , bulletPlayer(r)
+    , laserPlayer(r)
 {
 }
 
@@ -33,6 +35,7 @@ void CollisionSystem::operator()()
     playerPickup();
     bulletEnemy();
     bulletPlayer();
+    laserPlayer();
 }
 
 void CollisionSystem::BulletBullet::onOverlap(entt::entity bullet1, entt::entity bullet2)
@@ -73,6 +76,11 @@ void CollisionSystem::BulletEnemy::onOverlap(entt::entity bullet, entt::entity e
 void CollisionSystem::BulletPlayer::onOverlap(entt::entity bullet, entt::entity player)
 {
     reg.destroy(bullet);
+    damagePlayer(reg, player);
+}
+
+void CollisionSystem::LaserPlayer::onOverlap(entt::entity, entt::entity player)
+{
     damagePlayer(reg, player);
 }
 
