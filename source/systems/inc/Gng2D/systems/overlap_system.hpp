@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <entt/entt.hpp>
+#include "Gng2D/core/log.hpp"
 #include "Gng2D/components/colider.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/roation.hpp"
@@ -14,21 +15,17 @@ struct OverlapSystem
         : reg(r)
     {};
 
-    struct Reverse{};
-
     void operator()()
     {
         if constexpr (CircleColliderType<A> and CircleColliderType<B>)
         {
             CircleOnCircle();
         }
-        else if constexpr (CircleColliderType<A> and CapsuleColliderType<B>)
+
+        else if constexpr ((CircleColliderType<A> and CapsuleColliderType<B>)
+                        or (CapsuleColliderType<A> and CircleColliderType<B>))
         {
             CircleOnCapsule();
-        }
-        else if constexpr (CapsuleColliderType<A> and CircleColliderType<B>)
-        {
-            CircleOnCapsule<Reverse>();
         }
         else 
         {
@@ -59,13 +56,15 @@ protected:
         }
     }
 
-    template<typename R = void>
-        requires std::is_same_v<R, Reverse> or std::is_same_v<R, void>
     void CircleOnCapsule()
     {
-        for (const auto& [entityA, posA, colliderA] : reg.view<Position, A>().each())
+        constexpr bool CIRCLE_IS_ENTITY_A = CircleColliderType<A>;
+        using Circle    = std::conditional_t<CIRCLE_IS_ENTITY_A, A, B>;
+        using Capsule   = std::conditional_t<CIRCLE_IS_ENTITY_A, B, A>;
+
+        for (const auto& [entityA, posA, colliderA] : reg.view<Position, Circle>().each())
         {
-            for (const auto& [entityB, posB, colliderB] : reg.view<Position, B>().each())
+            for (const auto& [entityB, posB, colliderB] : reg.view<Position, Capsule>().each())
             {
                 double rotB = 0.0; 
                 if (auto* rotComp = reg.try_get<Rotation>(entityB))
@@ -75,12 +74,13 @@ protected:
                 const V2d capsuleVector     = V2d::rot(rotB, colliderB.length);
                 const V2d capsuleBegin      = posB - (capsuleVector/2);
                 const V2d circleToCapsule   = V2d{posA.x - capsuleBegin.x, posA.y - capsuleBegin.y};
+                const auto lenSqr           = colliderB.length * colliderB.length;
 
                 const float t 
-                    = std::max(0, 
-                               std::min(colliderB.length, 
-                                        V2d::dot(capsuleBegin, circleToCapsule))) 
-                        / colliderB.length;
+                    = std::max(0.0f, 
+                               std::min(lenSqr, 
+                                        V2d::dot(capsuleVector, circleToCapsule))) 
+                        / lenSqr;
 
                 const V2d closestCircleOnCapsule{capsuleBegin.x + t * capsuleVector.x,
                                                  capsuleBegin.y + t * capsuleVector.y};
@@ -90,8 +90,8 @@ protected:
 
                 if (sqrDistance < sqrRadius)
                 {
-                    if constexpr (std::is_same_v<R, Reverse>) onOverlap(entityB, entityA);
-                    else onOverlap(entityA, entityB);
+                    if constexpr (CIRCLE_IS_ENTITY_A) onOverlap(entityA, entityB);
+                    else onOverlap(entityB, entityA);
                     if (not reg.valid(entityA)) break;
                 }
             }
