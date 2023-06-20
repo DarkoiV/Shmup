@@ -15,8 +15,8 @@ struct MenuBuilder
 {
     MenuBuilder(entt::registry&);
 
-    MenuBuilder&    withOnHighlightFunc(SelectionList::SelectionModFunc);
-    MenuBuilder&    withOnStopHighlightFunc(SelectionList::SelectionModFunc);
+    MenuBuilder&    withOnHighlightFunc(SelectionList::ModFunc);
+    MenuBuilder&    withOnStopHighlightFunc(SelectionList::ModFunc);
     MenuBuilder&    withElement(const std::string&, SelectionList::SelectCallback);
     MenuBuilder&    withPosition(Position);
     MenuBuilder&    withVerticalSpace(unsigned);
@@ -31,15 +31,15 @@ private:
     std::vector<ElementToCreate> elementsToCreate;
   
     std::optional<Font>                 font;
-    std::string                         boxTiles;
+    SDL_Texture*                        boxTiles{nullptr};
     unsigned                            boxMargin           = 0;
     unsigned                            verticalSpace       = 2;
     unsigned                            longestTextChars    = 0;
     std::optional<Position>             pos;
     uint8_t                             layer               = 100;
 
-    SelectionList::SelectionModFunc                 onHighlightFunc;
-    SelectionList::SelectionModFunc                 onStopHighlightFunc;
+    SelectionList::ModFunc  onHighlightFunc;
+    SelectionList::ModFunc  onStopHighlightFunc;
 
     void createSelectionList(EntityCompositor&, float elementVericalPos);
 };

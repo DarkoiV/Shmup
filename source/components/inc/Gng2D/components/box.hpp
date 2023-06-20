@@ -13,6 +13,11 @@ struct Box
         unsigned capHeight, 
         unsigned margin = 0);
 
+    Box(SDL_Texture* sprite, 
+        unsigned capWidth, 
+        unsigned capHeight, 
+        unsigned margin = 0);
+
     SDL_Texture*    getSprite() const;
     void            setCapacity(unsigned width, unsigned height, unsigned margin = 0);
 

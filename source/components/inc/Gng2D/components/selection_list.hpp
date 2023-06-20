@@ -11,15 +11,15 @@ struct Text;
 struct SelectionList
 {
     using SelectCallback    = std::function<void()>;
-    using SelectionModFunc  = std::function<void(Text&)>;
+    using ModFunc           = std::function<void(Text&)>;
     struct Element 
     {
         entt::entity    entity;
         SelectCallback  callback;
     };
 
-    SelectionModFunc        onHighlight;
-    SelectionModFunc        onStopHiglight;
+    ModFunc                 onHighlight;
+    ModFunc                 onStopHiglight;
     std::vector<Element>    elements;
     std::size_t             highlightedSelection;
 };

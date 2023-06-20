@@ -56,6 +56,46 @@ Gng2D::Font AssetRegistry::getFont(const std::string& name) const
     return globalFonts.at(name);
 }
 
+void AssetRegistry::setDefaultFont(const std::string& name)
+{
+    defaultFont = getFont(name);
+}
+
+void AssetRegistry::setDefaultBoxTiles(const std::string& name)
+{
+    defaultBoxTiles = getSprite(name);
+}
+
+void AssetRegistry::setDefaultOnHighlightFunc(SelectionList::ModFunc func)
+{
+    defaultOnHighlight = func;
+}
+
+void AssetRegistry::setDefaultOnStopHighlightFunc(SelectionList::ModFunc func)
+{
+    defaultOnStopHighlight = func;
+}
+
+std::optional<Gng2D::Font> AssetRegistry::getDefaultFont() const
+{
+    return defaultFont;
+}
+
+SDL_Texture* AssetRegistry::getDefaultBoxTiles() const
+{
+    return defaultBoxTiles;
+}
+
+Gng2D::SelectionList::ModFunc AssetRegistry::getDefaultOnHighlightFunc() const
+{
+    return defaultOnHighlight;
+}
+
+Gng2D::SelectionList::ModFunc AssetRegistry::getDefaultOnStopHighlightFunc() const
+{
+    return defaultOnStopHighlight;
+}
+
 void Gng2D::AssetRegistry::freeAllSprites()
 {
     LOG::INFO("Freeing loaded sprites");

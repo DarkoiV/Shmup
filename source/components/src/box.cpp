@@ -12,6 +12,15 @@ Box::Box(const std::string& sprite, unsigned capWidth, unsigned capHeight, unsig
     generateNewTexture();
 }
 
+Box::Box(SDL_Texture* sprite, unsigned capWidth, unsigned capHeight, unsigned margin)
+    : tilesSprite(sprite)
+    , capacityWidth(capWidth)
+    , capacityHeight(capHeight)
+    , capacityMargin(margin)
+{
+    generateNewTexture();
+}
+
 SDL_Texture* Box::getSprite() const 
 {
     return boxSprite.get();

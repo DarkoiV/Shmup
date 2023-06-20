@@ -11,19 +11,19 @@ using Gng2D::MenuBuilder;
 MenuBuilder::MenuBuilder(entt::registry& reg)
     : reg(reg)
 {
-    font                = AssetRegistry().getFont(GuiSystem::defaultFont);
-    boxTiles            = GuiSystem::defaultBoxTiles;
-    onHighlightFunc     = GuiSystem::defaultOnHighlightFunc;
-    onStopHighlightFunc = GuiSystem::defaultOnStopHighlightFunc;
+    font                = AssetRegistry().getDefaultFont();
+    boxTiles            = AssetRegistry().getDefaultBoxTiles(); 
+    onHighlightFunc     = AssetRegistry().getDefaultOnHighlightFunc();
+    onStopHighlightFunc = AssetRegistry().getDefaultOnStopHighlightFunc();
 }
 
-MenuBuilder& MenuBuilder::withOnHighlightFunc(SelectionList::SelectionModFunc func)
+MenuBuilder& MenuBuilder::withOnHighlightFunc(SelectionList::ModFunc func)
 {
     onHighlightFunc = func;
     return *this;
 }
 
-MenuBuilder& MenuBuilder::withOnStopHighlightFunc(SelectionList::SelectionModFunc func)
+MenuBuilder& MenuBuilder::withOnStopHighlightFunc(SelectionList::ModFunc func)
 {
     onStopHighlightFunc = func;
     return *this;
@@ -64,7 +64,7 @@ MenuBuilder& MenuBuilder::withFont(const std::string& fontName)
 
 MenuBuilder& MenuBuilder::withBox(const std::string& sprite, unsigned margin)
 {
-    boxTiles = sprite;
+    boxTiles = AssetRegistry().getSprite(sprite);
     boxMargin = margin;
     return *this;
 }
@@ -116,9 +116,8 @@ Gng2D::MenuHandle MenuBuilder::build()
                           + (static_cast<float>(font->height()) / 2);
     createSelectionList(baseEntityCompositor, firstElementPos);
 
-    if (not boxTiles.empty())
+    if (boxTiles)
     {
-        LOG::INFO("Menu with box:", boxTiles);
         baseEntityCompositor
             .with<Gng2D::Box>(boxTiles, width, height, boxMargin);
     }
