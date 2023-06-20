@@ -67,6 +67,7 @@ void Gng2D::AssetRegistry::freeAllSprites()
 
 AssetRegistry::RenderToTexture::RenderToTexture(int width, int height, Commands commands)
 {
+    if (target) SDL_DestroyTexture(target);
     target = SDL_CreateTexture(renderer, 
                                SDL_PIXELFORMAT_ARGB32,
                                SDL_TEXTUREACCESS_TARGET, 
@@ -85,15 +86,18 @@ AssetRegistry::RenderToTexture::RenderToTexture(int width, int height, Commands 
 AssetRegistry::RenderToTexture::~RenderToTexture()
 {
     SDL_SetRenderTarget(renderer, NULL);
+    if (not transferredOwnership) SDL_DestroyTexture(target);
 }
 
 SDL_Texture* AssetRegistry::RenderToTexture::getTexture()
 {
+    transferredOwnership = true;
     return target;
 }
 
 void AssetRegistry::RenderToTexture::saveTexture(const std::string& name)
 {
+    transferredOwnership = true;
     globalSprites[name] = target;
 }
 

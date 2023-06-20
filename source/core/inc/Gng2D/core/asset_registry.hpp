@@ -28,7 +28,8 @@ struct AssetRegistry
         void                saveTexture(const std::string& name);
 
     private:
-        SDL_Texture* target;
+        bool            transferredOwnership{false};
+        SDL_Texture*    target{nullptr};
     };
 
 private:
