@@ -24,16 +24,16 @@ void Shmup::onCreate()
     assetRegistry.loadBMFont("charmap-oldschool_white", 7, 9);
     assetRegistry.loadBMFont("charmap-oldschool_black", 7, 9);
 
-    Gng2D::GuiSystem::defaultFont                   = "charmap-oldschool_white";
-    Gng2D::GuiSystem::defaultBoxTiles               = "box";
-    Gng2D::GuiSystem::defaultOnHighlightFunc        = [](auto& text)
+    assetRegistry.setDefaultFont("charmap-oldschool_white");
+    assetRegistry.setDefaultBoxTiles("box");
+    assetRegistry.setDefaultOnHighlightFunc([](auto& text)
     {
         text.changeRGBMod(120, 255, 155);
-    };
-    Gng2D::GuiSystem::defaultOnStopHighlightFunc    = [](auto& text)
+    });
+    assetRegistry.setDefaultOnStopHighlightFunc([](auto& text)
     {
         text.changeRGBMod(255, 255, 255);
-    };
+    });
 
     setNextScene<MainMenuScene>();
 }
