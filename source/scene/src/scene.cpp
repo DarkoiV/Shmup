@@ -46,6 +46,11 @@ Scene::~Scene()
         .disconnect<&Scene::updateChildrenLayer>();
 }
 
+void Scene::onMouseMotion(SDL_MouseMotionEvent& event)
+{
+    mouseSystem.motion(event);
+}
+
 void Scene::operator()()
 {
     if (pause) return;
@@ -53,6 +58,7 @@ void Scene::operator()()
     runCoroutines();
     animationSystem();
     positionSystem();
+    mouseSystem();
 
     update();
 }

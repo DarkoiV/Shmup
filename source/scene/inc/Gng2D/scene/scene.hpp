@@ -12,6 +12,7 @@
 #include "entity_renderer.hpp"
 #include "gui_system.hpp"
 #include "position_system.hpp"
+#include "mouse_system.hpp"
 
 namespace Gng2D
 {
@@ -30,6 +31,7 @@ struct Scene
     virtual void update()               = 0;
     virtual void render(SDL_Renderer*)  = 0;
 
+    virtual void onMouseMotion(SDL_MouseMotionEvent&);
     virtual void onKeyDown(SDL_KeyboardEvent&)  {};
     virtual void onKeyUp(SDL_KeyboardEvent&)    {};
 
@@ -57,6 +59,7 @@ protected:
     EntityRenderer      entityRenderer{reg};
     GuiSystem           guiSystem{reg};
     PositionSystem      positionSystem{reg};
+    MouseSystem         mouseSystem{reg};
 
 private:
     void                    runCoroutines();

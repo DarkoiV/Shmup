@@ -1,0 +1,30 @@
+#pragma once
+#include <entt/entt.hpp>
+#include <SDL2/SDL.h>
+
+namespace Gng2D
+{
+struct MouseSystem 
+{
+    MouseSystem(entt::registry&);
+    ~MouseSystem();
+
+    void motion(SDL_MouseMotionEvent);
+
+    void operator()();
+
+private:
+    entt::registry& reg;
+    entt::observer  spriteHoverObserver;
+    entt::observer  stretchHoverObserver;
+
+    void updateSpriteHoverArea();
+
+    static void useSpriteHoverArea(entt::registry&, entt::entity);
+
+    entt::entity currentlyHovered{entt::null};
+    void enterHover(entt::entity);
+    void leaveHover(entt::entity);
+};
+}
+

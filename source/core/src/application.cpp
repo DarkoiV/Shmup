@@ -60,6 +60,9 @@ void Gng2D::Application::eventLoop(Scene& scene)
             case SDL_QUIT: 
                 onQuit();
                 break;
+            case SDL_MOUSEMOTION:
+                scene.onMouseMotion(event.motion);
+                break;
             case SDL_KEYDOWN:
                 if (event.key.repeat) break;
                 scene.onKeyDown(event.key); 
