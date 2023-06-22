@@ -21,5 +21,15 @@ struct Hoverable
     V2d     dimension;
 };
 struct UseSpriteHoverArea {};
+
+struct Clickable
+{
+    using Callback  = std::function<void(entt::registry&, entt::entity)>;
+
+    Clickable(Callback lmb)
+        : leftButtonCallback(lmb) {}
+
+    Callback    leftButtonCallback;
+};
 }
 

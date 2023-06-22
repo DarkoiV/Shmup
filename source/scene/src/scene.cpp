@@ -51,6 +51,11 @@ void Scene::onMouseMotion(SDL_MouseMotionEvent& event)
     mouseSystem.motion(event);
 }
 
+void Scene::onMouseButton(SDL_MouseButtonEvent& event)
+{
+    mouseSystem.button(event);
+}
+
 void Scene::operator()()
 {
     if (pause) return;

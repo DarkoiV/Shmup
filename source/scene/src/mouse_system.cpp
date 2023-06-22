@@ -1,5 +1,5 @@
 #include "Gng2D/scene/mouse_system.hpp"
-#include "Gng2D/components/hoverable.hpp"
+#include "Gng2D/components/mouse_controlls.hpp"
 #include "Gng2D/components/position.hpp"
 #include "Gng2D/components/sprite.hpp"
 
@@ -40,6 +40,29 @@ void MouseSystem::motion(SDL_MouseMotionEvent event)
         }
     }
     leaveHover(currentlyHovered);
+}
+
+void MouseSystem::button(SDL_MouseButtonEvent event)
+{
+    auto* clickable = reg.try_get<Clickable>(currentlyHovered);
+    if (not clickable) return;
+    switch (event.button)
+    {
+        case SDL_BUTTON_LEFT:
+            if (event.state == SDL_PRESSED)
+            {
+                clickArmedOnEntity = currentlyHovered;
+            }
+            else if (clickArmedOnEntity == currentlyHovered)
+            {
+                clickable->leftButtonCallback(reg, currentlyHovered);
+            }
+            else 
+            {
+                clickArmedOnEntity = entt::null;
+            }
+            break;
+    }
 }
 
 void MouseSystem::operator()()

@@ -10,6 +10,7 @@ struct MouseSystem
     ~MouseSystem();
 
     void motion(SDL_MouseMotionEvent);
+    void button(SDL_MouseButtonEvent);
 
     void operator()();
 
@@ -25,6 +26,8 @@ private:
     entt::entity currentlyHovered{entt::null};
     void enterHover(entt::entity);
     void leaveHover(entt::entity);
+
+    entt::entity clickArmedOnEntity{entt::null};
 };
 }
 

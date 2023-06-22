@@ -32,6 +32,7 @@ struct Scene
     virtual void render(SDL_Renderer*)  = 0;
 
     virtual void onMouseMotion(SDL_MouseMotionEvent&);
+    virtual void onMouseButton(SDL_MouseButtonEvent&);
     virtual void onKeyDown(SDL_KeyboardEvent&)  {};
     virtual void onKeyUp(SDL_KeyboardEvent&)    {};
 
