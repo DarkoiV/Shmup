@@ -23,6 +23,7 @@ struct MenuBuilder
     MenuBuilder&    withLayer(uint8_t);
     MenuBuilder&    withFont(const std::string& font);
     MenuBuilder&    withBox(const std::string& sprite, unsigned margin = 0);
+    MenuBuilder&    withMouseSupport();
     MenuHandle      build();
 
 private:
@@ -30,13 +31,14 @@ private:
     using ElementToCreate = std::pair<std::string, SelectionList::SelectCallback>;
     std::vector<ElementToCreate> elementsToCreate;
   
-    std::optional<Font>                 font;
-    SDL_Texture*                        boxTiles{nullptr};
-    unsigned                            boxMargin           = 0;
-    unsigned                            verticalSpace       = 2;
-    unsigned                            longestTextChars    = 0;
-    std::optional<Position>             pos;
-    uint8_t                             layer               = 100;
+    std::optional<Font>             font;
+    SDL_Texture*                    boxTiles{nullptr};
+    unsigned                        boxMargin           = 0;
+    unsigned                        verticalSpace       = 2;
+    unsigned                        longestTextChars    = 0;
+    std::optional<Position>         pos;
+    uint8_t                         layer               = 100;
+    bool                            supportMouse{false};
 
     SelectionList::ModFunc  onHighlightFunc;
     SelectionList::ModFunc  onStopHighlightFunc;

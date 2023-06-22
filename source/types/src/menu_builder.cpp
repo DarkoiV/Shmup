@@ -1,10 +1,12 @@
 #include "Gng2D/types/menu_builder.hpp"
-#include "Gng2D/types/entity_compositor.hpp"
-#include "Gng2D/components/text.hpp"
 #include "Gng2D/components/box.hpp"
-#include "Gng2D/core/log.hpp"
+#include "Gng2D/components/mouse_controlls.hpp"
+#include "Gng2D/components/relationship.hpp"
+#include "Gng2D/components/text.hpp"
 #include "Gng2D/core/asset_registry.hpp"
+#include "Gng2D/core/log.hpp"
 #include "Gng2D/scene/gui_system.hpp"
+#include "Gng2D/types/entity_compositor.hpp"
 
 using Gng2D::MenuBuilder;
 
@@ -66,6 +68,12 @@ MenuBuilder& MenuBuilder::withBox(const std::string& sprite, unsigned margin)
 {
     boxTiles = AssetRegistry().getSprite(sprite);
     boxMargin = margin;
+    return *this;
+}
+
+MenuBuilder& MenuBuilder::withMouseSupport()
+{
+    supportMouse = true;
     return *this;
 }
 
@@ -133,6 +141,32 @@ void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, fl
     selectionList.onStopHiglight        = onStopHighlightFunc;
     selectionList.highlightedSelection  = 0;
 
+    auto mouseHoverEnter = [](entt::registry& reg, entt::entity entity)
+    {
+        auto selectionListEntity = reg.get<Gng2D::Parent>(entity).id;
+        auto& sl = reg.get<SelectionList>(selectionListEntity);
+        for (size_t i = 0; i < sl.elements.size(); i++)
+        {
+            if (sl.elements[i].entity == entity)
+            {
+                sl.highlightedSelection = i;
+                reg.patch<Text>(sl.elements[i].entity, sl.onHighlight);
+            }
+            else 
+            {
+                reg.patch<Text>(sl.elements[i].entity, sl.onStopHiglight);
+            }
+        }
+    };
+
+    auto mouseClick = [](entt::registry& reg, entt::entity entity)
+    {
+        auto selectionListEntity = reg.get<Gng2D::Parent>(entity).id;
+        auto& sl = reg.get<SelectionList>(selectionListEntity);
+        for (auto& el : sl.elements) 
+            if (el.entity == entity) return el.callback();
+    };
+
     for (auto& el : elementsToCreate)
     {
         LOG::INFO("Adding to menu:", 
@@ -143,6 +177,14 @@ void MenuBuilder::createSelectionList(EntityCompositor& baseEntityCompositor, fl
             .with<Gng2D::Text>(*font, el.first)
             .withParent(baseEntityCompositor.get())
             .with<Gng2D::RelativePosition>(0.0f, elementVerticalPos);
+
+        if (supportMouse)
+        {
+            selectionCompositor
+                .with<Hoverable>(mouseHoverEnter, [](entt::registry&, entt::entity){})
+                .with<UseSpriteHoverArea>()
+                .with<Clickable>(mouseClick);
+        }
 
         selectionList.elements.push_back({selectionCompositor.get(), el.second});
 
