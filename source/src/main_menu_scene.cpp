@@ -16,6 +16,7 @@ MainMenuScene::MainMenuScene()
             .withElement("SETTINGS", [](){})
             .withElement("QUIT", Gng2D::Application::stopRunning)
             .withBox("box", 4)
+            .withMouseSupport()
             .build())
 {
 }
