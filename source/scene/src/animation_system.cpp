@@ -13,10 +13,8 @@ AnimationSystem::AnimationSystem(entt::registry& r)
 void AnimationSystem::operator()()
 {
     auto view = reg.view<Animation>();
-    std::for_each(std::execution::par_unseq, view.begin(), view.end(), 
-    [&](auto entity)
+    view.each([&](auto entity, auto& animation)
     {
-        auto&& [animation] = view.get(entity);
         animation();
         if (animation.isCompleted()) reg.erase<Animation>(entity);
     });

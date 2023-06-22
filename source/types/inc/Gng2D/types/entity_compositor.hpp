@@ -17,6 +17,12 @@ struct EntityCompositor
         return *this;
     }
 
+    EntityCompositor& modify(std::function<void(entt::registry&, entt::entity)> func)
+    {
+        func(reg, entity);
+        return *this;
+    }
+
     template<typename Component>
     EntityCompositor& modify(std::function<void(Component&, entt::registry&, entt::entity)> func)
     {

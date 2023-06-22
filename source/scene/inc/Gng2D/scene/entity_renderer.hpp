@@ -24,6 +24,12 @@ private:
     entt::registry& reg;
     bool            needsSorting{false};
 
+    template <typename Component>
+    void connectSortOnChange();
+
+    template <typename Component>
+    void disconnectSortOnChange();
+
     using RenderableGroup = decltype(reg.group<Sprite, Position>());
     RenderableGroup     renderables{reg.group<Sprite, Position>()};
 };

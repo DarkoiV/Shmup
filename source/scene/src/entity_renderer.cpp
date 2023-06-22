@@ -5,39 +5,39 @@
 
 using namespace Gng2D;
 
+template<typename Component>
+void EntityRenderer::connectSortOnChange()
+{
+    reg.on_construct<Component>()
+        .template connect<&EntityRenderer::markForSorting>(this);
+    reg.on_update<Component>()
+        .template connect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Component>()
+        .template connect<&EntityRenderer::markForSorting>(this);
+}
+
+template<typename Component>
+void EntityRenderer::disconnectSortOnChange()
+{
+    reg.on_construct<Component>()
+        .template disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_update<Component>()
+        .template disconnect<&EntityRenderer::markForSorting>(this);
+    reg.on_destroy<Component>()
+        .template disconnect<&EntityRenderer::markForSorting>(this);
+}
+
 EntityRenderer::EntityRenderer(entt::registry& r)
     : reg(r)
 {
-    reg.on_construct<Sprite>()
-        .connect<&EntityRenderer::markForSorting>(this);
-    reg.on_update<Sprite>()
-        .connect<&EntityRenderer::markForSorting>(this);
-    reg.on_destroy<Sprite>()
-        .connect<&EntityRenderer::markForSorting>(this);
-
-    reg.on_construct<Layer>()
-        .connect<&EntityRenderer::markForSorting>(this);
-    reg.on_update<Layer>()
-        .connect<&EntityRenderer::markForSorting>(this);
-    reg.on_destroy<Layer>()
-        .connect<&EntityRenderer::markForSorting>(this);
+    connectSortOnChange<Sprite>();
+    connectSortOnChange<Layer>();
 }
 
 EntityRenderer::~EntityRenderer()
 {
-    reg.on_construct<Sprite>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
-    reg.on_update<Sprite>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
-    reg.on_destroy<Sprite>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
-
-    reg.on_construct<Layer>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
-    reg.on_update<Layer>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
-    reg.on_destroy<Layer>()
-        .disconnect<&EntityRenderer::markForSorting>(this);
+    disconnectSortOnChange<Sprite>();
+    disconnectSortOnChange<Layer>();
 }
 
 void EntityRenderer::operator()(SDL_Renderer* renderer)
