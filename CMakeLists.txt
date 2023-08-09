@@ -5,12 +5,7 @@ include(FetchContent)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-FetchContent_Declare(
-    Gng2D
-    GIT_REPOSITORY  https://github.com/DarkoiV/Gng2D.git
-    GIT_TAG         1f7b5e2d31ccbb64c5fb3570319b616188959876
-)
-FetchContent_MakeAvailable(Gng2D)
+add_subdirectory(Gng2D)
 
 add_executable(shmup)
 target_link_libraries(shmup
